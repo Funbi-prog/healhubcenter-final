@@ -147,7 +147,7 @@ Privacy-first. Judgment-free. Built for belonging.`}
         kicker="Roundtable • 10 Seats • Trust Over Time"
         title="Roundtable Conversations That Heal"
         body={`Roundtable is a virtual circle of 10 people focused on one shared theme. 
-Join anonymously or named. Vent, reflect, listen — together. 
+Join anonymously or named. Vent, reflect, listen together. 
 You can hop into an SOS session when life spikes, or schedule a monthly recurring circle that builds trust and growth.`}
         bullets={[
           "Small-group rooms (10 people) curated by topic",
@@ -156,7 +156,7 @@ You can hop into an SOS session when life spikes, or schedule a monthly recurrin
           "Scheduled monthly cohorts to deepen trust",
           "Summaries + gentle nudges to keep the circle alive",
         ]}
-        image="/assets/roundtable.avif"
+        image="/assets/rd.avif"
         primaryCta="Join a Roundtable Now"
         primaryTo="#roundtable"
         secondaryCta="Schedule Your Monthly Circle"
