@@ -162,15 +162,17 @@ function HomePage() {
 // 🧭 Main App Router
 export default function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/signup" element={<SignupPage />} />
-        <Route path="/help" element={<AuthHelp />} />
-        <Route path="/chat" element={<ChatPage />} />
-        <Route path="/roundtable" element={<RoundtablePage />} />
-      </Routes>
-    </BrowserRouter>
+   <BrowserRouter>
+  <Routes>
+    <Route path="/" element={<HomePage />} />
+    <Route path="/auth" element={<AuthPage />} />      {/* 💥 ADD THIS BACK */}
+    <Route path="/login" element={<LoginPage />} />
+    <Route path="/signup" element={<SignupPage />} />
+    <Route path="/help" element={<AuthHelp />} />
+    <Route path="/chat" element={<ChatPage />} />
+    <Route path="/roundtable" element={<RoundtablePage />} />
+  </Routes>
+</BrowserRouter>
+
   );
 }
