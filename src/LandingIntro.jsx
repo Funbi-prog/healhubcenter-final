@@ -520,39 +520,90 @@ export default function LandingIntro() {
         transition={{ duration: 0.6, ease: "easeOut" }}
         style={{ position: "absolute", inset: 0 }}
       >
-        <Canvas
-          shadows
-          camera={{ position: [2.2, 1.25, 3.8], fov: 45 }}
-          style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }}
-        >
-          <color attach="background" args={["#FFFDFE"]} />
-          <fog attach="fog" args={["#FFF7FB", 8, 22]} />
+      {/* ✅ Mobile-Optimized 3D Canvas */}
+{(() => {
+  const isMobile = /Mobi|Android/i.test(navigator.userAgent);
 
-          {/* Lighting */}
-          <hemisphereLight intensity={0.9} groundColor="#F5EFE6" skyColor="#FFFFFF" />
-          <directionalLight
-            name="breatheLight"
-            position={[4, 5, 3]}
-            intensity={1}
-            color="#FFEBD2"
-            castShadow
+  try {
+    const canvas = document.createElement("canvas");
+    const gl = canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
+
+    if (!gl) throw new Error("WebGL not supported");
+
+    return (
+      <Canvas
+        shadows={!isMobile}
+        dpr={[1, isMobile ? 1.3 : 2]}
+        gl={{
+          antialias: true,
+          alpha: true,
+          powerPreference: "high-performance",
+          preserveDrawingBuffer: false,
+        }}
+        camera={{ position: [2.2, 1.25, 3.8], fov: 45 }}
+        style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }}
+      >
+        <color attach="background" args={["#FFFDFE"]} />
+        <fog attach="fog" args={["#FFF7FB", 8, 22]} />
+
+        {/* Lighting */}
+        <hemisphereLight intensity={0.9} groundColor="#F5EFE6" skyColor="#FFFFFF" />
+        <directionalLight
+          name="breatheLight"
+          position={[4, 5, 3]}
+          intensity={isMobile ? 0.8 : 1}
+          color="#FFEBD2"
+          castShadow={!isMobile}
+        />
+
+        <Environment preset="city" />
+
+        {/* Scene — untouched */}
+        <group>
+          <RoomShell />
+          <ReceptionDesk />
+          <GoldChandelier position={[0.1, 2.6, -0.1]} />
+          <Plant position={[-2.4, 0, -2.4]} />
+          <Plant position={[2.6, 0, -2.5]} />
+          <BimpeModel
+            position={[0, -0.47, -0.35]}
+            scale={1.05}
+            rotation={[0, Math.PI, 0]}
           />
-          <Environment preset="city" />
+          <Atmosphere />
+        </group>
 
-          {/* Room & Props */}
-          <group>
-            <RoomShell />
-            <ReceptionDesk />
-            <GoldChandelier position={[0.1, 2.6, -0.1]} />
-            <Plant position={[-2.4, 0, -2.4]} />
-            <Plant position={[2.6, 0, -2.5]} />
-            <BimpeModel position={[0, -0.47, -0.35]} scale={1.05} rotation={[0, Math.PI, 0]} />
-            <Atmosphere />
-          </group>
+        <ContactShadows
+          position={[0, 0.01, 0]}
+          opacity={isMobile ? 0.15 : 0.25}
+          scale={10}
+          blur={2.4}
+          far={4}
+        />
+        <FloatingCamera focus={inView} />
+      </Canvas>
+    );
+  } catch (err) {
+    console.warn("WebGL not supported:", err);
+    return (
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          height: "100%",
+          background: "#FBF9F5",
+          color: "#444",
+          fontSize: "0.95rem",
+          textAlign: "center",
+        }}
+      >
+        <p>3D environment not supported on this device 💫</p>
+      </div>
+    );
+  }
+})()}
 
-          <ContactShadows position={[0, 0.01, 0]} opacity={0.25} scale={10} blur={2.4} far={4} />
-          <FloatingCamera focus={inView} />
-        </Canvas>
       </motion.div>
 
       {/* 💬 Chat bubble — lower-left, not blocking face/monitor */}
