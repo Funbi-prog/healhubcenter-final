@@ -16,6 +16,7 @@
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-intersection-observer": "^10.0.0",
+    "react-type-animation": "^3.2.0",
     "three": "^0.180.0",
     "typed.js": "^2.1.0"
   },

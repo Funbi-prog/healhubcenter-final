@@ -1,10 +1,20 @@
+// App.jsx
 import React from "react";
 import LandingIntro from "./LandingIntro.jsx";
 import Sections from "./Sections.jsx";
 import "./index.css";
-import Footer from "./Footer.jsx"; // ✅ premium footer import
+import Footer from "./Footer.jsx";
+import { TypeAnimation } from "react-type-animation";
+import { motion } from "framer-motion";
 
 export default function App() {
+  // ⏰ Time-based adaptive greeting
+  const hour = new Date().getHours();
+  let greeting = "Welcome back";
+  if (hour < 12) greeting = "Good morning";
+  else if (hour < 18) greeting = "Good afternoon";
+  else greeting = "Good evening";
+
   return (
     <div className="app-container">
       {/* 🌐 Navbar */}
@@ -18,37 +28,118 @@ export default function App() {
         </div>
 
         <div className="nav-links">
-          <a href="#contact">Login</a>
+          <a href="#login" className="nav-link">
+            Login
+          </a>
           <button className="demo-btn">Sign-up</button>
         </div>
       </nav>
 
-      {/* 🖥️ Modern Hero Layout */}
+      {/* 🖥️ Hero Layout */}
       <section className="hero-layout modern-layout">
         <div className="hero-content modern-content">
-          <h1 className="hero-title modern-title">
-            A wellness experience built for the modern world.
-          </h1>
-          <p className="hero-subtext modern-subtext">
-            HealHubCenter connects you to real support, community, and care.
+          {/* Dynamic Greeting */}
+          <motion.h2
+            className="hero-greeting"
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            style={{
+              fontSize: "1rem",
+              letterSpacing: "0.05em",
+              color: "#444",
+              marginBottom: "0.6rem",
+            }}
+          >
+            {greeting}, {`let’s make today lighter.`}
+          </motion.h2>
+
+          {/* ✨ Animated Headline */}
+          <motion.h1
+            className="hero-title modern-title"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            style={{
+              fontWeight: 600,
+              letterSpacing: "-0.02em",
+              lineHeight: "1.2",
+            }}
+          >
+            <TypeAnimation
+              sequence={[
+                "Wellness that meets you where you are.",
+                2500,
+                "Heal better. Feel supported. Live lighter.",
+                2500,
+                "Your digital wellness companion for real change.",
+                2500,
+                "Where care, calm, and connection meet.",
+                3000,
+              ]}
+              wrapper="span"
+              cursor={true}
+              repeat={Infinity}
+              speed={45}
+            />
+          </motion.h1>
+
+          {/* 💬 Subtext */}
+          <motion.p
+            className="hero-subtext modern-subtext"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5, duration: 0.8 }}
+          >
+            HealHubCenter connects you to <strong>real therapists</strong>,{" "}
+            <strong>supportive communities</strong>, and{" "}
+            <strong>AI-driven care</strong> designed for today’s world.
             <br />
-            Everything you need for mental and emotional well-being — reimagined.
-          </p>
-          <div className="hero-buttons modern-buttons">
-            <button className="primary-btn black-btn">Join Community</button>
-            <button className="secondary-btn outline-btn">Learn More</button>
-          </div>
+            Whether you’re healing, learning, or simply being —{" "}
+            <span style={{ color: "#CDBA96" }}>we’re here for you.</span>
+          </motion.p>
+
+          {/* 🎯 Buttons */}
+          <motion.div
+            className="hero-buttons modern-buttons"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1.2, duration: 0.6 }}
+          >
+            <button
+              className="primary-btn black-btn"
+              onClick={() =>
+                document
+                  .querySelector("#overview")
+                  .scrollIntoView({ behavior: "smooth" })
+              }
+            >
+              Join Community
+            </button>
+
+            <button
+              className="secondary-btn outline-btn"
+              onClick={() =>
+                document
+                  .querySelector("#bimpeai")
+                  .scrollIntoView({ behavior: "smooth" })
+              }
+            >
+              Meet Bimpe
+            </button>
+          </motion.div>
         </div>
 
+        {/* 🪞 3D Wellness Office Scene */}
         <div className="hero-office modern-office">
           <LandingIntro />
         </div>
       </section>
 
-      {/* 🌿 Content Sections below hero */}
+      {/* 🌿 Interactive Wellness Sections */}
       <Sections />
 
-      {/* 🦋 Premium Footer */}
+      {/* 🦋 Footer */}
       <Footer />
     </div>
   );
