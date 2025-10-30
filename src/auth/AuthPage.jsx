@@ -7,6 +7,16 @@ import { FaGoogle, FaApple, FaEnvelope } from "react-icons/fa";
 export default function AuthPage() {
   const navigate = useNavigate();
 
+  // Detect mobile once on mount and on resize
+  const [isMobile, setIsMobile] = React.useState(
+    typeof window !== "undefined" ? window.innerWidth <= 768 : false
+  );
+  React.useEffect(() => {
+    const onResize = () => setIsMobile(window.innerWidth <= 768);
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
+
   const handleLogin = (method) => {
     console.log(`${method} login clicked`);
     setTimeout(() => {
@@ -15,11 +25,11 @@ export default function AuthPage() {
   };
 
   return (
-    <div style={styles.page}>
-      {/* 🧭 Navbar */}
+    <div style={{ ...styles.page, ...(isMobile ? styles.pageMobile : null) }}>
+      {/* 🧭 Navbar (glass) */}
       <nav style={styles.nav}>
         <img
-          src="/assets/nav.png"
+          src="/assets/nav.png" // update if your logo path/name differs
           alt="HealHubCenter Logo"
           style={styles.logoImg}
         />
@@ -28,25 +38,58 @@ export default function AuthPage() {
         </button>
       </nav>
 
-      {/* 🌸 Overlay */}
-      <div style={styles.bgOverlay}></div>
+      {/* Soft overlay */}
+      <div style={styles.bgOverlay} />
 
-      {/* 🧍🏽‍♀️ Bimpe AI — closer to the form */}
-      <motion.img
-        src="/assets/bim1.png"
-        alt="Bimpe AI"
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1.2 }}
-        style={styles.bimpeImg}
-      />
+      {/* 🧍🏽‍♀️ Desktop/Large-screen Bimpe (hidden on mobile) */}
+      {!isMobile && (
+        <motion.img
+          src="/assets/bim1.png" // full-body transparent PNG
+          alt="Bimpe AI"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1.2 }}
+          style={styles.bimpeImg}
+        />
+      )}
+
+      {/* 📱 Mobile Floating Avatar (circular, draggable, always above the form) */}
+      {isMobile && (
+        <motion.div
+          drag
+          dragMomentum={false}
+          dragElastic={0.2}
+          initial={{ opacity: 0, y: -10, scale: 0.9 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ duration: 0.5 }}
+          style={styles.mobileAvatarWrap}
+          aria-label="BIMPE avatar"
+        >
+          <img
+            src="/assets/bimpe-face.png" // <— add a square/transparent face crop here
+            alt="BIMPE"
+            style={styles.mobileAvatarImg}
+            onError={(e) => {
+              // Fallback if face crop not ready yet: use full image and let it cover
+              e.currentTarget.src = "/assets/bim1.png";
+              e.currentTarget.style.objectPosition = "top";
+            }}
+          />
+          {/* subtle breathing glow */}
+          <motion.span
+            style={styles.mobileGlow}
+            animate={{ opacity: [0.3, 0.6, 0.3], scale: [1, 1.08, 1] }}
+            transition={{ repeat: Infinity, duration: 3 }}
+          />
+        </motion.div>
+      )}
 
       {/* 💬 Auth Card */}
       <motion.div
         initial={{ opacity: 0, y: 25 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
-        style={styles.card}
+        style={{ ...styles.card, ...(isMobile ? styles.cardMobile : null) }}
       >
         <div style={styles.banner}>You need to sign in to see this page.</div>
 
@@ -75,7 +118,7 @@ export default function AuthPage() {
           <span style={styles.line}></span>
         </div>
 
-        <form style={styles.form}>
+        <form style={styles.form} onSubmit={(e) => e.preventDefault()}>
           <input
             type="email"
             placeholder="name@workemail.com"
@@ -111,9 +154,15 @@ export default function AuthPage() {
       {/* ⚖️ Premium Footer */}
       <footer style={styles.footer}>
         <div style={styles.footerInner}>
-          <a href="#" style={styles.footerLink}>Privacy & Terms</a>
-          <a href="#" style={styles.footerLink}>Contact Us</a>
-          <a href="#" style={styles.footerLink}>Change Region</a>
+          <a href="#" style={styles.footerLink}>
+            Privacy & Terms
+          </a>
+          <a href="#" style={styles.footerLink}>
+            Contact Us
+          </a>
+          <a href="#" style={styles.footerLink}>
+            Change Region
+          </a>
         </div>
         <p style={styles.copyright}>
           © {new Date().getFullYear()} HealHubCenter. All rights reserved.
@@ -132,10 +181,14 @@ const styles = {
     background: "linear-gradient(135deg, #fdfcfb, #f1ece7)",
     display: "flex",
     flexDirection: "column",
-    justifyContent: "center",
     alignItems: "center",
     overflowY: "auto",
-    padding: "5rem 0 0",
+    paddingTop: "5rem", // space for glass nav
+    paddingBottom: "2rem",
+  },
+  pageMobile: {
+    // a bit more headroom so the avatar can float above the card
+    paddingTop: "6rem",
   },
   bgOverlay: {
     position: "absolute",
@@ -144,37 +197,40 @@ const styles = {
     backdropFilter: "blur(5px)",
     zIndex: 0,
   },
- nav: {
-  position: "absolute",
-  top: 0,
-  left: 0,
-  width: "100%",
-  padding: "1rem 2rem",
-  display: "flex",
-  justifyContent: "space-between",
-  alignItems: "center",
-  zIndex: 10,
-  background: "rgba(255, 255, 255, 0.25)", // translucent white
-  backdropFilter: "blur(10px)",             // glass effect
-  WebkitBackdropFilter: "blur(10px)",       // for Safari
-  borderBottom: "1px solid rgba(255, 255, 255, 0.3)", // subtle border line
-  boxShadow: "0 4px 20px rgba(0, 0, 0, 0.05)",        // soft shadow for depth
-  borderRadius: "0 0 12px 12px",           // rounded bottom corners (optional)
-},
-
+  // Glass nav
+  nav: {
+    position: "fixed",
+    top: 0,
+    left: 0,
+    width: "100%",
+    padding: "1rem 1.25rem",
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    zIndex: 10,
+    background: "rgba(255, 255, 255, 0.25)",
+    backdropFilter: "blur(10px)",
+    WebkitBackdropFilter: "blur(10px)",
+    borderBottom: "1px solid rgba(255, 255, 255, 0.3)",
+    boxShadow: "0 4px 20px rgba(0, 0, 0, 0.05)",
+  },
   logoImg: {
     height: "42px",
     objectFit: "contain",
   },
   homeBtn: {
-    background: "none",
-    border: "1px solid #444",
+    background: "rgba(255,255,255,0.2)",
+    border: "1px solid rgba(0,0,0,0.2)",
     borderRadius: "8px",
     padding: "0.4rem 1rem",
     cursor: "pointer",
     color: "#222",
     fontSize: "0.9rem",
+    backdropFilter: "blur(6px)",
+    transition: "all 0.3s ease",
   },
+
+  // Auth card (center column)
   card: {
     zIndex: 2,
     background: "#fff",
@@ -184,7 +240,11 @@ const styles = {
     textAlign: "center",
     width: "90%",
     maxWidth: "420px",
-    margin: "2rem auto",
+    margin: "2rem auto 0 auto",
+  },
+  cardMobile: {
+    // leave space on top so the avatar doesn’t overlap inputs
+    marginTop: "4.5rem",
   },
   banner: {
     background: "#f7f0e9",
@@ -282,25 +342,58 @@ const styles = {
     fontWeight: "600",
     textDecoration: "none",
   },
- bimpeImg: {
-  position: "absolute",
-  bottom: "6%",      // moved slightly higher for better alignment
-  left: "-8.5%",     // nudged slightly farther left
-  height: "400px",
-  objectFit: "contain",
-  zIndex: 1,
-  opacity: 0.96,
-  pointerEvents: "none",
-  transition: "all 0.6s ease-out",
-},
 
+  // Desktop Bimpe full image (kept tighter left & slightly higher)
+  bimpeImg: {
+    position: "absolute",
+    bottom: "7.5%", // slightly higher
+    left: "-9.5%", // more left so gesture aims toward form
+    height: "400px",
+    objectFit: "contain",
+    zIndex: 1,
+    opacity: 0.96,
+    pointerEvents: "none",
+    transition: "all 0.6s ease-out",
+  },
+
+  // Mobile circular avatar that sits above the card
+  mobileAvatarWrap: {
+    position: "fixed",
+    top: "84px", // below the glass nav
+    left: "16px",
+    width: "84px",
+    height: "84px",
+    borderRadius: "999px",
+    background: "rgba(255,255,255,0.95)",
+    boxShadow: "0 10px 28px rgba(0,0,0,0.15)",
+    zIndex: 5, // above the card
+    overflow: "hidden",
+    border: "1px solid rgba(0,0,0,0.06)",
+    touchAction: "none",
+  },
+  mobileAvatarImg: {
+    width: "100%",
+    height: "100%",
+    objectFit: "cover",
+    objectPosition: "center",
+    display: "block",
+  },
+  mobileGlow: {
+    position: "absolute",
+    inset: 0,
+    borderRadius: "999px",
+    boxShadow: "0 0 24px #cdbb96 inset",
+    pointerEvents: "none",
+  },
+
+  // Premium footer
   footer: {
     position: "relative",
     width: "100%",
-    background: "#111", // matte black
-    color: "#e5decf", // soft gold tone
+    background: "#111",
+    color: "#e5decf",
     padding: "1.4rem 0",
-    marginTop: "4rem",
+    marginTop: "3rem",
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
