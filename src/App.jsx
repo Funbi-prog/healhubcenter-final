@@ -7,13 +7,20 @@ import Footer from "./Footer.jsx";
 import { TypeAnimation } from "react-type-animation";
 import { motion } from "framer-motion";
 
-// 🧩 New imports for routing
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+// 🧩 Routing imports
+import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
 import AuthPage from "./auth/AuthPage.jsx";
+import LoginPage from "./auth/LoginPage.jsx";
+import SignupPage from "./auth/SignupPage.jsx";
+import AuthHelp from "./auth/AuthHelp.jsx";
+import RoundtablePage from "./roundtable/RoundtablePage.jsx";
 import ChatPage from "./chat/ChatPage.jsx";
 
+// 🏠 HomePage Component
 function HomePage() {
-  // ⏰ Time-based adaptive greeting
+  const navigate = useNavigate();
+
+  // ⏰ Time-based greeting
   const hour = new Date().getHours();
   let greeting = "Welcome back";
   if (hour < 12) greeting = "Good morning";
@@ -33,10 +40,12 @@ function HomePage() {
         </div>
 
         <div className="nav-links">
-          <a href="#login" className="nav-link">
+          <button className="nav-link" onClick={() => navigate("/login")}>
             Login
-          </a>
-          <button className="demo-btn">Sign-up</button>
+          </button>
+          <button className="demo-btn" onClick={() => navigate("/signup")}>
+            Sign-up
+          </button>
         </div>
       </nav>
 
@@ -56,7 +65,7 @@ function HomePage() {
               marginBottom: "0.6rem",
             }}
           >
-            {greeting}, {`let’s make today lighter.`}
+            {greeting}, let’s make today lighter.
           </motion.h2>
 
           {/* ✨ Animated Headline */}
@@ -150,18 +159,17 @@ function HomePage() {
   );
 }
 
+// 🧭 Main App Router
 export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* 🏠 Main landing page */}
         <Route path="/" element={<HomePage />} />
-
-        {/* 🔐 Authentication page */}
-        <Route path="/auth" element={<AuthPage />} />
-
-        {/* 💬 Chat with BIMPE-AI */}
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/signup" element={<SignupPage />} />
+        <Route path="/help" element={<AuthHelp />} />
         <Route path="/chat" element={<ChatPage />} />
+        <Route path="/roundtable" element={<RoundtablePage />} />
       </Routes>
     </BrowserRouter>
   );
