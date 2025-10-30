@@ -1,4 +1,4 @@
-// App.jsx
+// src/App.jsx
 import React from "react";
 import LandingIntro from "./LandingIntro.jsx";
 import Sections from "./Sections.jsx";
@@ -7,7 +7,12 @@ import Footer from "./Footer.jsx";
 import { TypeAnimation } from "react-type-animation";
 import { motion } from "framer-motion";
 
-export default function App() {
+// 🧩 New imports for routing
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import AuthPage from "./auth/AuthPage.jsx";
+import ChatPage from "./chat/ChatPage.jsx";
+
+function HomePage() {
   // ⏰ Time-based adaptive greeting
   const hour = new Date().getHours();
   let greeting = "Welcome back";
@@ -142,5 +147,22 @@ export default function App() {
       {/* 🦋 Footer */}
       <Footer />
     </div>
+  );
+}
+
+export default function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        {/* 🏠 Main landing page */}
+        <Route path="/" element={<HomePage />} />
+
+        {/* 🔐 Authentication page */}
+        <Route path="/auth" element={<AuthPage />} />
+
+        {/* 💬 Chat with BIMPE-AI */}
+        <Route path="/chat" element={<ChatPage />} />
+      </Routes>
+    </BrowserRouter>
   );
 }

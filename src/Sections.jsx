@@ -1,6 +1,7 @@
 import React from "react";
 import { motion, useAnimation } from "framer-motion";
 import { useInView } from "react-intersection-observer";
+import { useNavigate } from "react-router-dom";
 
 /* ————— Utils ————— */
 const smoothScrollTo = (id) => {
@@ -50,10 +51,18 @@ export function Section({
 }) {
   const controls = useAnimation();
   const [ref, inView] = useInView({ threshold: 0.25, triggerOnce: false });
+  const navigate = useNavigate();
 
   React.useEffect(() => {
     controls.start(inView ? "visible" : "hidden");
   }, [inView, controls]);
+
+  // Smart navigation: scroll if hash (#), route if /
+  const handleNav = (target) => {
+    if (!target) return;
+    if (target.startsWith("/")) navigate(target);
+    else smoothScrollTo(target);
+  };
 
   return (
     <motion.section
@@ -93,7 +102,7 @@ export function Section({
           {primaryCta && (
             <button
               className="hh-btn primary"
-              onClick={() => smoothScrollTo(primaryTo)}
+              onClick={() => handleNav(primaryTo)}
               aria-label={primaryCta}
             >
               {primaryCta}
@@ -102,7 +111,7 @@ export function Section({
           {secondaryCta && (
             <button
               className="hh-btn ghost"
-              onClick={() => smoothScrollTo(secondaryTo)}
+              onClick={() => handleNav(secondaryTo)}
               aria-label={secondaryCta}
             >
               {secondaryCta}
@@ -123,8 +132,8 @@ export default function Sections() {
         id="community"
         kicker="Community • Belonging • Moderated"
         title="A Community That Actually Cares"
-        body={`HealHub’s community is a verified, moderated home for real people in real seasons of life. 
-We group conversations by lived context — single parents, widows, youth, elders, and more — so support actually lands. 
+        body={`HealHubcenter community is a verified, moderated home for real people in real seasons of life. 
+We group conversations by lived context single parents, widows, youth, elders, and more so support actually lands. 
 Privacy-first. Judgment-free. Built for belonging.`}
         bullets={[
           "Verified entry to keep spaces safe and relevant",
@@ -148,12 +157,12 @@ Privacy-first. Judgment-free. Built for belonging.`}
         title="Roundtable Conversations That Heal"
         body={`Roundtable is a virtual circle of 10 people focused on one shared theme. 
 Join anonymously or named. Vent, reflect, listen together. 
-You can hop into an SOS session when life spikes, or schedule a monthly recurring circle that builds trust and growth.`}
+You can hop into an SOS session when life spikes, or schedule a weekly recurring circle that builds trust and growth.`}
         bullets={[
           "Small-group rooms (10 people) curated by topic",
-          "Anonymous or named participation — your choice",
+          "Anonymous or named participation = your choice",
           "SOS pop-ins for urgent support moments",
-          "Scheduled monthly cohorts to deepen trust",
+          "Scheduled weekly cohorts to deepen trust",
           "Summaries + gentle nudges to keep the circle alive",
         ]}
         image="/assets/rd.avif"
@@ -166,10 +175,10 @@ You can hop into an SOS session when life spikes, or schedule a monthly recurrin
       {/* BIMPE-AI */}
       <Section
         id="bimpeai"
-        kicker="BIMPE-AI • Empathic • Always-On"
-        title="Meet BIMPE-AI — The Intentional Companion"
-        body={`BIMPE-AI is more than a chatbot — she’s an emotionally aware concierge for your wellness journey. 
-She checks in if you go quiet, guides you through 2-minute calm drills, recommends communities or roundtables that fit your season, and can even help with life admin — from tutoring to CV polish — when your brain is tired.`}
+        kicker="BIMPE • Empathic • Always-On"
+        title="Meet BIMPE — The Intentional Companion"
+        body={`BIMPE is more than a chatbot she’s an emotionally aware concierge for your wellness journey. 
+She checks in if you go quiet, guides you through 2-minute calm drills, recommends communities or roundtables that fit your season, and can even help with life admin from tutoring to CV polish when your brain is tired.`}
         bullets={[
           "Checks in after 24–48h inactivity (opt-in)",
           "Recommends groups and Roundtables by interest",
@@ -178,8 +187,8 @@ She checks in if you go quiet, guides you through 2-minute calm drills, recommen
           "Context memory (opt-in) so care feels personal",
         ]}
         image="/assets/bimpe.jpg"
-        primaryCta="Chat with BIMPE-AI"
-        primaryTo="#bimpeai"
+        primaryCta="Chat with Bimpe"
+        primaryTo="/auth"  // 🚀 Redirects to login page
         secondaryCta="Try a 2-min Calm Exercise"
         secondaryTo="#overview"
       />

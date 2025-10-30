@@ -9,6 +9,7 @@ import {
 import { useMemo, useState, useEffect, useRef } from "react";
 import * as THREE from "three";
 import { motion, AnimatePresence } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 import BimpeModel from "./BimpeModel";
 import Atmosphere from "./Atmosphere";
 
@@ -24,7 +25,7 @@ const colors = {
   brass: "#B89F65",
   glass: "#FFFFFF",
   rug: "#F2EEE9",
-  monitor: "#16263A",       // deep navy
+  monitor: "#16263A",
   monitorGlow: "#3A4E66",
   plantLeaf: "#9BCBA8",
   plantLeaf2: "#B8E0C1",
@@ -67,11 +68,8 @@ function FloatingCamera({ basePosition = [0, 1.25, 3.8], focus = true }) {
 
   useFrame((_, delta) => {
     t.current += delta * 0.25;
-
-    // Target zoom: closer when focused, further when not
     const targetZ = focus ? basePosition[2] : basePosition[2] + 0.9;
     const targetY = focus ? basePosition[1] : basePosition[1] - 0.1;
-
     const offsetY = Math.sin(t.current * 1.0) * 0.02;
     const offsetX = Math.sin(t.current * 0.5) * 0.012;
 
@@ -92,7 +90,7 @@ function FloatingCamera({ basePosition = [0, 1.25, 3.8], focus = true }) {
   return null;
 }
 
-/* Glass Plane (raised slightly above desk body) */
+/* Glass Plane */
 function GlassPlane({ size = [2.2, 0.04, 0.9], position = [0, 0.77, 0] }) {
   return (
     <mesh position={position}>
@@ -108,7 +106,6 @@ function GlassPlane({ size = [2.2, 0.04, 0.9], position = [0, 0.77, 0] }) {
     </mesh>
   );
 }
-
 /* Plants */
 function Plant({ position = [-1.6, 0, -2.2] }) {
   const leaves = useMemo(
@@ -140,7 +137,7 @@ function Plant({ position = [-1.6, 0, -2.2] }) {
   );
 }
 
-/* Gold Chandelier with soft aura */
+/* Gold Chandelier */
 function GoldChandelier({ position = [0, 2.6, -0.1] }) {
   const ref = useRef();
   useFrame(({ clock }) => {
@@ -150,12 +147,10 @@ function GoldChandelier({ position = [0, 2.6, -0.1] }) {
 
   return (
     <group position={position} ref={ref}>
-      {/* stem */}
       <mesh position={[0, -0.25, 0]}>
         <cylinderGeometry args={[0.02, 0.02, 0.5, 24]} />
         <meshStandardMaterial color={colors.gold} roughness={0.35} metalness={1} />
       </mesh>
-      {/* bulbs */}
       {[[-0.32, -0.48, 0], [0, -0.5, 0], [0.32, -0.48, 0]].map((p, i) => (
         <group key={i} position={p}>
           <mesh>
@@ -171,13 +166,12 @@ function GoldChandelier({ position = [0, 2.6, -0.1] }) {
           <pointLight intensity={0.65} distance={4} decay={2} color="#FFE5B0" />
         </group>
       ))}
-      {/* soft aura */}
       <pointLight position={[0, -0.5, 0]} intensity={0.3} distance={5} color="#FFEAD1" />
     </group>
   );
 }
 
-/* Wall Sconces for luxe feel */
+/* Wall Sconces */
 function WallSconces() {
   return (
     <group>
@@ -198,11 +192,10 @@ function WallSconces() {
   );
 }
 
-/* Desk Decor — LEFT on glass (candle + diffuser), nothing blocking Bimpe */
+/* Desk Decor — LEFT on glass */
 function DeskDecorGlassLeft() {
   return (
     <group position={[-0.72, 0.8, 0.2]}>
-      {/* candle */}
       <group>
         <mesh>
           <cylinderGeometry args={[0.05, 0.05, 0.1, 16]} />
@@ -214,8 +207,6 @@ function DeskDecorGlassLeft() {
         </mesh>
         <pointLight intensity={0.55} distance={1.4} color="#FFE5B0" />
       </group>
-
-      {/* diffuser */}
       <group position={[0.18, 0, 0]}>
         <mesh>
           <cylinderGeometry args={[0.04, 0.05, 0.12, 24]} />
@@ -256,16 +247,14 @@ function DeskBooksRight() {
   );
 }
 
-/* Sculptural Vases on pedestal (right wall) */
+/* Sculptural Vases */
 function VaseSet() {
   return (
     <group position={[3.7, 0, -1.6]}>
-      {/* pedestal */}
       <mesh position={[0, 0.35, 0]}>
         <cylinderGeometry args={[0.22, 0.22, 0.7, 28]} />
         <meshStandardMaterial color="#EFE9E3" roughness={0.6} />
       </mesh>
-      {/* vases */}
       <group position={[0, 0.75, 0]}>
         <mesh position={[-0.08, 0, 0]}>
           <cylinderGeometry args={[0.05, 0.06, 0.2, 24]} />
@@ -284,12 +273,16 @@ function VaseSet() {
   );
 }
 
-/* Monitor — deep navy, subtle glow */
+/* Monitor */
 function Monitor({ position = [0.55, 0.82, 0.05] }) {
   return (
     <group position={position}>
       <RoundedBox args={[0.55, 0.32, 0.05]} radius={0.04} smoothness={6}>
-        <meshStandardMaterial emissive={colors.monitorGlow} emissiveIntensity={0.35} color={colors.monitor} />
+        <meshStandardMaterial
+          emissive={colors.monitorGlow}
+          emissiveIntensity={0.35}
+          color={colors.monitor}
+        />
       </RoundedBox>
       <mesh position={[0, -0.25, -0.08]}>
         <boxGeometry args={[0.12, 0.22, 0.12]} />
@@ -312,14 +305,13 @@ function ReceptionDesk() {
       </mesh>
       <GlassPlane />
       <Monitor />
-      {/* decor */}
       <DeskDecorGlassLeft />
       <DeskBooksRight />
     </group>
   );
 }
 
-/* Abstract Wall Art — purple base + pink emissive tint */
+/* Wall Art */
 function WallArt({ position = [1.8, 1.4, -2.99] }) {
   return (
     <group position={position}>
@@ -329,13 +321,13 @@ function WallArt({ position = [1.8, 1.4, -2.99] }) {
       </mesh>
       <mesh position={[0, 0, 0.025]}>
         <planeGeometry args={[1.0, 0.7]} />
-        <meshStandardMaterial color="#8A6BBF" emissive="#FFB6C1" emissiveIntensity={0.28} roughness={0.4} />
+        <meshStandardMaterial color="#8A6BBF" emissive="#FFB6C1" emissiveIntensity={0.28} />
       </mesh>
     </group>
   );
 }
 
-/* Wall TV — shifted fully into frame, affirmations visible */
+/* Wall TV */
 function WallTV({ position = [-1.25, 1.18, -2.95] }) {
   const [i, setI] = useState(0);
   const quotes = [
@@ -373,45 +365,40 @@ function WallTV({ position = [-1.25, 1.18, -2.95] }) {
   );
 }
 
-/* Room Shell + Branding + Luxe trims */
+/* Room Shell */
 function RoomShell() {
   return (
     <group>
-      {/* Floor */}
       <mesh rotation={[-Math.PI / 2, 0, 0]}>
         <planeGeometry args={[10, 10]} />
         <meshStandardMaterial color={colors.floor} roughness={0.9} />
       </mesh>
 
-      {/* Back Wall */}
       <mesh position={[0, 1.5, -3]}>
         <planeGeometry args={[10, 3]} />
         <meshStandardMaterial color={colors.wall} />
       </mesh>
 
-      {/* Side walls */}
       <mesh rotation={[0, Math.PI / 2, 0]} position={[-5, 1.5, 0]}>
         <planeGeometry args={[10, 3]} />
         <meshStandardMaterial color={colors.wall} />
       </mesh>
+
       <mesh rotation={[0, -Math.PI / 2, 0]} position={[5, 1.5, 0]}>
         <planeGeometry args={[10, 3]} />
         <meshStandardMaterial color={colors.wall} />
       </mesh>
 
-      {/* Rug */}
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.01, 0.2]}>
         <circleGeometry args={[1.6, 48]} />
         <meshStandardMaterial color={colors.rug} roughness={0.9} />
       </mesh>
 
-      {/* Brass edge trim across top */}
       <mesh position={[0, 3, -3]}>
         <boxGeometry args={[10, 0.02, 0.02]} />
         <meshStandardMaterial color={colors.brass} metalness={1} roughness={0.4} />
       </mesh>
 
-      {/* Acrylic branding plaque */}
       <group position={[0, 2.2, -2.95]}>
         <RoundedBox args={[3.0, 0.6, 0.04]} radius={0.06}>
           <meshPhysicalMaterial color={colors.plaque} roughness={0.3} metalness={0.1} clearcoat={1} />
@@ -435,15 +422,13 @@ function RoomShell() {
     </group>
   );
 }
-
 /* -----------------------------
    Dialogue + Page
 ------------------------------*/
 export default function LandingIntro() {
-  // Scroll re-animate (fade/zoom) container
   const { ref: containerRef, inView } = useInView({ threshold: 0.35 });
+  const navigate = useNavigate();
 
-  // Conversation flow
   const [step, setStep] = useState(0);
   const [selected, setSelected] = useState("");
   const [finalMsg, setFinalMsg] = useState("");
@@ -451,15 +436,12 @@ export default function LandingIntro() {
   const flow = [
     { text: "Welcome to HealHub Center.", next: 1 },
     { text: "I’m Bimpe — your digital wellness companion.", next: 2 },
-    {
-      text: "How are you feeling today?",
-      options: ["I'm good", "I'm okay", "Not great"],
-    },
+    { text: "How are you feeling today?", options: ["I'm good", "I'm okay", "Not great"] },
   ];
 
   const responses = {
     "I'm good": {
-      text: "That's wonderful! Would you like to get started or look around?",
+      text: "That’s wonderful! Would you like to get started or look around?",
       options: ["Get started", "Look around"],
     },
     "I'm okay": {
@@ -472,7 +454,6 @@ export default function LandingIntro() {
     },
   };
 
-  // Auto progress first two lines
   useEffect(() => {
     if (step < 2) {
       const id = setTimeout(() => setStep((s) => s + 1), 3500);
@@ -491,13 +472,13 @@ export default function LandingIntro() {
         smoothScrollTo("#overview");
         break;
       case "Chat with Bimpe":
-        smoothScrollTo("#bimpeai");
+        navigate("/auth");
         break;
       case "Join roundtable":
         smoothScrollTo("#roundtable");
         break;
       case "Not now":
-        setFinalMsg("Alright. I’ll be right here when you’re ready.");
+        setFinalMsg("Alright — I’ll be right here when you’re ready.");
         setTimeout(() => setFinalMsg(""), 3000);
         break;
       default:
@@ -511,102 +492,93 @@ export default function LandingIntro() {
   return (
     <div
       ref={containerRef}
-      style={{ position: "relative", width: "100%", height: "100vh", overflow: "hidden" }}
+      style={{
+        position: "relative",
+        width: "100%",
+        height: "100vh",
+        overflow: "hidden",
+      }}
     >
-      {/* Scene wrapper gets the fade/zoom (via CSS transform) */}
+      {/* 🪞 Smooth zoom / fade */}
       <motion.div
         initial={{ opacity: 0.0, scale: 0.98 }}
         animate={{ opacity: inView ? 1 : 0.6, scale: inView ? 1 : 0.97 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
         style={{ position: "absolute", inset: 0 }}
       >
-      {/* ✅ Mobile-Optimized 3D Canvas */}
-{(() => {
-  const isMobile = /Mobi|Android/i.test(navigator.userAgent);
+        {/* ✅ Resilient mobile Canvas mount */}
+        {(() => {
+          const isMobile =
+            typeof navigator !== "undefined" &&
+            /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
 
-  try {
-    const canvas = document.createElement("canvas");
-    const gl = canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
+          if (typeof window === "undefined" || typeof document === "undefined") return null;
 
-    if (!gl) throw new Error("WebGL not supported");
+          try {
+            const canvas = document.createElement("canvas");
+            const gl =
+              canvas.getContext("webgl", { failIfMajorPerformanceCaveat: false }) ||
+              canvas.getContext("experimental-webgl");
+            if (!gl) throw new Error("WebGL not supported");
 
-    return (
-      <Canvas
-        shadows={!isMobile}
-        dpr={[1, isMobile ? 1.3 : 2]}
-        gl={{
-          antialias: true,
-          alpha: true,
-          powerPreference: "high-performance",
-          preserveDrawingBuffer: false,
-        }}
-        camera={{ position: [2.2, 1.25, 3.8], fov: 45 }}
-        style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }}
-      >
-        <color attach="background" args={["#FFFDFE"]} />
-        <fog attach="fog" args={["#FFF7FB", 8, 22]} />
+            return (
+              <Canvas
+                shadows={!isMobile}
+                dpr={[1, isMobile ? 1.2 : 2]}
+                frameloop={isMobile ? "demand" : "always"}
+                gl={{
+                  antialias: !isMobile,
+                  alpha: true,
+                  powerPreference: "high-performance",
+                  preserveDrawingBuffer: false,
+                }}
+                camera={{ position: [2.2, 1.25, 3.8], fov: 45 }}
+                style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }}
+              >
+                <color attach="background" args={["#FFFDFE"]} />
+                <fog attach="fog" args={["#FFF7FB", 8, 22]} />
 
-        {/* Lighting */}
-        <hemisphereLight intensity={0.9} groundColor="#F5EFE6" skyColor="#FFFFFF" />
-        <directionalLight
-          name="breatheLight"
-          position={[4, 5, 3]}
-          intensity={isMobile ? 0.8 : 1}
-          color="#FFEBD2"
-          castShadow={!isMobile}
-        />
+                <hemisphereLight
+                  intensity={0.9}
+                  groundColor="#F5EFE6"
+                  skyColor="#FFFFFF"
+                />
+                <directionalLight
+                  name="breatheLight"
+                  position={[4, 5, 3]}
+                  intensity={isMobile ? 0.8 : 1}
+                  color="#FFEBD2"
+                  castShadow={!isMobile}
+                />
+                <Environment preset="city" />
 
-        <Environment preset="city" />
+                <group>
+                  <RoomShell />
+                  <ReceptionDesk />
+                  <GoldChandelier position={[0.1, 2.6, -0.1]} />
+                  <Plant position={[-2.4, 0, -2.4]} />
+                  <Plant position={[2.6, 0, -2.5]} />
+                  <BimpeModel position={[0, -0.47, -0.35]} scale={1.05} rotation={[0, Math.PI, 0]} />
+                  <Atmosphere />
+                </group>
 
-        {/* Scene — untouched */}
-        <group>
-          <RoomShell />
-          <ReceptionDesk />
-          <GoldChandelier position={[0.1, 2.6, -0.1]} />
-          <Plant position={[-2.4, 0, -2.4]} />
-          <Plant position={[2.6, 0, -2.5]} />
-          <BimpeModel
-            position={[0, -0.47, -0.35]}
-            scale={1.05}
-            rotation={[0, Math.PI, 0]}
-          />
-          <Atmosphere />
-        </group>
-
-        <ContactShadows
-          position={[0, 0.01, 0]}
-          opacity={isMobile ? 0.15 : 0.25}
-          scale={10}
-          blur={2.4}
-          far={4}
-        />
-        <FloatingCamera focus={inView} />
-      </Canvas>
-    );
-  } catch (err) {
-    console.warn("WebGL not supported:", err);
-    return (
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          height: "100%",
-          background: "#FBF9F5",
-          color: "#444",
-          fontSize: "0.95rem",
-          textAlign: "center",
-        }}
-      >
-        <p>3D environment not supported on this device 💫</p>
-      </div>
-    );
-  }
-})()}
-
+                <ContactShadows
+                  position={[0, 0.01, 0]}
+                  opacity={isMobile ? 0.15 : 0.25}
+                  scale={10}
+                  blur={2.4}
+                  far={4}
+                />
+                <FloatingCamera focus={inView} />
+              </Canvas>
+            );
+          } catch {
+            return null;
+          }
+        })()}
       </motion.div>
 
-      {/* 💬 Chat bubble — lower-left, not blocking face/monitor */}
+      {/* 💬 Dialogue Bubble */}
       <AnimatePresence mode="wait">
         {!finalMsg && (
           <motion.div
@@ -619,9 +591,9 @@ export default function LandingIntro() {
               position: "absolute",
               bottom: "12%",
               left: "16%",
-              transform: "translate(-10%, 0)",
+              transform: "translate(-10%,0)",
               background:
-                "linear-gradient(135deg, rgba(255,255,255,0.95), rgba(245,240,250,0.92))",
+                "linear-gradient(135deg,rgba(255,255,255,0.95),rgba(245,240,250,0.92))",
               borderRadius: "14px 14px 14px 6px",
               padding: "0.9rem 1.1rem",
               maxWidth: 300,
@@ -668,7 +640,6 @@ export default function LandingIntro() {
               </div>
             )}
 
-            {/* nub */}
             <span
               style={{
                 position: "absolute",
@@ -686,7 +657,7 @@ export default function LandingIntro() {
         )}
       </AnimatePresence>
 
-      {/* Soft closing line (Not now) */}
+      {/* 🕊 Soft final message */}
       <AnimatePresence>
         {finalMsg && (
           <motion.div
@@ -699,9 +670,9 @@ export default function LandingIntro() {
               position: "absolute",
               bottom: "12%",
               left: "16%",
-              transform: "translate(-10%, 0)",
+              transform: "translate(-10%,0)",
               background:
-                "linear-gradient(135deg, rgba(255,255,255,0.95), rgba(245,240,250,0.92))",
+                "linear-gradient(135deg,rgba(255,255,255,0.95),rgba(245,240,250,0.92))",
               borderRadius: 12,
               padding: "0.7rem 1rem",
               maxWidth: 300,
@@ -718,4 +689,4 @@ export default function LandingIntro() {
       </AnimatePresence>
     </div>
   );
-}  
+}
