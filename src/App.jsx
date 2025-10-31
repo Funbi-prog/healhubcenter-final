@@ -26,6 +26,7 @@ import Contact from "./pages/Contact.jsx";
 
 // === DASHBOARD (DEV PREVIEW) ===
 import HealHubDashboard from "./dashboard/HealHubDashboard.jsx";
+import CheckInPage from "./dashboard/CheckInPage.jsx"; // ✅ Added import
 
 // === PLACEHOLDER COMPONENT ===
 function PlaceholderPage({ title }) {
@@ -165,11 +166,10 @@ export default function App() {
         {/* === INFORMATION === */}
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
-        <Route path="/blog" element={<PlaceholderPage title="Blog" />} />
-        <Route path="/faqs" element={<PlaceholderPage title="FAQs" />} />
 
         {/* === DASHBOARD (DEV PREVIEW) === */}
         <Route path="/dashboard" element={<HealHubDashboard />} />
+        <Route path="/dashboard/checkin" element={<CheckInPage />} /> {/* ✅ Added route */}
       </Routes>
     </BrowserRouter>
   );

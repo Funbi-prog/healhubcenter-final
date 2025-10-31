@@ -103,7 +103,7 @@ body {
   color: #cdbA96;
 }
 
-/* === MOBILE MENU === */
+/* === MOBILE MENU (CLEAN RESPONSIVE FIX) === */
 .hamburger {
   display: none;
   flex-direction: column;
@@ -145,19 +145,17 @@ body {
 }
 
 .mobile-menu.open {
-  height: 220px;
+  height: 240px;
   padding: 1.2rem 0;
   opacity: 1;
   pointer-events: auto;
 }
 
-/* Mobile Nav Links */
 .mobile-menu .nav-link {
   color: #111;
-  font-weight: 300;
-  font-size: 0.95rem;
-  letter-spacing: 0.02em;
-  font-family: "Inter", sans-serif;
+  font-weight: 400;
+  font-size: 1rem;
+  letter-spacing: 0.03em;
   background: transparent;
   border: none;
   cursor: pointer;
@@ -168,18 +166,18 @@ body {
   color: #cdbA96;
 }
 
-/* 🔄 Toggle Hamburger for Mobile */
+/* === RESPONSIVE BEHAVIOR === */
 @media (max-width: 768px) {
   .nav-links {
-    display: none;
+    display: none !important; /* 👈 hide desktop links on mobile */
   }
 
   .hamburger {
-    display: flex;
+    display: flex !important; /* 👈 show hamburger on mobile */
   }
 }
 
-/* Hamburger Animation ("X" transition) */
+/* Hamburger Animation */
 .hamburger.active span:nth-child(1) {
   transform: rotate(45deg) translateY(7px);
 }
@@ -189,7 +187,6 @@ body {
 .hamburger.active span:nth-child(3) {
   transform: rotate(-45deg) translateY(-7px);
 }
-
 
 /* === HERO SECTION === */
 .hero-layout {
