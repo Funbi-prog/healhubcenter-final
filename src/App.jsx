@@ -16,10 +16,11 @@ import AuthHelp from "./auth/AuthHelp.jsx";
 import RoundtablePage from "./roundtable/RoundtablePage.jsx";
 import ChatPage from "./chat/ChatPage.jsx";
 
-// ✅ Import your new About page
+// Informational Pages
 import About from "./pages/About.jsx";
+import Contact from "./pages/Contact.jsx"; // ✅ NEW CONTACT PAGE
 
-// Temporary placeholder pages for Blog, FAQs, Contact
+// Temporary placeholder pages for Blog, FAQs
 function PlaceholderPage({ title }) {
   return (
     <div
@@ -42,14 +43,13 @@ function PlaceholderPage({ title }) {
 function HomePage() {
   const navigate = useNavigate();
 
-  // ⏰ Time-based greeting
+  // Time-based greeting
   const hour = new Date().getHours();
   let greeting = "Welcome back";
   if (hour < 12) greeting = "Good morning";
   else if (hour < 18) greeting = "Good afternoon";
   else greeting = "Good evening";
 
-  // ✨ Navbar items
   const navItems = [
     { label: "About", route: "/about" },
     { label: "Blog", route: "/blog" },
@@ -131,7 +131,7 @@ function HomePage() {
         </div>
       </nav>
 
-      {/* 🍔 Hamburger for mobile */}
+      {/* 🍔 Mobile Hamburger */}
       <div
         className="hamburger"
         onClick={() => {
@@ -224,7 +224,7 @@ function HomePage() {
             <span style={{ color: "#CDBA96" }}>we’re here for you.</span>
           </motion.p>
 
-          {/* 🎯 CTA — single, centered, authorized */}
+          {/* 🎯 CTA */}
           <motion.div
             className="hero-buttons modern-buttons"
             initial={{ opacity: 0 }}
@@ -265,6 +265,7 @@ export default function App() {
   return (
     <BrowserRouter>
       <Routes>
+        {/* Main Pages */}
         <Route path="/" element={<HomePage />} />
         <Route path="/auth" element={<AuthPage />} />
         <Route path="/login" element={<LoginPage />} />
@@ -273,11 +274,11 @@ export default function App() {
         <Route path="/chat" element={<ChatPage />} />
         <Route path="/roundtable" element={<RoundtablePage />} />
 
-        {/* ✅ Informational Pages */}
+        {/* Informational Pages */}
         <Route path="/about" element={<About />} />
         <Route path="/blog" element={<PlaceholderPage title="Blog" />} />
         <Route path="/faqs" element={<PlaceholderPage title="FAQs" />} />
-        <Route path="/contact" element={<PlaceholderPage title="Contact" />} />
+        <Route path="/contact" element={<Contact />} /> {/* ✅ FIXED */}
       </Routes>
     </BrowserRouter>
   );
