@@ -52,3 +52,98 @@
 .nav-link:hover {
   color: #c6ad7b;
 }
+/* ===  Dark-mode support  === */
+html.dark {
+  background-color: #0f0f0f;
+  color: #fafafa;
+}
+
+html.dark .glass-nav {
+  background: rgba(0, 0, 0, 0.55);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+}
+
+html.dark .nav-link {
+  color: #eaeaea;
+}
+
+html.dark .nav-link.active,
+html.dark .nav-link:hover {
+  color: #cdb996;
+}
+
+/* ===  Utility area (toggle + hamburger)  === */
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.darkmode-toggle,
+.hamburger {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: inherit;
+}
+
+/* ===  Mobile responsiveness  === */
+.hamburger {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .nav-links {
+    display: none;
+  }
+
+  .hamburger {
+    display: block;
+  }
+
+  .mobile-nav {
+    position: absolute;
+    top: 68px;
+    left: 0;
+    width: 100%;
+    padding: 1rem 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.96);
+    gap: 1.25rem;
+    z-index: 998;
+    animation: fadeSlide 0.25s ease forwards;
+  }
+
+  html.dark .mobile-nav {
+    background: rgba(0, 0, 0, 0.9);
+  }
+
+  .mobile-link {
+    font-family: "Inter", sans-serif;
+    font-size: 1rem;
+    color: inherit;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: color 0.25s ease;
+  }
+
+  .mobile-link:hover,
+  .mobile-link.active {
+    color: #c6ad7b;
+  }
+
+  @keyframes fadeSlide {
+    from {
+      opacity: 0;
+      transform: translateY(-8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
