@@ -1,0 +1,54 @@
+.glass-nav {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  z-index: 999;
+  background: rgba(255, 255, 255, 0.35);
+  backdrop-filter: blur(14px) saturate(180%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+}
+
+.glass-nav.scrolled {
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.nav-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-logo-img {
+  height: 42px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.nav-logo-img:hover {
+  transform: scale(1.05);
+}
+
+.nav-links {
+  display: flex;
+  gap: 2rem;
+}
+
+.nav-link {
+  background: none;
+  border: none;
+  font-family: "Inter", sans-serif;
+  font-size: 0.95rem;
+  cursor: pointer;
+  color: #1b003b;
+  transition: color 0.3s ease;
+}
+
+.nav-link.active,
+.nav-link:hover {
+  color: #c6ad7b;
+}

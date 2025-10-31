@@ -8,7 +8,11 @@ import { TypeAnimation } from "react-type-animation";
 import { motion } from "framer-motion";
 import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
 
-// Auth & Feature Routes
+// === GLOBAL COMPONENTS ===
+import Navbar from "./components/Navbar.jsx";
+import ScrollToTopButton from "./components/ScrollToTopButton.jsx";
+
+// === AUTH & FEATURE ROUTES ===
 import AuthPage from "./auth/AuthPage.jsx";
 import LoginPage from "./auth/LoginPage.jsx";
 import SignupPage from "./auth/SignupPage.jsx";
@@ -16,180 +20,67 @@ import AuthHelp from "./auth/AuthHelp.jsx";
 import RoundtablePage from "./roundtable/RoundtablePage.jsx";
 import ChatPage from "./chat/ChatPage.jsx";
 
-// Informational Pages
+// === INFORMATIONAL PAGES ===
 import About from "./pages/About.jsx";
-import Contact from "./pages/Contact.jsx"; // ✅ NEW CONTACT PAGE
+import Contact from "./pages/Contact.jsx";
 
-// Temporary placeholder pages for Blog, FAQs
+// === DASHBOARD (DEV PREVIEW) ===
+import HealHubDashboard from "./dashboard/HealHubDashboard.jsx";
+
+// === PLACEHOLDER COMPONENT ===
 function PlaceholderPage({ title }) {
   return (
     <div
       style={{
-        minHeight: "70vh",
+        minHeight: "80vh",
         display: "flex",
+        flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        fontSize: "1.6rem",
-        fontWeight: 500,
-        color: "#333",
+        textAlign: "center",
+        padding: "2rem",
       }}
     >
-      {title} Page — Coming Soon
+      <h2 style={{ fontSize: "2rem", marginBottom: "1rem", color: "#222" }}>
+        {title} Page — Coming Soon
+      </h2>
+      <p style={{ maxWidth: "500px", color: "#555", lineHeight: 1.6 }}>
+        We’re crafting something wonderful here. Check back soon to explore{" "}
+        {title.toLowerCase()} insights and updates from HealHub Center.
+      </p>
     </div>
   );
 }
 
-// 🏠 HomePage Component
+// === HOMEPAGE ===
 function HomePage() {
   const navigate = useNavigate();
 
-  // Time-based greeting
   const hour = new Date().getHours();
   let greeting = "Welcome back";
   if (hour < 12) greeting = "Good morning";
   else if (hour < 18) greeting = "Good afternoon";
   else greeting = "Good evening";
 
-  const navItems = [
-    { label: "About", route: "/about" },
-    { label: "Blog", route: "/blog" },
-    { label: "FAQs", route: "/faqs" },
-    { label: "Contact", route: "/contact" },
-  ];
-
   return (
     <div className="app-container">
-      {/* 🌐 Navbar */}
-      <nav
-        className="navbar minimal-nav"
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          padding: "0.8rem 2rem",
-        }}
-      >
-        <div className="nav-left">
-          <img
-            src="/assets/nav.png"
-            alt="HealHub Center Logo"
-            className="nav-logo-img"
-            style={{ height: "42px", cursor: "pointer" }}
-            onClick={() => navigate("/")}
-          />
-        </div>
-
-        <div
-          className="nav-links"
-          style={{
-            display: "flex",
-            gap: "2rem",
-            alignItems: "center",
-          }}
-        >
-          {navItems.map((item, i) => (
-            <motion.button
-              key={i}
-              onClick={() => navigate(item.route)}
-              className="nav-link"
-              style={{
-                position: "relative",
-                background: "none",
-                border: "none",
-                cursor: "pointer",
-                fontSize: "0.95rem",
-                fontWeight: 300,
-                color: "#222",
-                letterSpacing: "0.03em",
-                padding: "0.3rem 0.6rem",
-                fontFamily: "Inter, sans-serif",
-              }}
-              whileHover={{ scale: 1.08 }}
-            >
-              {item.label}
-              <motion.span
-                layoutId="circle-hover"
-                style={{
-                  position: "absolute",
-                  bottom: "-4px",
-                  left: "50%",
-                  transform: "translateX(-50%)",
-                  width: "8px",
-                  height: "8px",
-                  borderRadius: "50%",
-                  backgroundColor: "#CDBA96",
-                  opacity: 0,
-                }}
-                whileHover={{
-                  opacity: 1,
-                  scale: [0, 1.6, 1],
-                  transition: { duration: 0.5, ease: "easeOut" },
-                }}
-              />
-            </motion.button>
-          ))}
-        </div>
-      </nav>
-
-      {/* 🍔 Mobile Hamburger */}
-      <div
-        className="hamburger"
-        onClick={() => {
-          document.querySelector(".hamburger").classList.toggle("active");
-          document.querySelector(".mobile-menu").classList.toggle("open");
-        }}
-      >
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
-
-      {/* 📱 Mobile Menu */}
-      <div className="mobile-menu">
-        <button className="nav-link" onClick={() => navigate("/about")}>
-          About
-        </button>
-        <button className="nav-link" onClick={() => navigate("/blog")}>
-          Blog
-        </button>
-        <button className="nav-link" onClick={() => navigate("/faqs")}>
-          FAQs
-        </button>
-        <button className="nav-link" onClick={() => navigate("/contact")}>
-          Contact
-        </button>
-      </div>
-
-      {/* 🖥️ Hero Layout */}
+      {/* === HERO SECTION === */}
       <section className="hero-layout modern-layout">
         <div className="hero-content modern-content">
-          {/* Dynamic Greeting */}
           <motion.h2
             className="hero-greeting"
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
-            style={{
-              fontSize: "1rem",
-              letterSpacing: "0.05em",
-              color: "#444",
-              marginBottom: "0.6rem",
-            }}
+            transition={{ duration: 0.6 }}
           >
             {greeting}, let’s make today lighter.
           </motion.h2>
 
-          {/* ✨ Animated Headline */}
           <motion.h1
             className="hero-title modern-title"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            style={{
-              fontWeight: 600,
-              letterSpacing: "-0.02em",
-              lineHeight: "1.2",
-            }}
+            transition={{ duration: 0.8 }}
           >
             <TypeAnimation
               sequence={[
@@ -209,12 +100,11 @@ function HomePage() {
             />
           </motion.h1>
 
-          {/* 💬 Subtext */}
           <motion.p
             className="hero-subtext modern-subtext"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5, duration: 0.8 }}
+            transition={{ delay: 0.5 }}
           >
             HealHub Center connects you to <strong>real therapists</strong>,{" "}
             <strong>supportive communities</strong>, and{" "}
@@ -224,17 +114,11 @@ function HomePage() {
             <span style={{ color: "#CDBA96" }}>we’re here for you.</span>
           </motion.p>
 
-          {/* 🎯 CTA */}
           <motion.div
             className="hero-buttons modern-buttons"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 1.2, duration: 0.6 }}
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              marginTop: "1.2rem",
-            }}
+            transition={{ delay: 1.2 }}
           >
             <button
               className="primary-btn black-btn"
@@ -245,40 +129,47 @@ function HomePage() {
           </motion.div>
         </div>
 
-        {/* 🪞 3D Wellness Office Scene */}
         <div className="hero-office modern-office">
           <LandingIntro />
         </div>
       </section>
 
-      {/* 🌿 Interactive Wellness Sections */}
       <Sections />
-
-      {/* 🦋 Footer */}
       <Footer />
     </div>
   );
 }
 
-// 🧭 Main App Router
+// === MAIN ROUTER ===
 export default function App() {
   return (
     <BrowserRouter>
+      {/* === GLOBAL NAVBAR & SCROLL === */}
+      <Navbar />
+      <ScrollToTopButton />
+
       <Routes>
-        {/* Main Pages */}
+        {/* === MAIN === */}
         <Route path="/" element={<HomePage />} />
+
+        {/* === AUTH === */}
         <Route path="/auth" element={<AuthPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/help" element={<AuthHelp />} />
+
+        {/* === FEATURES === */}
         <Route path="/chat" element={<ChatPage />} />
         <Route path="/roundtable" element={<RoundtablePage />} />
 
-        {/* Informational Pages */}
+        {/* === INFORMATION === */}
         <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
         <Route path="/blog" element={<PlaceholderPage title="Blog" />} />
         <Route path="/faqs" element={<PlaceholderPage title="FAQs" />} />
-        <Route path="/contact" element={<Contact />} /> {/* ✅ FIXED */}
+
+        {/* === DASHBOARD (DEV PREVIEW) === */}
+        <Route path="/dashboard" element={<HealHubDashboard />} />
       </Routes>
     </BrowserRouter>
   );

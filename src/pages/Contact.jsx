@@ -39,30 +39,7 @@ export default function Contact() {
   return (
     <main className="contact-page">
       {/* === NAVBAR === */}
-      <header className="about-navbar glass-nav">
-        <div className="nav-container">
-          <img
-            src="/assets/nav.png"
-            alt="HealHubCenter Logo"
-            className="about-logo"
-            onClick={() => navigate("/")}
-          />
-          <nav className="nav-links">
-            <button onClick={() => navigate("/")} className="nav-link">
-              Home
-            </button>
-            <button onClick={() => navigate("/about")} className="nav-link">
-              About
-            </button>
-            <button onClick={() => navigate("/blog")} className="nav-link">
-              Blog
-            </button>
-            <button onClick={() => navigate("/contact")} className="nav-link active">
-              Contact
-            </button>
-          </nav>
-        </div>
-      </header>
+      
 
       {/* === HERO SECTION (SaaS Dashboard Style) === */}
       <section className="contact-hero">

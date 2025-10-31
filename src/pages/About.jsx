@@ -47,31 +47,7 @@ export default function About() {
 
     return (
         <main className="about-page">
-            {/* === NAVBAR === */}
-            <header className="about-navbar glass-nav">
-                <div className="nav-container">
-                    <img
-                        src="/assets/nav.png"
-                        alt="HealHubCenter Logo"
-                        className="about-logo"
-                        onClick={() => navigate("/")}
-                    />
-                    <nav className="nav-links">
-                        <button onClick={() => navigate("/")} className="nav-link">
-                            Home
-                        </button>
-                        <button onClick={() => navigate("/about")} className="nav-link active">
-                            About
-                        </button>
-                        <button onClick={() => navigate("/blog")} className="nav-link">
-                            Blog
-                        </button>
-                        <button onClick={() => navigate("/contact")} className="nav-link">
-                            Contact
-                        </button>
-                    </nav>
-                </div>
-            </header>
+           
 
             {/* === HERO === */}
             <section className="about-hero modern-hero">
