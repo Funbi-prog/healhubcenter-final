@@ -14,22 +14,25 @@ body {
 * {
   box-sizing: border-box;
 }
-/* === NAVBAR === */
+/* === NAVBAR (Glass + Halo + Mobile Responsive) === */
 .minimal-nav {
   width: 100%;
   height: 70px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 3rem;
+  padding: 1rem 2rem;
   position: fixed;
   top: 0;
   left: 0;
   z-index: 100;
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(14px);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-  transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  transition: all 0.4s ease;
+  font-family: "Inter", sans-serif;
 }
 
 .nav-left {
@@ -38,56 +41,153 @@ body {
 }
 
 .nav-logo-img {
-  height: 38px;
+  height: 40px;
   width: auto;
   object-fit: contain;
+  cursor: pointer;
+  transition: transform 0.3s ease;
 }
 
+.nav-logo-img:hover {
+  transform: scale(1.04);
+}
+
+/* Desktop Nav Links */
 .nav-links {
   display: flex;
   align-items: center;
-  gap: 1.4rem;
+  gap: 1.8rem;
 }
 
-/* 🪞 Login (outlined lilac — calm, soft, minimal) */
 .nav-link {
+  position: relative;
   background: transparent;
-  border: 1.5px solid #c8b6ff;
-  color: #4a3b6e;
+  border: none;
+  color: #111;
+  font-family: "Inter", sans-serif;
   font-weight: 300;
   font-size: 0.95rem;
-  padding: 0.55rem 1.3rem;
-  border-radius: 8px;
+  letter-spacing: 0.02em;
   cursor: pointer;
-  transition: all 0.3s ease;
+  padding: 0.4rem 0.8rem;
+  transition: color 0.4s ease;
+}
+
+/* 🌸 Hover Halo (Animated Glow) */
+.nav-link::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0px;
+  height: 0px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(205, 186, 150, 0.3) 0%,
+    rgba(205, 186, 150, 0.05) 60%,
+    transparent 100%
+  );
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: all 0.5s ease;
+}
+
+.nav-link:hover::before {
+  width: 48px;
+  height: 48px;
+  opacity: 1;
 }
 
 .nav-link:hover {
-  background: rgba(200, 182, 255, 0.1);
-  border-color: #b197fc;
-  color: #3a2e5c;
-  transform: translateY(-2px);
-  box-shadow: 0 0 8px rgba(177, 151, 252, 0.3);
+  color: #cdbA96;
 }
 
-/* 🖤 Signup (matte black, minimalist with lighter typography) */
-.demo-btn {
-  background: #000;
-  color: #fff;
-  border: none;
-  padding: 0.55rem 1.3rem;
-  border-radius: 8px;
-  font-weight: 300; /* thinned out */
-  font-size: 0.95rem;
+/* === MOBILE MENU === */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 5px;
   cursor: pointer;
+  z-index: 120;
   transition: all 0.3s ease;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.25);
 }
 
-.demo-btn:hover {
+.hamburger span {
+  width: 25px;
+  height: 2px;
   background: #111;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.4);
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+/* Mobile Menu Overlay */
+.mobile-menu {
+  position: fixed;
+  top: 70px;
+  right: 0;
+  width: 100%;
+  height: 0;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.2rem;
+  transition: all 0.4s ease;
+  z-index: 110;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.mobile-menu.open {
+  height: 220px;
+  padding: 1.2rem 0;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Mobile Nav Links */
+.mobile-menu .nav-link {
+  color: #111;
+  font-weight: 300;
+  font-size: 0.95rem;
+  letter-spacing: 0.02em;
+  font-family: "Inter", sans-serif;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.mobile-menu .nav-link:hover {
+  color: #cdbA96;
+}
+
+/* 🔄 Toggle Hamburger for Mobile */
+@media (max-width: 768px) {
+  .nav-links {
+    display: none;
+  }
+
+  .hamburger {
+    display: flex;
+  }
+}
+
+/* Hamburger Animation ("X" transition) */
+.hamburger.active span:nth-child(1) {
+  transform: rotate(45deg) translateY(7px);
+}
+.hamburger.active span:nth-child(2) {
+  opacity: 0;
+}
+.hamburger.active span:nth-child(3) {
+  transform: rotate(-45deg) translateY(-7px);
 }
 
 
