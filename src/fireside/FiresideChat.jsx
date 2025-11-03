@@ -1,11 +1,20 @@
+// src/fireside/FiresideChat.jsx
 import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLocation, useParams, useNavigate } from "react-router-dom";
 import { io } from "socket.io-client";
 import "./FiresideChat.css";
 
-// connect to backend server
-const socket = io("http://localhost:5000", {
+/**
+ * HealHub Fireside Chat (Global Live Build 2025)
+ * - Works with Vercel serverless /api/socket endpoint
+ * - Real-time listeners, reactions, and mic animation
+ * - Sharable room links
+ */
+
+// 🔗 Auto-connect to correct environment (local or live)
+const socket = io(window.location.origin, {
+  path: "/api/socket",
   transports: ["websocket"],
 });
 
@@ -19,7 +28,9 @@ export default function FiresideChat() {
   const [handRaised, setHandRaised] = useState(false);
   const [reactions, setReactions] = useState([]);
   const [listenerCount, setListenerCount] = useState(1);
+  const [shareLink, setShareLink] = useState("");
 
+  // Use a unique roomId from URL or fallback default
   const roomId = id || "healhub-room";
 
   const topic =
@@ -28,13 +39,11 @@ export default function FiresideChat() {
       desc: "A calm, reflective space for honest and healing conversations.",
     };
 
+  // 🔥 Connect to room and listen for updates
   useEffect(() => {
-    // join room on mount
     socket.emit("joinRoom", roomId);
 
-    socket.on("updateCount", (count) => {
-      setListenerCount(count);
-    });
+    socket.on("updateCount", (count) => setListenerCount(count));
 
     socket.on("newReaction", (emoji) => {
       const id = Date.now();
@@ -46,19 +55,30 @@ export default function FiresideChat() {
       );
     });
 
+    // Generate shareable room link
+    setShareLink(`${window.location.origin}/fireside/${roomId}`);
+
     return () => {
       socket.disconnect();
     };
   }, [roomId]);
 
+  // 💜 Send a reaction (real-time broadcast)
   const handleReaction = () => {
-    const emojis = ["💜", "👏", "🔥", "✨", "🙌", "💭"];
+    const emojis = ["💜", "👏", "🔥", "✨", "🙌", "💭", "💫", "🌸"];
     const emoji = emojis[Math.floor(Math.random() * emojis.length)];
     socket.emit("reaction", { roomId, emoji });
   };
 
+  // ✋ Toggle raise hand
   const toggleRaiseHand = () => {
     setHandRaised((prev) => !prev);
+  };
+
+  // 📤 Copy share link to clipboard
+  const copyShareLink = () => {
+    navigator.clipboard.writeText(shareLink);
+    alert("🔗 Room link copied! Share it with anyone to join live.");
   };
 
   return (
@@ -83,7 +103,9 @@ export default function FiresideChat() {
           <button className="fs-pill ghost" onClick={() => navigate("/roundtable")}>
             Leave quietly
           </button>
-          <button className="fs-pill solid">Invite</button>
+          <button className="fs-pill solid" onClick={copyShareLink}>
+            📤 Share Link
+          </button>
         </div>
       </header>
 
