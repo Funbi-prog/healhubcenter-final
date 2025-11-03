@@ -11,7 +11,10 @@ import {
   Newspaper,
   BarChart2,
   Settings,
+  LogOut,
 } from "lucide-react";
+import { signOut } from "firebase/auth";
+import { auth } from "../firebaseConfig"; // ✅ Make sure path is correct
 
 const navItems = [
   { icon: <Home size={18} />, label: "Dashboard", route: "/dashboard" },
@@ -28,17 +31,24 @@ export default function Sidebar() {
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
+  const handleLogout = async () => {
+    try {
+      await signOut(auth); // ✅ Ends Firebase session
+      localStorage.clear(); // ✅ Clean up any custom local data
+      console.log("✅ User signed out successfully");
+      navigate("/login"); // ✅ Redirect
+    } catch (error) {
+      console.error("❌ Logout Error:", error.message);
+      alert("Logout failed, please try again.");
+    }
+  };
+
   return (
     <aside className="sidebar">
-      <motion.div
-        className="sidebar-header"
-        initial={{ opacity: 0, y: -10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-      >
-        <img src="/assets/nav.png" alt="HealHub Logo" className="sidebar-logo" />
-      </motion.div>
+      {/* Logo Header */}
+    
 
+      {/* Navigation Links */}
       <nav className="sidebar-nav">
         {navItems.map((item, i) => {
           const active = pathname === item.route;
@@ -53,6 +63,7 @@ export default function Sidebar() {
               style={{
                 background: active ? "rgba(205,185,150,0.12)" : "transparent",
                 borderColor: active ? "rgba(205,185,150,0.35)" : "transparent",
+                color: active ? "#b99f79" : "#222",
               }}
             >
               {item.icon}
@@ -60,6 +71,24 @@ export default function Sidebar() {
             </motion.button>
           );
         })}
+
+        {/* Logout Button */}
+        <motion.button
+          onClick={handleLogout}
+          className="sidebar-link logout"
+          whileHover={{ scale: 1.05 }}
+          transition={{ type: "spring", stiffness: 260, damping: 20 }}
+          style={{
+            marginTop: "1.5rem",
+            borderTop: "1px solid rgba(0,0,0,0.06)",
+            paddingTop: "1rem",
+            color: "#9c2b2b",
+            fontWeight: 600,
+          }}
+        >
+          <LogOut size={18} />
+          <span>Logout</span>
+        </motion.button>
       </nav>
     </aside>
   );

@@ -19,6 +19,7 @@ import SignupPage from "./auth/SignupPage.jsx";
 import AuthHelp from "./auth/AuthHelp.jsx";
 import RoundtablePage from "./roundtable/RoundtablePage.jsx";
 import ChatPage from "./chat/ChatPage.jsx";
+import FiresideChat from "./fireside/FiresideChat.jsx"; // ✅ Added import
 
 // === INFORMATIONAL PAGES ===
 import About from "./pages/About.jsx";
@@ -26,7 +27,7 @@ import Contact from "./pages/Contact.jsx";
 
 // === DASHBOARD (DEV PREVIEW) ===
 import HealHubDashboard from "./dashboard/HealHubDashboard.jsx";
-import CheckInPage from "./dashboard/CheckInPage.jsx"; // ✅ Added import
+import CheckInPage from "./dashboard/CheckInPage.jsx";
 
 // === PLACEHOLDER COMPONENT ===
 function PlaceholderPage({ title }) {
@@ -162,6 +163,7 @@ export default function App() {
         {/* === FEATURES === */}
         <Route path="/chat" element={<ChatPage />} />
         <Route path="/roundtable" element={<RoundtablePage />} />
+        <Route path="/fireside/:id" element={<FiresideChat />} /> {/* ✅ Added Fireside route */}
 
         {/* === INFORMATION === */}
         <Route path="/about" element={<About />} />
@@ -169,7 +171,7 @@ export default function App() {
 
         {/* === DASHBOARD (DEV PREVIEW) === */}
         <Route path="/dashboard" element={<HealHubDashboard />} />
-        <Route path="/dashboard/checkin" element={<CheckInPage />} /> {/* ✅ Added route */}
+        <Route path="/dashboard/checkin" element={<CheckInPage />} />
       </Routes>
     </BrowserRouter>
   );

@@ -23,19 +23,27 @@ export default function LoginPage() {
     try {
       const result = await signInWithPopup(auth, provider);
       console.log("✅ Google Login Success:", result.user);
-      navigate("/roundtable");
+      // Redirect to dashboard after successful login
+      navigate("/dashboard");
     } catch (error) {
       console.error("❌ Google Login Error:", error.message);
+      alert("Google login failed. Please try again.");
     }
   };
 
   const handleEmailLogin = async (e) => {
     e.preventDefault();
     try {
-      await signInWithEmailAndPassword(auth, email, password);
-      console.log("✅ Email Login Success");
-      navigate("/roundtable");
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      console.log("✅ Email Login Success:", userCredential.user);
+      // Redirect to dashboard after successful login
+      navigate("/dashboard");
     } catch (error) {
+      console.error("❌ Email Login Error:", error.message);
       alert(error.message);
     }
   };
@@ -217,7 +225,6 @@ const styles = {
     background: "rgba(255,255,255,0.65)",
     zIndex: 0,
   },
-  /* ==== Desktop Bimpe ==== */
   bimpeDesktop: {
     position: "absolute",
     right: "-0.9%",
@@ -232,8 +239,6 @@ const styles = {
     filter: "drop-shadow(0 14px 30px rgba(0,0,0,0.14))",
     transition: "transform 0.3s ease-in-out",
   },
-
-  /* ==== Auth Card ==== */
   card: {
     zIndex: 2,
     background: "rgba(255,255,255,0.88)",
@@ -281,7 +286,12 @@ const styles = {
   },
   line: { height: 1, width: "40%", background: "#ddd" },
   or: { margin: "0 0.55rem", fontSize: "0.8rem", color: "#777", fontWeight: 600 },
-  form: { display: "flex", flexDirection: "column", gap: "0.8rem", marginBottom: "1.1rem" },
+  form: {
+    display: "flex",
+    flexDirection: "column",
+    gap: "0.8rem",
+    marginBottom: "1.1rem",
+  },
   input: {
     padding: "0.7rem 1rem",
     borderRadius: 10,
@@ -302,8 +312,6 @@ const styles = {
   links: { fontSize: "0.85rem", color: "#555" },
   link: { color: "#555", textDecoration: "none" },
   linkBold: { color: "#000", fontWeight: 600, textDecoration: "none" },
-
-  /* ==== Mobile Floating Bimpe bubble ==== */
   fabContainer: {
     position: "fixed",
     left: 14,

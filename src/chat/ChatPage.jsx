@@ -80,7 +80,7 @@ export default function ChatPage() {
       >
         <div className="bimpe-profile">
           <img
-            src="/assets/bimpe-avatar.png"
+            src="/assets/bim1"
             alt="Bimpe"
             className="bimpe-avatar"
           />
