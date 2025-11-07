@@ -19,17 +19,22 @@ import SignupPage from "./auth/SignupPage.jsx";
 import AuthHelp from "./auth/AuthHelp.jsx";
 import RoundtablePage from "./roundtable/RoundtablePage.jsx";
 import ChatPage from "./chat/ChatPage.jsx";
-import FiresideChat from "./fireside/FiresideChat.jsx"; // ✅ Added import
+import FiresideChat from "./fireside/FiresideChat.jsx";
 
 // === INFORMATIONAL PAGES ===
 import About from "./pages/About.jsx";
 import Contact from "./pages/Contact.jsx";
 
-// === DASHBOARD (DEV PREVIEW) ===
+// === DASHBOARD (CORE) ===
 import HealHubDashboard from "./dashboard/HealHubDashboard.jsx";
-import CheckInPage from "./dashboard/CheckInPage.jsx";
+import CheckInPage from "./dashboard/pages/CheckInPage.jsx";
+import LibraryPage from "./dashboard/pages/LibraryPage.jsx";
+import GamesPage from "./dashboard/pages/GamesPage.jsx";
+import InsightsPage from "./dashboard/pages/InsightsPage.jsx";
+import SettingsPage from "./dashboard/pages/SettingsPage.jsx";
+import BlogPage from "./dashboard/pages/BlogPage.jsx";
 
-// === PLACEHOLDER COMPONENT ===
+// === PLACEHOLDER ===
 function PlaceholderPage({ title }) {
   return (
     <div
@@ -57,7 +62,6 @@ function PlaceholderPage({ title }) {
 // === HOMEPAGE ===
 function HomePage() {
   const navigate = useNavigate();
-
   const hour = new Date().getHours();
   let greeting = "Welcome back";
   if (hour < 12) greeting = "Good morning";
@@ -66,7 +70,6 @@ function HomePage() {
 
   return (
     <div className="app-container">
-      {/* === HERO SECTION === */}
       <section className="hero-layout modern-layout">
         <div className="hero-content modern-content">
           <motion.h2
@@ -146,7 +149,6 @@ function HomePage() {
 export default function App() {
   return (
     <BrowserRouter>
-      {/* === GLOBAL NAVBAR & SCROLL === */}
       <Navbar />
       <ScrollToTopButton />
 
@@ -163,15 +165,20 @@ export default function App() {
         {/* === FEATURES === */}
         <Route path="/chat" element={<ChatPage />} />
         <Route path="/roundtable" element={<RoundtablePage />} />
-        <Route path="/fireside/:id" element={<FiresideChat />} /> {/* ✅ Added Fireside route */}
+        <Route path="/fireside/:id" element={<FiresideChat />} />
 
         {/* === INFORMATION === */}
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
 
-        {/* === DASHBOARD (DEV PREVIEW) === */}
+        {/* === DASHBOARD (FULL NAVIGATION) === */}
         <Route path="/dashboard" element={<HealHubDashboard />} />
         <Route path="/dashboard/checkin" element={<CheckInPage />} />
+        <Route path="/dashboard/library" element={<LibraryPage />} />
+        <Route path="/dashboard/games" element={<GamesPage />} />
+        <Route path="/dashboard/insights" element={<InsightsPage />} />
+        <Route path="/dashboard/settings" element={<SettingsPage />} />
+        <Route path="/dashboard/blog" element={<BlogPage />} /> {/* ✅ FIXED */}
       </Routes>
     </BrowserRouter>
   );

@@ -337,3 +337,16 @@
     font-size: 1rem;
   }
 }
+/* === Unify Roundtable with Dashboard === */
+.dashboard-content.roundtable-content {
+  background: transparent;
+  overflow: visible;
+  padding: 2rem 2rem 5rem;
+  min-height: auto;
+}
+
+.roundtable-page,
+.roundtable-content {
+  overflow: visible !important;
+  height: auto !important;
+}

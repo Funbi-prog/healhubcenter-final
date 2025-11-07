@@ -911,3 +911,11 @@ a/* ===========================
   justify-content: center;
   flex-wrap: wrap;
 }
+/* === Content Wrapper inside DashboardLayout === */
+.dashboard-content-wrapper {
+  flex: 1;
+  padding: 1.5rem 0;
+  overflow-y: auto;
+  background: linear-gradient(180deg, #fffaf6, #f9f5ee);
+  border-radius: 12px;
+}

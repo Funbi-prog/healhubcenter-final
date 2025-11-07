@@ -1,12 +1,12 @@
-// src/dashboard/HealHubDashboard.jsx
 import React from "react";
 import "./Dashboard.css";
 import Sidebar from "./Sidebar";
 import Topbar from "./Topbar";
-import WidgetCard from "./WidgetCard";
+import WidgetCard from "./pages/WidgetCard"; // ✅ fixed path
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 
+// === Dashboard Widgets Data ===
 const WIDGETS = (go) => [
   {
     title: "Daily Check-In",
@@ -65,15 +65,21 @@ const WIDGETS = (go) => [
   },
 ];
 
+// === HealHub Dashboard Component ===
 export default function HealHubDashboard() {
   const navigate = useNavigate();
   const go = (route) => navigate(route);
 
   return (
     <div className="dashboard-layout">
+      {/* === Sidebar === */}
       <Sidebar />
+
+      {/* === Main Dashboard === */}
       <main className="dashboard-main">
         <Topbar />
+
+        {/* === Animated Widget Section === */}
         <motion.section
           className="dashboard-widgets"
           initial="hidden"
@@ -84,16 +90,23 @@ export default function HealHubDashboard() {
             show: {
               opacity: 1,
               y: 0,
-              transition: { staggerChildren: 0.06, duration: 0.6, ease: "easeOut" },
+              transition: {
+                staggerChildren: 0.06,
+                duration: 0.6,
+                ease: "easeOut",
+              },
             },
           }}
         >
-          {WIDGETS(go).map((w, i) => (
+          {WIDGETS(go).map((widget, i) => (
             <motion.div
               key={i}
-              variants={{ hidden: { opacity: 0, y: 14 }, show: { opacity: 1, y: 0 } }}
+              variants={{
+                hidden: { opacity: 0, y: 14 },
+                show: { opacity: 1, y: 0 },
+              }}
             >
-              <WidgetCard {...w} />
+              <WidgetCard {...widget} />
             </motion.div>
           ))}
         </motion.section>

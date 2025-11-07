@@ -1,0 +1,31 @@
+.settings-section {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.6rem;
+  margin-top: 2rem;
+}
+
+.settings-card {
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.settings-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 24px rgba(205, 185, 150, 0.25);
+}
+
+.settings-card h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+}
+
+.settings-card p {
+  font-size: 0.9rem;
+  color: #555;
+  margin-bottom: 0.8rem;
+}

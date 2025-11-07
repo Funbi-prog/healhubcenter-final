@@ -1,8 +1,10 @@
 // src/chat/ChatPage.jsx
 import React, { useEffect, useState, useRef } from "react";
 import { motion } from "framer-motion";
-import "./ChatPage.css";
 import { Send, Bot, User } from "lucide-react";
+import Sidebar from "../dashboard/Sidebar.jsx";
+import Topbar from "../dashboard/Topbar.jsx";
+import "./ChatPage.css";
 
 export default function ChatPage() {
   const [messages, setMessages] = useState([]);
@@ -72,68 +74,80 @@ export default function ChatPage() {
   };
 
   return (
-    <div className="chat-container">
-      <motion.header
-        className="chat-header"
-        initial={{ y: -20, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-      >
-        <div className="bimpe-profile">
-          <img
-            src="/assets/bim1"
-            alt="Bimpe"
-            className="bimpe-avatar"
-          />
-          <div>
-            <h3>Bimpe AI</h3>
-            <p>Online • Listening</p>
+    <div className="dashboard-layout">
+      <Sidebar />
+      <main className="dashboard-main">
+        <Topbar />
+        <div className="dashboard-content">
+          <div className="chat-container">
+            <motion.header
+              className="chat-header"
+              initial={{ y: -20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+            >
+              <div className="bimpe-profile">
+                <img
+                  src="/assets/bim1"
+                  alt="Bimpe"
+                  className="bimpe-avatar"
+                />
+                <div>
+                  <h3>Bimpe AI</h3>
+                  <p>Online • Listening</p>
+                </div>
+              </div>
+            </motion.header>
+
+            <div className="chat-body">
+              {messages.map((msg, i) => (
+                <motion.div
+                  key={i}
+                  className={`chat-bubble ${
+                    msg.sender === "user" ? "user-bubble" : "bimpe-bubble"
+                  }`}
+                  initial={{ opacity: 0, y: 15 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  {msg.sender === "bimpe" ? (
+                    <Bot size={16} />
+                  ) : (
+                    <User size={16} />
+                  )}
+                  <span>{msg.text}</span>
+                </motion.div>
+              ))}
+
+              {isTyping && (
+                <motion.div
+                  className="typing-indicator"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </motion.div>
+              )}
+
+              <div ref={chatEndRef} />
+            </div>
+
+            <form className="chat-input" onSubmit={handleSend}>
+              <input
+                type="text"
+                placeholder="Type your message..."
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+              />
+              <button type="submit">
+                <Send size={18} />
+              </button>
+            </form>
           </div>
         </div>
-      </motion.header>
-
-      <div className="chat-body">
-        {messages.map((msg, i) => (
-          <motion.div
-            key={i}
-            className={`chat-bubble ${
-              msg.sender === "user" ? "user-bubble" : "bimpe-bubble"
-            }`}
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3 }}
-          >
-            {msg.sender === "bimpe" ? <Bot size={16} /> : <User size={16} />}
-            <span>{msg.text}</span>
-          </motion.div>
-        ))}
-
-        {isTyping && (
-          <motion.div
-            className="typing-indicator"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.3 }}
-          >
-            <span></span>
-            <span></span>
-            <span></span>
-          </motion.div>
-        )}
-
-        <div ref={chatEndRef} />
-      </div>
-
-      <form className="chat-input" onSubmit={handleSend}>
-        <input
-          type="text"
-          placeholder="Type your message..."
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-        />
-        <button type="submit">
-          <Send size={18} />
-        </button>
-      </form>
+      </main>
     </div>
   );
 }
