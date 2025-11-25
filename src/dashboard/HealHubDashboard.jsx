@@ -1,8 +1,9 @@
+// src/dashboard/HealHubDashboard.jsx
 import React from "react";
 import "./Dashboard.css";
 import Sidebar from "./Sidebar";
 import Topbar from "./Topbar";
-import WidgetCard from "./pages/WidgetCard"; // ✅ fixed path
+import WidgetCard from "./pages/WidgetCard";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 
@@ -62,6 +63,36 @@ const WIDGETS = (go) => [
     trend: "+4.2%",
     data: [6, 8, 12, 11, 15, 17, 16, 19, 21, 23],
     onClick: () => go("/roundtable"),
+  },
+
+  // ============================================
+  // NEW — HEALHUB CONNECT
+  // ============================================
+  {
+    title: "HealHub Connect",
+    subtitle: "Find work or hire safely.",
+    actionText: "Open Connect",
+    gradient: "linear-gradient(90deg, #CDB996, #BAA078)",
+    metricValue: 88,
+    metricLabel: "Matches",
+    trend: "+3.8%",
+    data: [7, 12, 14, 18, 20, 22, 19, 25, 27, 30],
+    onClick: () => go("/dashboard/connect"),
+  },
+
+  // ============================================
+  // NEW — WORKSHOPS
+  // ============================================
+  {
+    title: "Workshops",
+    subtitle: "Guided healing journeys.",
+    actionText: "Start Workshop",
+    gradient: "linear-gradient(90deg, #D8C9AA, #C4AE86)",
+    metricValue: 52,
+    metricLabel: "Progress",
+    trend: "+5.4%",
+    data: [3, 5, 7, 6, 9, 11, 10, 14, 13, 16],
+    onClick: () => go("/dashboard/workshops"),
   },
 ];
 

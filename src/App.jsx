@@ -34,6 +34,11 @@ import InsightsPage from "./dashboard/pages/InsightsPage.jsx";
 import SettingsPage from "./dashboard/pages/SettingsPage.jsx";
 import BlogPage from "./dashboard/pages/BlogPage.jsx";
 
+// === NEW FEATURES YOU ADDED ===
+import ConnectPage from "./dashboard/pages/ConnectPage.jsx";
+import WorkshopPage from "./dashboard/pages/WorkshopPage.jsx";
+
+
 // === PLACEHOLDER ===
 function PlaceholderPage({ title }) {
   return (
@@ -59,11 +64,13 @@ function PlaceholderPage({ title }) {
   );
 }
 
+
 // === HOMEPAGE ===
 function HomePage() {
   const navigate = useNavigate();
   const hour = new Date().getHours();
   let greeting = "Welcome back";
+
   if (hour < 12) greeting = "Good morning";
   else if (hour < 18) greeting = "Good afternoon";
   else greeting = "Good evening";
@@ -145,6 +152,7 @@ function HomePage() {
   );
 }
 
+
 // === MAIN ROUTER ===
 export default function App() {
   return (
@@ -153,6 +161,7 @@ export default function App() {
       <ScrollToTopButton />
 
       <Routes>
+
         {/* === MAIN === */}
         <Route path="/" element={<HomePage />} />
 
@@ -173,12 +182,18 @@ export default function App() {
 
         {/* === DASHBOARD (FULL NAVIGATION) === */}
         <Route path="/dashboard" element={<HealHubDashboard />} />
+
         <Route path="/dashboard/checkin" element={<CheckInPage />} />
         <Route path="/dashboard/library" element={<LibraryPage />} />
         <Route path="/dashboard/games" element={<GamesPage />} />
         <Route path="/dashboard/insights" element={<InsightsPage />} />
         <Route path="/dashboard/settings" element={<SettingsPage />} />
-        <Route path="/dashboard/blog" element={<BlogPage />} /> {/* ✅ FIXED */}
+        <Route path="/dashboard/blog" element={<BlogPage />} />
+
+        {/* === NEW FEATURES YOU ADDED === */}
+        <Route path="/dashboard/connect" element={<ConnectPage />} />
+        <Route path="/dashboard/workshops" element={<WorkshopPage />} />
+
       </Routes>
     </BrowserRouter>
   );
