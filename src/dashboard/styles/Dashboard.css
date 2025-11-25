@@ -1,0 +1,240 @@
+/* ===============================
+   HealHub — Global Dashboard Frame (Unified Layout)
+   =============================== */
+
+:root {
+  --hh-bg: #ffffff;
+  --hh-text: #222222;
+  --hh-muted: #6d6d6d;
+
+  --gold-500: #cdb996;
+  --gold-600: #b99f79;
+  --gold-700: #9c7f52;
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+
+  --shadow-soft: 0 8px 24px rgba(0, 0, 0, 0.06);
+  --shadow-hover: 0 12px 28px rgba(0, 0, 0, 0.1);
+
+  --frame-max-width: 1150px;
+  --frame-padding-desktop: 1.8rem;
+  --frame-padding-mobile: 1rem;
+  --sidebar-width: 250px;
+}
+
+/* === Sidebar + Dashboard Structure === */
+.dashboard-wrapper {
+  display: flex;
+  width: 100%;
+  min-height: 100vh;
+  background: var(--hh-bg);
+}
+
+.healhub-dashboard {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  color: var(--hh-text);
+  background: var(--hh-bg);
+  margin-left: var(--sidebar-width);
+  transition: margin-left 0.3s ease;
+  min-height: 100vh;
+}
+
+/* === Topbar Section === */
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.2rem var(--frame-padding-desktop);
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  position: sticky;
+  top: 0;
+  z-index: 20;
+}
+
+.topbar h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+}
+
+/* === Shared Dashboard Content Area === */
+.dashboard-content {
+  width: 100%;
+  max-width: var(--frame-max-width);
+  margin: 0 auto;
+  padding: 2rem var(--frame-padding-desktop) 3rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* === Widgets Grid === */
+.dashboard-widgets {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.6rem;
+  margin-top: 1rem;
+  width: 100%;
+}
+
+/* === Widget Card === */
+.widget-card {
+  border-radius: var(--radius-lg);
+  padding: 1.2rem;
+  box-shadow: var(--shadow-soft);
+  position: relative;
+  overflow: hidden;
+  background: white;
+  transition: all 0.3s ease;
+}
+
+.widget-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-hover);
+}
+
+.widget-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    120deg,
+    rgba(205, 185, 150, 0.2),
+    rgba(255, 255, 255, 0) 35%,
+    rgba(185, 159, 121, 0.15)
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.widget-card:hover::after {
+  opacity: 1;
+}
+
+/* === Widget Header === */
+.widget-head {
+  display: grid;
+  grid-template-columns: 1fr 18px;
+  align-items: start;
+  gap: 0.8rem;
+  margin-bottom: 0.9rem;
+}
+
+.widget-title {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.widget-subtitle {
+  font-size: 0.9rem;
+  color: var(--hh-muted);
+  margin-top: 0.2rem;
+  line-height: 1.5;
+}
+
+/* === Widget Metrics === */
+.widget-metrics {
+  display: grid;
+  grid-template-columns: 56px 1fr;
+  align-items: center;
+  gap: 1rem;
+  margin: 0.5rem 0 1rem;
+}
+
+.metric-value {
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+.metric-label {
+  font-size: 0.85rem;
+  color: var(--hh-muted);
+}
+.metric-trend.up {
+  color: #1a7f37;
+}
+.metric-trend.down {
+  color: #ad1a1a;
+}
+
+/* === Widget Action Button === */
+.widget-action {
+  border: none;
+  color: white;
+  width: 100%;
+  border-radius: var(--radius-md);
+  padding: 0.75rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: var(--shadow-soft);
+}
+.widget-action:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-hover);
+}
+
+/* === Section Consistency for Subpages === */
+.section-container {
+  width: 100%;
+  max-width: var(--frame-max-width);
+  margin: 0 auto;
+  padding: 2rem var(--frame-padding-desktop) 3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* === Check-In Page Styles === */
+.checkin-wrap {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 2rem 0 3rem;
+}
+.checkin-card {
+  margin-top: 1rem;
+  border-radius: var(--radius-lg);
+  padding: 1.2rem;
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: var(--shadow-soft);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+/* === Responsive === */
+@media (max-width: 1024px) {
+  .healhub-dashboard {
+    margin-left: 0;
+  }
+  .dashboard-content,
+  .section-container {
+    padding: 1.6rem var(--frame-padding-mobile);
+  }
+  .dashboard-widgets {
+    gap: 1.2rem;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .dashboard-content,
+  .section-container {
+    padding: 1.2rem var(--frame-padding-mobile);
+  }
+  .dashboard-widgets {
+    grid-template-columns: 1fr;
+  }
+  .widget-card {
+    padding: 1rem;
+  }
+}

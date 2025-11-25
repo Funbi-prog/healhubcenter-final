@@ -1,0 +1,288 @@
+/* ============================================
+   HealHub Connect — Luxury + SaaS (C + D)
+   ============================================ */
+
+:root {
+  --bg-1: #faf9f7;
+  --bg-2: #f5f3ee;
+  --text-1: #1b1b1b;
+  --text-2: #6b665d;
+  --gold-1: #b79f6d;
+  --gold-2: #cdb996;
+  --card: #ffffff;
+}
+
+/* PAGE BACKGROUND */
+.connect-page {
+  background: linear-gradient(180deg, var(--bg-1), var(--bg-2));
+}
+
+/* HEADER */
+.connect-header {
+  padding: 18px 0;
+}
+
+.connect-header h1 {
+  margin: 0;
+  font-size: 1.9rem;
+  font-weight: 700;
+  color: var(--text-1);
+}
+
+.connect-header .lead {
+  margin-top: 6px;
+  color: var(--text-2);
+  font-size: 1rem;
+}
+
+/* GRID LAYOUT */
+.connect-grid {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 24px;
+  margin-top: 1.2rem;
+}
+
+/* LEFT PANEL */
+.connect-main {
+  background: var(--card);
+  border-radius: 16px;
+  padding: 22px;
+  border: 1px solid rgba(205, 185, 150, 0.12);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.04);
+}
+
+/* ============================================
+   CHOICE CARDS (Choose: Open to Work / Hiring)
+   ============================================ */
+.choice-row {
+  display: flex;
+  gap: 16px;
+}
+
+.choice-card {
+  flex: 1;
+  padding: 22px;
+  border-radius: 14px;
+  border: 1px solid rgba(205, 185, 150, 0.15);
+  background: linear-gradient(180deg, #ffffff, #fbf9f7);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.choice-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 32px rgba(183, 159, 109, 0.18);
+}
+
+.choice-card h3 {
+  margin: 0 0 6px;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.small {
+  font-size: 0.9rem;
+  color: var(--text-2);
+}
+
+/* ============================================
+   FORM STYLING
+   ============================================ */
+.connect-form {
+  margin-top: 12px;
+}
+
+.connect-form .form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.input {
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid #e8dfd3;
+  background: #ffffff;
+  font-size: 0.95rem;
+  transition: 0.25s ease;
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--gold-1);
+  box-shadow: 0 0 0 3px rgba(205, 185, 150, 0.25);
+}
+
+.textarea {
+  width: 100%;
+  padding: 14px;
+  border-radius: 12px;
+  border: 1px solid #e8dfd3;
+  min-height: 120px;
+  font-size: 0.95rem;
+  resize: vertical;
+  transition: 0.25s ease;
+}
+
+.textarea:focus {
+  outline: none;
+  border-color: var(--gold-1);
+  box-shadow: 0 0 0 3px rgba(205, 185, 150, 0.22);
+}
+
+/* SKILLS TAGS */
+.choices-label {
+  font-size: 0.9rem;
+  color: var(--text-2);
+  margin-bottom: 8px;
+  margin-top: 10px;
+}
+
+.skill-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+
+.skill {
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  border: 1px solid rgba(205, 185, 150, 0.28);
+  background: #fff;
+  color: var(--text-1);
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+.skill:hover {
+  background: rgba(205, 185, 150, 0.12);
+}
+
+.skill.on {
+  background: linear-gradient(120deg, var(--gold-1), var(--gold-2));
+  color: #fff;
+  border: none;
+  box-shadow: 0 6px 14px rgba(183, 159, 109, 0.24);
+}
+
+/* FORM ACTIONS */
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.ghost {
+  background: #f4efe6;
+  color: #3d3324;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+.ghost:hover {
+  background: #eae3d7;
+}
+
+.primary {
+  background: linear-gradient(120deg, var(--gold-1), var(--gold-2));
+  color: #fff;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(183, 159, 109, 0.32);
+}
+
+/* ============================================
+   RIGHT SIDE — MATCH FEED
+   ============================================ */
+.connect-feed {
+  background: var(--card);
+  border-radius: 16px;
+  padding: 20px;
+  border: 1px solid rgba(205, 185, 150, 0.12);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
+}
+
+.connect-feed h3 {
+  margin: 0 0 4px;
+  color: var(--text-1);
+}
+
+.muted {
+  color: var(--text-2);
+}
+
+.matches {
+  margin-top: 14px;
+}
+
+.match-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px;
+  background: linear-gradient(180deg, #ffffff, #fcfbf8);
+  border-radius: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  margin-bottom: 12px;
+  transition: 0.25s;
+}
+
+.match-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 28px rgba(183, 159, 109, 0.18);
+}
+
+.match-title {
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.match-meta {
+  color: var(--text-2);
+  font-size: 0.9rem;
+}
+
+.match-actions {
+  display: flex;
+  gap: 10px;
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 900px) {
+  .connect-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .connect-feed {
+    order: 2;
+  }
+}
+
+@media (max-width: 600px) {
+  .connect-form .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .choice-row {
+    flex-direction: column;
+  }
+}

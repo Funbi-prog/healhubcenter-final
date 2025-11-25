@@ -6,70 +6,93 @@ import "./index.css";
 import Footer from "./Footer.jsx";
 import { TypeAnimation } from "react-type-animation";
 import { motion } from "framer-motion";
+import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
 
-// 🧩 New imports for routing
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+// === GLOBAL COMPONENTS ===
+import Navbar from "./components/Navbar.jsx";
+import ScrollToTopButton from "./components/ScrollToTopButton.jsx";
+
+// === AUTH & FEATURE ROUTES ===
 import AuthPage from "./auth/AuthPage.jsx";
+import LoginPage from "./auth/LoginPage.jsx";
+import SignupPage from "./auth/SignupPage.jsx";
+import AuthHelp from "./auth/AuthHelp.jsx";
+import RoundtablePage from "./roundtable/RoundtablePage.jsx";
 import ChatPage from "./chat/ChatPage.jsx";
+import FiresideChat from "./fireside/FiresideChat.jsx";
 
+// === INFORMATIONAL PAGES ===
+import About from "./pages/About.jsx";
+import Contact from "./pages/Contact.jsx";
+
+// === DASHBOARD (CORE) ===
+import HealHubDashboard from "./dashboard/HealHubDashboard.jsx";
+import CheckInPage from "./dashboard/pages/CheckInPage.jsx";
+import LibraryPage from "./dashboard/pages/LibraryPage.jsx";
+import GamesPage from "./dashboard/pages/GamesPage.jsx";
+import InsightsPage from "./dashboard/pages/InsightsPage.jsx";
+import SettingsPage from "./dashboard/pages/SettingsPage.jsx";
+import BlogPage from "./dashboard/pages/BlogPage.jsx";
+
+// === NEW FEATURES YOU ADDED ===
+import ConnectPage from "./dashboard/pages/ConnectPage.jsx";
+import WorkshopPage from "./dashboard/pages/WorkshopPage.jsx";
+
+
+// === PLACEHOLDER ===
+function PlaceholderPage({ title }) {
+  return (
+    <div
+      style={{
+        minHeight: "80vh",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        textAlign: "center",
+        padding: "2rem",
+      }}
+    >
+      <h2 style={{ fontSize: "2rem", marginBottom: "1rem", color: "#222" }}>
+        {title} Page — Coming Soon
+      </h2>
+      <p style={{ maxWidth: "500px", color: "#555", lineHeight: 1.6 }}>
+        We’re crafting something wonderful here. Check back soon to explore{" "}
+        {title.toLowerCase()} insights and updates from HealHub Center.
+      </p>
+    </div>
+  );
+}
+
+
+// === HOMEPAGE ===
 function HomePage() {
-  // ⏰ Time-based adaptive greeting
+  const navigate = useNavigate();
   const hour = new Date().getHours();
   let greeting = "Welcome back";
+
   if (hour < 12) greeting = "Good morning";
   else if (hour < 18) greeting = "Good afternoon";
   else greeting = "Good evening";
 
   return (
     <div className="app-container">
-      {/* 🌐 Navbar */}
-      <nav className="navbar minimal-nav">
-        <div className="nav-left">
-          <img
-            src="/assets/nav.png"
-            alt="HealHub Logo"
-            className="nav-logo-img"
-          />
-        </div>
-
-        <div className="nav-links">
-          <a href="#login" className="nav-link">
-            Login
-          </a>
-          <button className="demo-btn">Sign-up</button>
-        </div>
-      </nav>
-
-      {/* 🖥️ Hero Layout */}
       <section className="hero-layout modern-layout">
         <div className="hero-content modern-content">
-          {/* Dynamic Greeting */}
           <motion.h2
             className="hero-greeting"
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
-            style={{
-              fontSize: "1rem",
-              letterSpacing: "0.05em",
-              color: "#444",
-              marginBottom: "0.6rem",
-            }}
+            transition={{ duration: 0.6 }}
           >
-            {greeting}, {`let’s make today lighter.`}
+            {greeting}, let’s make today lighter.
           </motion.h2>
 
-          {/* ✨ Animated Headline */}
           <motion.h1
             className="hero-title modern-title"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            style={{
-              fontWeight: 600,
-              letterSpacing: "-0.02em",
-              lineHeight: "1.2",
-            }}
+            transition={{ duration: 0.8 }}
           >
             <TypeAnimation
               sequence={[
@@ -89,14 +112,13 @@ function HomePage() {
             />
           </motion.h1>
 
-          {/* 💬 Subtext */}
           <motion.p
             className="hero-subtext modern-subtext"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5, duration: 0.8 }}
+            transition={{ delay: 0.5 }}
           >
-            HealHubCenter connects you to <strong>real therapists</strong>,{" "}
+            HealHub Center connects you to <strong>real therapists</strong>,{" "}
             <strong>supportive communities</strong>, and{" "}
             <strong>AI-driven care</strong> designed for today’s world.
             <br />
@@ -104,64 +126,74 @@ function HomePage() {
             <span style={{ color: "#CDBA96" }}>we’re here for you.</span>
           </motion.p>
 
-          {/* 🎯 Buttons */}
           <motion.div
             className="hero-buttons modern-buttons"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 1.2, duration: 0.6 }}
+            transition={{ delay: 1.2 }}
           >
             <button
               className="primary-btn black-btn"
-              onClick={() =>
-                document
-                  .querySelector("#overview")
-                  .scrollIntoView({ behavior: "smooth" })
-              }
+              onClick={() => navigate("/login")}
             >
-              Join Community
-            </button>
-
-            <button
-              className="secondary-btn outline-btn"
-              onClick={() =>
-                document
-                  .querySelector("#bimpeai")
-                  .scrollIntoView({ behavior: "smooth" })
-              }
-            >
-              Meet Bimpe
+              Discover HealHub Center
             </button>
           </motion.div>
         </div>
 
-        {/* 🪞 3D Wellness Office Scene */}
         <div className="hero-office modern-office">
           <LandingIntro />
         </div>
       </section>
 
-      {/* 🌿 Interactive Wellness Sections */}
       <Sections />
-
-      {/* 🦋 Footer */}
       <Footer />
     </div>
   );
 }
 
+
+// === MAIN ROUTER ===
 export default function App() {
   return (
     <BrowserRouter>
+      <Navbar />
+      <ScrollToTopButton />
+
       <Routes>
-        {/* 🏠 Main landing page */}
+
+        {/* === MAIN === */}
         <Route path="/" element={<HomePage />} />
 
-        {/* 🔐 Authentication page */}
+        {/* === AUTH === */}
         <Route path="/auth" element={<AuthPage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/signup" element={<SignupPage />} />
+        <Route path="/help" element={<AuthHelp />} />
 
-        {/* 💬 Chat with BIMPE-AI */}
+        {/* === FEATURES === */}
         <Route path="/chat" element={<ChatPage />} />
+        <Route path="/roundtable" element={<RoundtablePage />} />
+        <Route path="/fireside/:id" element={<FiresideChat />} />
+
+        {/* === INFORMATION === */}
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
+
+        {/* === DASHBOARD (FULL NAVIGATION) === */}
+        <Route path="/dashboard" element={<HealHubDashboard />} />
+
+        <Route path="/dashboard/checkin" element={<CheckInPage />} />
+        <Route path="/dashboard/library" element={<LibraryPage />} />
+        <Route path="/dashboard/games" element={<GamesPage />} />
+        <Route path="/dashboard/insights" element={<InsightsPage />} />
+        <Route path="/dashboard/settings" element={<SettingsPage />} />
+        <Route path="/dashboard/blog" element={<BlogPage />} />
+
+        {/* === NEW FEATURES YOU ADDED === */}
+        <Route path="/dashboard/connect" element={<ConnectPage />} />
+        <Route path="/dashboard/workshops" element={<WorkshopPage />} />
+
       </Routes>
     </BrowserRouter>
   );

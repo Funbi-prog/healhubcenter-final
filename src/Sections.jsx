@@ -1,3 +1,4 @@
+// src/Sections.jsx
 import React from "react";
 import { motion, useAnimation } from "framer-motion";
 import { useInView } from "react-intersection-observer";
@@ -9,7 +10,7 @@ const smoothScrollTo = (id) => {
   if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
 };
 
-/* Motion */
+/* Motion Variants */
 const fadeSlideVariant = {
   hidden: (direction) => ({
     opacity: 0,
@@ -26,6 +27,7 @@ const fadeSlideVariant = {
   },
 };
 
+/* Feature Bullet Component */
 function Feature({ children }) {
   return (
     <li className="hh-feature">
@@ -35,7 +37,7 @@ function Feature({ children }) {
   );
 }
 
-/* Reusable Section */
+/* ————— Section Component ————— */
 export function Section({
   id,
   title,
@@ -57,11 +59,22 @@ export function Section({
     controls.start(inView ? "visible" : "hidden");
   }, [inView, controls]);
 
-  // Smart navigation: scroll if hash (#), route if /
+  /* Unified Navigation Logic */
   const handleNav = (target) => {
     if (!target) return;
-    if (target.startsWith("/")) navigate(target);
-    else smoothScrollTo(target);
+
+    // If internal route
+    if (target.startsWith("/")) {
+      navigate(target);
+    }
+    // If page section
+    else if (target.startsWith("#")) {
+      smoothScrollTo(target);
+    }
+    // If external link
+    else {
+      window.location.href = target;
+    }
   };
 
   return (
@@ -89,12 +102,16 @@ export function Section({
 
       <div className="hh-copy">
         {kicker && <p className="hh-kicker">{kicker}</p>}
-        <h2 id={`${id}-title`} className="hh-title">{title}</h2>
+        <h2 id={`${id}-title`} className="hh-title">
+          {title}
+        </h2>
         <p className="hh-body">{body}</p>
 
         {bullets.length > 0 && (
           <ul className="hh-features" role="list">
-            {bullets.map((b, i) => <Feature key={i}>{b}</Feature>)}
+            {bullets.map((b, i) => (
+              <Feature key={i}>{b}</Feature>
+            ))}
           </ul>
         )}
 
@@ -123,17 +140,17 @@ export function Section({
   );
 }
 
-/* All Sections */
+/* ————— All Sections ————— */
 export default function Sections() {
   return (
     <div className="hh-sections">
-      {/* COMMUNITY */}
+      {/* 🌿 COMMUNITY SECTION */}
       <Section
         id="community"
         kicker="Community • Belonging • Moderated"
         title="A Community That Actually Cares"
-        body={`HealHubcenter community is a verified, moderated home for real people in real seasons of life. 
-We group conversations by lived context single parents, widows, youth, elders, and more so support actually lands. 
+        body={`HealHubCenter community is a verified, moderated home for real people in real seasons of life. 
+We group conversations by lived context—single parents, widows, youth, elders, and more—so support actually lands. 
 Privacy-first. Judgment-free. Built for belonging.`}
         bullets={[
           "Verified entry to keep spaces safe and relevant",
@@ -144,12 +161,12 @@ Privacy-first. Judgment-free. Built for belonging.`}
         ]}
         image="/assets/comu.avif"
         primaryCta="Join the Community"
-        primaryTo="#community-signup"
+        primaryTo="/login"
         secondaryCta="Explore Forums"
         secondaryTo="#community-forums"
       />
 
-      {/* ROUNDTABLE */}
+      {/* 🪶 ROUNDTABLE SECTION */}
       <Section
         id="roundtable"
         reverse
@@ -167,17 +184,17 @@ You can hop into an SOS session when life spikes, or schedule a weekly recurring
         ]}
         image="/assets/rd.avif"
         primaryCta="Join a Roundtable Now"
-        primaryTo="#roundtable"
+        primaryTo="/login"
         secondaryCta="Schedule Your Monthly Circle"
-        secondaryTo="#calendar"
+        secondaryTo="/login"
       />
 
-      {/* BIMPE-AI */}
+      {/* 🤖 BIMPE-AI SECTION */}
       <Section
         id="bimpeai"
         kicker="BIMPE • Empathic • Always-On"
         title="Meet BIMPE — The Intentional Companion"
-        body={`BIMPE is more than a chatbot she’s an emotionally aware concierge for your wellness journey. 
+        body={`BIMPE is more than a chatbot—she’s an emotionally aware concierge for your wellness journey. 
 She checks in if you go quiet, guides you through 2-minute calm drills, recommends communities or roundtables that fit your season, and can even help with life admin from tutoring to CV polish when your brain is tired.`}
         bullets={[
           "Checks in after 24–48h inactivity (opt-in)",
@@ -188,7 +205,7 @@ She checks in if you go quiet, guides you through 2-minute calm drills, recommen
         ]}
         image="/assets/bimpe.jpg"
         primaryCta="Chat with Bimpe"
-        primaryTo="/auth"  // 🚀 Redirects to login page
+        primaryTo="/auth"
         secondaryCta="Try a 2-min Calm Exercise"
         secondaryTo="#overview"
       />
