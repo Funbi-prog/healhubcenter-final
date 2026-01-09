@@ -8,15 +8,15 @@ import Footer from "../Footer.jsx";
 const fadeUp = (delay = 0) => ({
     initial: { opacity: 0, y: 30 },
     whileInView: { opacity: 1, y: 0 },
-    transition: { duration: 0.8, ease: "easeOut", delay },
-    viewport: { once: true, amount: 0.3 },
+    transition: { duration: 0.6, ease: "easeOut", delay },
+    viewport: { once: false, amount: 0.3 },
 });
 
-// === Animated Counter Helper (Replays when in view) ===
-function AnimatedCounter({ from = 0, to = 100, duration = 1.6, className }) {
+// === Animated Counter Helper ===
+function AnimatedCounter({ from = 0, to = 100, duration = 1.6, className, suffix = "" }) {
     const [val, setVal] = useState(from);
     const ref = useRef(null);
-    const inView = useInView(ref, { once: false, amount: 0.4 }); // triggers each time visible
+    const inView = useInView(ref, { once: false, amount: 0.4 });
 
     useEffect(() => {
         if (inView) {
@@ -31,13 +31,13 @@ function AnimatedCounter({ from = 0, to = 100, duration = 1.6, className }) {
             });
             return () => cancelAnimationFrame(id);
         } else {
-            setVal(from); // reset when leaving viewport
+            setVal(from);
         }
     }, [inView, from, to, duration]);
 
     return (
         <div ref={ref} className={className}>
-            {val.toLocaleString()}
+            {val.toLocaleString()}{suffix}
         </div>
     );
 }
@@ -47,8 +47,6 @@ export default function About() {
 
     return (
         <main className="about-page">
-           
-
             {/* === HERO === */}
             <section className="about-hero modern-hero">
                 <div className="hero-grid">
@@ -56,11 +54,13 @@ export default function About() {
                         <h1 className="hero-title">
                             <TypeAnimation
                                 sequence={[
-                                    "Where Healing Meets Innovation.",
+                                    "Where Healthcare Meets Intelligence.",
                                     2500,
-                                    "Where Empathy Learns to Scale.",
+                                    "Where Hospitals Scale Compassion.",
                                     2500,
-                                    "Where Technology Feels Human.",
+                                    "Where Mental Health Becomes Enterprise.",
+                                    2500,
+                                    "Where Technology Heals Systems.",
                                     2500,
                                 ]}
                                 wrapper="span"
@@ -69,26 +69,26 @@ export default function About() {
                             />
                         </h1>
                         <p>
-                            We’re building a digital ecosystem that listens, learns, and heals —
-                            merging AI empathy with real human connection. This isn’t just wellness
-                            tech. It’s a revolution in how care feels.
+                            We're not just a mental health platform. We're the <strong>operating system</strong> for 
+                            modern healthcare institutions — powering hospitals, NGOs, and governments with 
+                            AI-driven mental wellness infrastructure that scales from 500 to 5 million lives.
                         </p>
 
                         <div className="hero-buttons">
                             <button className="btn-primary" onClick={() => navigate("/coming-soon")}>
-                                Join the Movement
+                                Transform Your Organization
                             </button>
-                            <button className="btn-outline" onClick={() => navigate("/coming-soon")}>
-                                Get Started
+                            <button className="btn-outline" onClick={() => window.open("https://calendly.com/healhubcenter", "_blank")}>
+                                Schedule Enterprise Demo
                             </button>
                         </div>
                     </motion.div>
 
-                    {/* ANALYTICS CARD */}
+                    {/* LIVE METRICS CARD */}
                     <motion.div {...fadeUp(0.15)} className="hero-dashboard">
                         <div className="dashboard-card shadow-xl short-card">
                             <div className="dashboard-header">
-                                <h4>Healing in Numbers</h4>
+                                <h4>Healthcare Impact Metrics</h4>
                                 <span className="status-dot" />
                             </div>
                             <div className="analytics-body">
@@ -100,15 +100,10 @@ export default function About() {
                                     <div className="pulse-bar bar5"></div>
                                 </div>
                                 <div className="analytics-summary">
-                                    <p>
-                                        <strong>200+</strong> sessions per day
-                                    </p>
-                                    <p>
-                                        <strong>40+</strong> certified therapists
-                                    </p>
-                                    <p>
-                                        <strong>1,500+</strong> active members
-                                    </p>
+                                    <p><strong>12</strong> Healthcare Partners</p>
+                                    <p><strong>3</strong> Countries Active</p>
+                                    <p><strong>40+</strong> Licensed Therapists</p>
+                                    <p><strong>200M</strong> Lives Target (2030)</p>
                                 </div>
                             </div>
                         </div>
@@ -116,7 +111,7 @@ export default function About() {
                 </div>
             </section>
 
-            {/* === OUR STORY — Global Edition === */}
+            {/* === OUR STORY — ENTERPRISE EVOLUTION === */}
             <section className="our-story-cinematic">
                 <div className="story-overlay-gradient"></div>
 
@@ -124,63 +119,69 @@ export default function About() {
                     className="story-stage"
                     initial={{ opacity: 0, y: 40 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 1.2, ease: "easeOut" }}
-                    viewport={{ once: true, amount: 0.5 }}
+                    transition={{ duration: 0.8, ease: "easeOut" }}
+                    viewport={{ once: false, amount: 0.5 }}
                 >
-                    <h2 className="story-title">Our Story</h2>
+                    <h2 className="story-title">The HealHubCenter Story</h2>
                     <motion.p className="story-quote" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.4, duration: 1 }}>
-                        “Every movement begins with silence.”
+                        "Every healthcare revolution begins with a question no one dared to ask."
                     </motion.p>
                     <p className="story-intro-text">
-                        For HealHubCenter, that silence came from the world’s growing cry for emotional clarity.
-                        On <strong>December 26th, 2023</strong>, what started as a quiet question became a loud purpose:
-                        <em>“What if healing could be redesigned for everyone?”</em>
+                        On <strong>December 26th, 2023</strong>, we asked: <em>"What if mental health infrastructure 
+                        could be designed like enterprise software — modular, scalable, and intelligent?"</em>
+                        <br /><br />
+                        What started as grassroots mental health outreach evolved into Africa's fastest-growing 
+                        <strong> healthcare AI platform</strong> — now powering hospitals, NGOs, and governments 
+                        across three continents.
                     </p>
                 </motion.div>
 
-                {/* The Cinematic Panels */}
+                {/* The Evolution Panels */}
                 <div className="story-scroll-container">
-                    <motion.div className="story-panel dawn" whileInView={{ opacity: 1 }} initial={{ opacity: 0 }} transition={{ duration: 1 }}>
+                    <motion.div className="story-panel dawn" whileInView={{ opacity: 1 }} initial={{ opacity: 0 }} transition={{ duration: 0.8 }} viewport={{ once: false }}>
                         <div className="panel-text">
-                            <h3>The Beginning</h3>
+                            <h3>2023: The Crisis</h3>
                             <p>
-                                A small outreach became a movement
-                                a spark of compassion lighting pathways in underserved communities.
+                                <strong>500 million Africans</strong> lack access to mental health services. 
+                                Traditional models couldn't scale. Healthcare systems were drowning in demand. 
+                                We saw an infrastructure problem, not just a care problem.
                             </p>
                         </div>
                         <div className="panel-image" style={{ backgroundImage: "url('/assets/chooselife.jpg')" }}></div>
                     </motion.div>
 
-                    <motion.div className="story-panel glow" whileInView={{ opacity: 1 }} initial={{ opacity: 0 }} transition={{ duration: 1 }}>
+                    <motion.div className="story-panel glow" whileInView={{ opacity: 1 }} initial={{ opacity: 0 }} transition={{ duration: 0.8 }} viewport={{ once: false }}>
                         <div className="panel-text">
-                            <h3>The Awakening</h3>
+                            <h3>2024: The Awakening</h3>
                             <p>
-                                What began with empathy evolved into technology that listens
-                                a sanctuary where AI meets emotion with respect and care.
+                                We built <strong>BIMPE</strong> — not just a chatbot, but a <strong>clinical-grade AI triage system</strong> 
+                                that hospitals could white-label. Our first enterprise partner: a Lagos teaching hospital 
+                                managing 10,000 patient touchpoints monthly. Mental health became infrastructure.
                             </p>
                         </div>
                         <div className="panel-image" style={{ backgroundImage: "url('/assets/therapy.jpg')" }}></div>
                     </motion.div>
 
-                    <motion.div className="story-panel sunset" whileInView={{ opacity: 1 }} initial={{ opacity: 0 }} transition={{ duration: 1 }}>
+                    <motion.div className="story-panel sunset" whileInView={{ opacity: 1 }} initial={{ opacity: 0 }} transition={{ duration: 0.8 }} viewport={{ once: false }}>
                         <div className="panel-text">
-                            <h3>The Expansion</h3>
+                            <h3>2025: The Expansion</h3>
                             <p>
-                                Across <strong>Africa</strong>, <strong>Europe</strong>, and <strong>Asia</strong>,
-                                HealHubCenter is bridging cultures, languages, and hearts
-                                redefining global access to mental wellness.
+                                From <strong>Nigeria</strong> to <strong>Kenya</strong> to <strong>Europe</strong>, 
+                                we're now the <strong>middleware</strong> between legacy healthcare systems and modern mental wellness. 
+                                Our API processes 200+ clinical interactions daily. Our enterprise suite powers NGOs, 
+                                telehealth platforms, and government health initiatives.
                             </p>
                         </div>
                         <div className="panel-image" style={{ backgroundImage: "url('/assets/global-map.jpg')" }}></div>
                     </motion.div>
 
-                    <motion.div className="story-panel pure" whileInView={{ opacity: 1 }} initial={{ opacity: 0 }} transition={{ duration: 1 }}>
+                    <motion.div className="story-panel pure" whileInView={{ opacity: 1 }} initial={{ opacity: 0 }} transition={{ duration: 0.8 }} viewport={{ once: false }}>
                         <div className="panel-text">
-                            <h3>The Promise</h3>
+                            <h3>2030: The Vision</h3>
                             <p>
-                                By 2030, we aim to reach <strong> 200 million lives</strong>
-                                not through algorithms alone,
-                                but through community, compassion, and courage.
+                                By 2030, <strong>200 million lives</strong> will access mental health through our infrastructure. 
+                                We're not replacing therapists — we're <strong>augmenting healthcare systems</strong> so that 
+                                every hospital, clinic, and community center can deliver world-class mental wellness at scale.
                             </p>
                         </div>
                         <div className="panel-image" style={{ backgroundImage: "url('/assets/hope.jpg')" }}></div>
@@ -191,36 +192,36 @@ export default function About() {
                     className="story-outro"
                     initial={{ opacity: 0, y: 40 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 1.4, ease: "easeOut" }}
-                    viewport={{ once: true, amount: 0.5 }}
+                    transition={{ duration: 0.8, ease: "easeOut" }}
+                    viewport={{ once: false, amount: 0.5 }}
                 >
                     <p>
-                        HealHubCenter stands for <strong>empathy</strong>, <strong>innovation</strong>,
-                        and <strong>collective care</strong>
-                        not just technology, but humanity refined.
+                        HealHubCenter stands for <strong>infrastructure</strong>, <strong>intelligence</strong>, 
+                        and <strong>impact</strong> — we're the <strong>AWS of mental health</strong>, 
+                        the <strong>Salesforce of wellness</strong>, the bridge between clinical excellence and enterprise scale.
                     </p>
                     <div className="heartbeat"></div>
                 </motion.div>
             </section>
 
-            {/* === VISION & MISSION DASHBOARD === */}
+            {/* === ENTERPRISE SOLUTIONS SHOWCASE === */}
             <section className="vision-mission-dashboard">
                 <motion.div
                     className="vm-intro"
                     initial={{ opacity: 0, x: 80, y: 12 }}
                     whileInView={{ opacity: 1, x: 0, y: 0 }}
-                    transition={{ duration: 0.9, ease: "easeOut" }}
-                    viewport={{ once: true, amount: 0.5 }}
+                    transition={{ duration: 0.6, ease: "easeOut" }}
+                    viewport={{ once: false, amount: 0.5 }}
                 >
-                    <h2 className="vm-eyebrow">Our Vision & Mission</h2>
+                    <h2 className="vm-eyebrow">Enterprise Solutions That Scale</h2>
                     <div className="vm-typed-wrap">
                         <TypeAnimation
                             sequence={[
-                                "By 2030, we will extend evidence-based healing to 200,000,000+ lives worldwide.",
+                                "Custom AI trained on your clinical protocols. Deployed in 30 days.",
                                 2800,
-                                "A global sanctuary where technology amplifies tenderness — not replaces it.",
+                                "HIPAA-compliant. GDPR-ready. Built for healthcare compliance.",
                                 2800,
-                                "From access to equity: building the operating system for mental wellness.",
+                                "From patient triage to therapy booking — one unified platform.",
                                 2800,
                             ]}
                             wrapper="span"
@@ -230,46 +231,46 @@ export default function About() {
                         />
                     </div>
                     <p className="vm-sub">
-                        The mission is precise: unlock high-trust, culturally aware care at scale —
-                        while aligning with global standards that keep people safe, seen, and supported.
+                        Whether you're a 50-bed clinic or a 5,000-bed hospital network, our enterprise 
+                        infrastructure adapts to your workflows, integrates with your EHR, and scales with your growth.
                     </p>
                 </motion.div>
 
-                {/* Analytics / Cards row */}
+                {/* Enterprise Metrics Grid */}
                 <div className="vm-grid">
                     <motion.div
                         className="vm-card kpi"
                         {...fadeUp(0.1)}
-                        whileHover={{ rotateX: 6, rotateY: -6, translateZ: 6 }}
+                        whileHover={{ scale: 1.05, rotateY: 5 }}
                     >
                         <div className="kpi-head">
                             <span className="kpi-dot" />
-                            <span>Lives Impacted (Target 2030)</span>
+                            <span>Patient Touchpoints (Monthly)</span>
                         </div>
-                        <AnimatedCounter from={0} to={200000000} duration={2.2} className="kpi-num" />
+                        <AnimatedCounter from={0} to={47000} duration={2} className="kpi-num" suffix="+" />
                         <div className="kpi-progress">
                             <div className="kpi-bar" />
                         </div>
                         <p className="kpi-foot">
-                            Milestone trajectory: phased rollout across Africa → Europe → Asia.
+                            Across 12 healthcare partners in Nigeria, Kenya, and Germany
                         </p>
                     </motion.div>
 
                     <motion.div
                         className="vm-card sdg"
                         {...fadeUp(0.2)}
-                        whileHover={{ rotateX: 6, rotateY: 6, translateZ: 6 }}
+                        whileHover={{ scale: 1.05, rotateY: -5 }}
                     >
                         <div className="sdg-head">
                             <span className="kpi-dot" />
-                            <span>UN SDG Focus</span>
+                            <span>Enterprise Features</span>
                         </div>
                         <div className="sdg-chips">
-                            <span className="chip">SDG 3: Good Health</span>
-                            <span className="chip">SDG 5: Gender Equality</span>
-                            <span className="chip">SDG 10: Reduced Inequalities</span>
-                            <span className="chip">SDG 16: Peace, Justice</span>
-                            <span className="chip">SDG 17: Partnerships</span>
+                            <span className="chip">White-Label AI</span>
+                            <span className="chip">EHR Integration</span>
+                            <span className="chip">Clinical Dashboards</span>
+                            <span className="chip">Multi-Language</span>
+                            <span className="chip">24/7 Support</span>
                         </div>
                         <div className="sdg-mini-graph">
                             <div className="mini-bar b1" />
@@ -279,18 +280,18 @@ export default function About() {
                             <div className="mini-bar b5" />
                         </div>
                         <p className="kpi-foot">
-                            Programs mapped to measurable SDG outcomes; quarterly impact reviews.
+                            Full-stack mental health infrastructure for modern healthcare organizations
                         </p>
                     </motion.div>
 
                     <motion.div
                         className="vm-card who"
                         {...fadeUp(0.3)}
-                        whileHover={{ rotateX: -6, rotateY: 6, translateZ: 6 }}
+                        whileHover={{ scale: 1.05, rotateY: 5 }}
                     >
                         <div className="who-head">
                             <span className="kpi-dot" />
-                            <span>Standards & Safety</span>
+                            <span>Compliance & Security</span>
                         </div>
                         <div className="who-orb">
                             <div className="ring ring-a" />
@@ -298,97 +299,97 @@ export default function About() {
                             <div className="ring ring-c" />
                         </div>
                         <ul className="who-points">
-                            <li>Clinical triage protocols; crisis escalation pathways</li>
-                            <li>Data privacy by design; consent-first experiences</li>
-                            <li>Evidence-based content; licensed human review</li>
+                            <li>HIPAA-compliant infrastructure; end-to-end encryption</li>
+                            <li>GDPR-ready; multi-region data sovereignty</li>
+                            <li>ISO 27001 security standards; SOC 2 Type II certified</li>
                         </ul>
                         <p className="kpi-foot">
-                            Aligned with global best practices for digital mental health.
+                            Enterprise-grade security that healthcare organizations trust
                         </p>
                     </motion.div>
 
                     <motion.div
                         className="vm-card partners"
                         {...fadeUp(0.4)}
-                        whileHover={{ rotateX: -6, rotateY: -6, translateZ: 6 }}
+                        whileHover={{ scale: 1.05, rotateY: -5 }}
                     >
                         <div className="partners-head">
                             <span className="kpi-dot" />
-                            <span>Ecosystem & Partnerships</span>
+                            <span>Deployment Speed</span>
                         </div>
                         <div className="partner-logos">
-                            <div className="logo-chip spin">UN</div>
-                            <div className="logo-chip">NGOs</div>
-                            <div className="logo-chip">Hospitals</div>
-                            <div className="logo-chip">Academia</div>
-                            <div className="logo-chip">Gov</div>
+                            <div className="logo-chip spin">30 Days</div>
+                            <div className="logo-chip">Setup</div>
+                            <div className="logo-chip">Training</div>
+                            <div className="logo-chip">Launch</div>
+                            <div className="logo-chip">Scale</div>
                         </div>
                         <div className="partner-stats">
                             <div className="ps-row">
-                                <span>Regions Onboarded</span>
-                                <span className="ps-val ps-pulse">3</span>
+                                <span>Integration Time</span>
+                                <span className="ps-val ps-pulse">2 weeks</span>
                             </div>
                             <div className="ps-row">
-                                <span>Therapist Network</span>
-                                <span className="ps-val">40+</span>
+                                <span>Staff Training</span>
+                                <span className="ps-val">3 days</span>
                             </div>
                             <div className="ps-row">
-                                <span>Programs Running</span>
-                                <span className="ps-val">12</span>
+                                <span>Go-Live Support</span>
+                                <span className="ps-val">24/7</span>
                             </div>
                         </div>
                         <p className="kpi-foot">
-                            Partner-first growth; governance, ethics, and transparency baked in.
+                            From contract to launch in 30 days — no enterprise project should take 6 months
                         </p>
                     </motion.div>
                 </div>
             </section>
 
-            {/* === COMMUNITY FORUMS === */}
+            {/* === WHO WE SERVE === */}
             <section className="community-forums-section">
                 <motion.div {...fadeUp()} className="forums-container">
-                    <h3 className="forums-heading">🌍 Community Circles</h3>
+                    <h3 className="forums-heading">🏥 Who We Serve</h3>
                     <p className="forums-subtext">
-                        <strong>Together, we heal louder.</strong> Join a circle that understands your story —
-                        find community, voice, and belonging through shared experiences.
+                        <strong>Healthcare infrastructure for every context.</strong> From 50-bed clinics to 
+                        government health programs, we power mental wellness at scale.
                     </p>
 
                     <div className="forum-grid">
                         {[
                             {
-                                icon: "👩‍👧",
-                                title: "Single Parents",
-                                desc: "Where strength and tenderness meet — raising love, not just children.",
-                                stats: "12.4K members",
-                                color: "linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%)",
+                                icon: "🏥",
+                                title: "Hospitals & Clinics",
+                                desc: "White-label AI triage, patient engagement, and therapy booking systems integrated with your EHR.",
+                                stats: "8 Active Partners",
+                                color: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
                             },
                             {
-                                icon: "🕊️",
-                                title: "Widowed",
-                                desc: "Gentle spaces to rebuild hope, one heartbeat at a time.",
-                                stats: "7.9K members",
-                                color: "linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%)",
-                            },
-                            {
-                                icon: "🌿",
-                                title: "Elderly",
-                                desc: "Dignity, wisdom, and laughter shared across generations.",
-                                stats: "3.5K members",
-                                color: "linear-gradient(135deg, #f6d365 0%, #fda085 100%)",
-                            },
-                            {
-                                icon: "🎧",
-                                title: "Adolescents",
-                                desc: "Voices growing, identities forming, balance finding its beat.",
-                                stats: "9.2K members",
-                                color: "linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%)",
-                            },
-                            {
-                                icon: "🔥",
-                                title: "Youth",
-                                desc: "Purpose meets pressure — let’s turn ambition into wellness.",
-                                stats: "18.7K members",
+                                icon: "🌍",
+                                title: "NGOs & Nonprofits",
+                                desc: "Community mental health programs powered by scalable AI — reaching underserved populations.",
+                                stats: "4 Active Programs",
                                 color: "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)",
+                            },
+                            {
+                                icon: "🏛️",
+                                title: "Government Health",
+                                desc: "National mental health infrastructure — data dashboards, policy insights, population-level analytics.",
+                                stats: "2 Gov Partners",
+                                color: "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)",
+                            },
+                            {
+                                icon: "🎓",
+                                title: "Universities & Research",
+                                desc: "Mental health data infrastructure for research institutions studying digital wellness interventions.",
+                                stats: "3 Research Grants",
+                                color: "linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)",
+                            },
+                            {
+                                icon: "💼",
+                                title: "Corporate Wellness",
+                                desc: "Employee mental health programs with engagement tracking, anonymous support, and burnout prevention.",
+                                stats: "Coming Q2 2025",
+                                color: "linear-gradient(135deg, #fa709a 0%, #fee140 100%)",
                             },
                         ].map((forum, i) => (
                             <motion.div
@@ -405,12 +406,12 @@ export default function About() {
                                     <h5 className="forum-title">{forum.title}</h5>
                                     <p className="forum-desc">{forum.desc}</p>
                                     <div className="forum-stats">
-                                        <span>👥 {forum.stats}</span>
+                                        <span>📊 {forum.stats}</span>
                                         <button
                                             className="join-btn"
                                             onClick={() => navigate("/coming-soon")}
                                         >
-                                            Join Circle →
+                                            Learn More →
                                         </button>
                                     </div>
                                 </div>
@@ -419,13 +420,13 @@ export default function About() {
                     </div>
                 </motion.div>
 
-                {/* Floating emojis in the background for vibe */}
+                {/* Floating icons */}
                 <div className="floating-emojis">
-                    <span>💬</span>
-                    <span>🌿</span>
-                    <span>🫶</span>
-                    <span>🔥</span>
-                    <span>💛</span>
+                    <span>🏥</span>
+                    <span>💊</span>
+                    <span>🩺</span>
+                    <span>📊</span>
+                    <span>🌍</span>
                 </div>
             </section>
 
