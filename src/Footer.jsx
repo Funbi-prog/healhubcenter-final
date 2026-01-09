@@ -18,7 +18,7 @@ export default function Footer() {
         </h2>
 
         <div className="footer-cta">
-          <a href="#signup" className="footer-btn">
+          <a href="#coming-soon" className="footer-btn">
             Get Started Today
           </a>
         </div>

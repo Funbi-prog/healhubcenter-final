@@ -186,7 +186,7 @@ export default function Contact() {
         </p>
         <button
           className="btn-primary"
-          onClick={() => navigate("/signup")}
+          onClick={() => navigate("/coming-soon")}
         >
           Join the Movement →
         </button>

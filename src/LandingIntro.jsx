@@ -495,7 +495,7 @@ export default function LandingIntro() {
       case "Join roundtable":
       case "Chat with Bimpe": // ← send to login instead of /auth
       case "Get started":
-        navigate("/login");
+        navigate("/coming-soon");
         break;
       case "Take a quick tour":
       case "Look around":

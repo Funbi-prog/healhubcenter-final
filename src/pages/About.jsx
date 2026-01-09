@@ -75,10 +75,10 @@ export default function About() {
                         </p>
 
                         <div className="hero-buttons">
-                            <button className="btn-primary" onClick={() => navigate("/signup")}>
+                            <button className="btn-primary" onClick={() => navigate("/coming-soon")}>
                                 Join the Movement
                             </button>
-                            <button className="btn-outline" onClick={() => navigate("/login")}>
+                            <button className="btn-outline" onClick={() => navigate("/coming-soon")}>
                                 Get Started
                             </button>
                         </div>
@@ -408,7 +408,7 @@ export default function About() {
                                         <span>👥 {forum.stats}</span>
                                         <button
                                             className="join-btn"
-                                            onClick={() => navigate("/login")}
+                                            onClick={() => navigate("/coming-soon")}
                                         >
                                             Join Circle →
                                         </button>

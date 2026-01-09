@@ -702,3 +702,26 @@ body {
 .hh-btn.primary:focus {
   transform: translateY(-1px);
 }
+
+/* ===================================
+   FIX: Hide 3D Animation on Mobile
+   =================================== */
+@media (max-width: 768px) {
+  .hero-office,
+  .modern-office {
+    display: none !important;
+  }
+  
+  .hero-layout,
+  .modern-layout {
+    grid-template-columns: 1fr !important;
+    padding: 2rem 1rem !important;
+  }
+  
+  .hero-content,
+  .modern-content {
+    max-width: 100% !important;
+    text-align: center !important;
+    padding: 0 !important;
+  }
+}

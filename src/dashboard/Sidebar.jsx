@@ -36,7 +36,7 @@ export default function Sidebar() {
       await signOut(auth); // ✅ Ends Firebase session
       localStorage.clear(); // ✅ Clean up any custom local data
       console.log("✅ User signed out successfully");
-      navigate("/login"); // ✅ Redirect
+      navigate("/coming-soon"); // ✅ Redirect
     } catch (error) {
       console.error("❌ Logout Error:", error.message);
       alert("Logout failed, please try again.");
