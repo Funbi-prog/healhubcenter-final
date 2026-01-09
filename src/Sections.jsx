@@ -10,20 +10,25 @@ const smoothScrollTo = (id) => {
   if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
 };
 
-/* Motion Variants */
+/* Motion Variants - OPTIMIZED WITH BLUR */
 const fadeSlideVariant = {
   hidden: (direction) => ({
     opacity: 0,
-    x: direction === "left" ? -80 : 80,
-    scale: 0.96,
-    filter: "blur(8px)",
+    x: direction === "left" ? -40 : 40,
+    scale: 0.98,
+    filter: "blur(8px)", // ← KEPT THE BLUR
   }),
   visible: {
     opacity: 1,
     x: 0,
     scale: 1,
     filter: "blur(0px)",
-    transition: { type: "spring", stiffness: 60, damping: 20, duration: 1.2 },
+    transition: { 
+      type: "spring", 
+      stiffness: 80,
+      damping: 25,
+      duration: 0.6,
+    },
   },
 };
 
@@ -52,11 +57,14 @@ export function Section({
   secondaryTo = "#",
 }) {
   const controls = useAnimation();
-  const [ref, inView] = useInView({ threshold: 0.25, triggerOnce: false });
+  const [ref, inView] = useInView({ 
+    threshold: 0.15,
+    triggerOnce: false // ← CHANGED: Animation repeats on scroll
+  });
   const navigate = useNavigate();
 
   React.useEffect(() => {
-    controls.start(inView ? "visible" : "hidden");
+    controls.start(inView ? "visible" : "hidden"); // ← Animates in AND out
   }, [inView, controls]);
 
   /* Unified Navigation Logic */
@@ -94,9 +102,9 @@ export function Section({
           alt={title}
           loading="lazy"
           className="hh-img"
-          initial={{ opacity: 0, y: 40, scale: 0.98 }}
+          initial={{ opacity: 0, y: 20, scale: 0.98 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
-          transition={{ duration: 1, ease: "easeOut" }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
         />
       </div>
 
@@ -144,57 +152,12 @@ export function Section({
 export default function Sections() {
   return (
     <div className="hh-sections">
-      {/* 🌿 COMMUNITY SECTION */}
-      <Section
-        id="community"
-        kicker="Community • Belonging • Moderated"
-        title="A Community That Actually Cares"
-        body={`HealHubCenter community is a verified, moderated home for real people in real seasons of life. 
-We group conversations by lived context—single parents, widows, youth, elders, and more—so support actually lands. 
-Privacy-first. Judgment-free. Built for belonging.`}
-        bullets={[
-          "Verified entry to keep spaces safe and relevant",
-          "Open forum + private sub-groups by life stage",
-          "Asynchronous threads and live prompts that spark reflection",
-          "Report tools and human moderation for respectful dialogue",
-          "Searchable topics so wisdom compounds over time",
-        ]}
-        image="/assets/comu.avif"
-        primaryCta="Join the Community"
-        primaryTo="/login"
-        secondaryCta="Explore Forums"
-        secondaryTo="#community-forums"
-      />
-
-      {/* 🪶 ROUNDTABLE SECTION */}
-      <Section
-        id="roundtable"
-        reverse
-        kicker="Roundtable • 10 Seats • Trust Over Time"
-        title="Roundtable Conversations That Heal"
-        body={`Roundtable is a virtual circle of 10 people focused on one shared theme. 
-Join anonymously or named. Vent, reflect, listen together. 
-You can hop into an SOS session when life spikes, or schedule a weekly recurring circle that builds trust and growth.`}
-        bullets={[
-          "Small-group rooms (10 people) curated by topic",
-          "Anonymous or named participation = your choice",
-          "SOS pop-ins for urgent support moments",
-          "Scheduled weekly cohorts to deepen trust",
-          "Summaries + gentle nudges to keep the circle alive",
-        ]}
-        image="/assets/rd.avif"
-        primaryCta="Join a Roundtable Now"
-        primaryTo="/login"
-        secondaryCta="Schedule Your Monthly Circle"
-        secondaryTo="/login"
-      />
-
-      {/* 🤖 BIMPE-AI SECTION */}
+      {/* 🤖 BIMPE-AI SECTION - FIRST */}
       <Section
         id="bimpeai"
         kicker="BIMPE • Empathic • Always-On"
-        title="Meet BIMPE — The Intentional Companion"
-        body={`BIMPE is more than a chatbot—she’s an emotionally aware concierge for your wellness journey. 
+        title="Meet BIMPE — Your Intentional Companion"
+        body={`BIMPE is more than a chatbot — she's an emotionally aware concierge for your wellness journey. 
 She checks in if you go quiet, guides you through 2-minute calm drills, recommends communities or roundtables that fit your season, and can even help with life admin from tutoring to CV polish when your brain is tired.`}
         bullets={[
           "Checks in after 24–48h inactivity (opt-in)",
@@ -208,6 +171,54 @@ She checks in if you go quiet, guides you through 2-minute calm drills, recommen
         primaryTo="/auth"
         secondaryCta="Try a 2-min Calm Exercise"
         secondaryTo="#overview"
+      />
+
+      {/* 🌿 COMMUNITY SECTION - SECOND */}
+      <Section
+        id="community"
+        reverse
+        kicker="Community • Belonging • Moderated"
+        title="A Community That Actually Cares"
+        body={`HealHubCenter community is a verified, moderated home for real people in real seasons of life. 
+We group conversations by lived context — single parents, widows, youth, elders, and more — so support actually lands. 
+Privacy-first. Judgment-free. Built for belonging.`}
+        bullets={[
+          "Verified entry to keep spaces safe and relevant",
+          "Open forum + private sub-groups by life stage",
+          "Asynchronous threads and live prompts that spark reflection",
+          "Report tools and human moderation for respectful dialogue",
+          "Searchable topics so wisdom compounds over time",
+        ]}
+        image="/assets/comu.avif"
+        primaryCta="Join the Community"
+        primaryTo="/coming-soon"
+        secondaryCta="Explore Forums"
+        secondaryTo="#community-forums"
+      />
+
+      {/* 🏥 ENTERPRISE SECTION - THIRD (SLIDES FROM LEFT) */}
+      <Section
+        id="enterprise"
+        reverse={false}
+        kicker="Enterprise • Custom AI • Healthcare Grade"
+        title="For Healthcare Organizations & Institutions"
+        body={`HealHubCenter also powers private, customizable AI assistants for hospitals, NGOs, and research institutions trained on proprietary healthcare data to automate education, triage, booking, and engagement. 
+        
+Built for scale, compliance, and impact. Whether you're serving 500 patients or 50,000 community members, our enterprise solutions adapt to your workflows, integrate with existing systems, and provide actionable insights that improve outcomes.`}
+        bullets={[
+          "Custom AI trained on your clinical protocols and patient education materials",
+          "HIPAA-compliant infrastructure with end-to-end encryption",
+          "Automated triage, appointment booking, and follow-up reminders",
+          "Multi-language support for diverse patient populations",
+          "Real-time analytics dashboard for engagement and health metrics",
+          "Seamless integration with EHR/EMR systems",
+          "Dedicated success team for onboarding and ongoing support",
+        ]}
+        image="/assets/hce.png"
+        primaryCta="Explore HealHubCenter Enterprise"
+        primaryTo="/coming-soon"
+        secondaryCta="Schedule a Demo"
+        secondaryTo="https://calendly.com/healhubcenter"
       />
     </div>
   );

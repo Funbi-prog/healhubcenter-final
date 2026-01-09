@@ -119,7 +119,7 @@ export default function RoundtablePage() {
                 whileInView={{ opacity: 1, y: 0, scale: 1 }}
                 viewport={{ once: true, amount: 0.25 }}
                 transition={{ type: "spring", stiffness: 220, damping: 24, delay: i * 0.02 }}
-                onClick={() => nav("/login")}
+                onClick={() => nav("/coming-soon")}
               >
                 <div className="rt-bg" style={{ backgroundImage: `url(${t.img})` }} />
                 <div className="rt-overlay" />

@@ -6,7 +6,7 @@ export default function AuthHelp() {
     <div style={styles.page}>
       <nav style={styles.nav}>
         <img src="/assets/nav.png" alt="HealHub Logo" style={styles.logoImg} />
-        <Link to="/login" style={styles.navLink}>Back to Login</Link>
+        <Link to="/coming-soon" style={styles.navLink}>Back to Login</Link>
       </nav>
 
       <div style={styles.card}>

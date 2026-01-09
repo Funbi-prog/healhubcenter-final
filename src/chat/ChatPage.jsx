@@ -4,8 +4,8 @@ import { motion } from "framer-motion";
 import { Send, Mic, Smile, StopCircle, Play } from "lucide-react";
 import Sidebar from "../dashboard/Sidebar.jsx";
 import "./ChatPage.css";
-import {sendMessage, createConversation,getMessages} from "../services/api.js" 
-  
+import { sendMessage, createConversation, getMessages } from "../services/api.js";
+
 export default function ChatPage() {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
@@ -28,8 +28,9 @@ export default function ChatPage() {
   // ========== INIT CHAT SESSION ==========
   useEffect(() => {
     async function initChat() {
-      const conv = await createConversation();
+      const conv = await createConversation("hello");
       setConversationId(conv?.id);
+      console.log(conv)
 
       let greeting = "";
       switch (lastMood) {
@@ -65,7 +66,6 @@ export default function ChatPage() {
 
     initChat();
   }, []);
-  // ========================================
 
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -80,7 +80,9 @@ export default function ChatPage() {
   // ========== SEND TEXT ==========
   const handleSend = async (e) => {
     e?.preventDefault();
-    if (!input.trim() || !conversationId) return;
+    if (!input.trim() || !conversationId
+    ) {console.log("no conversation id")
+    return;}
 
     const userText = input.trim();
 
@@ -107,7 +109,6 @@ export default function ChatPage() {
     setIsTyping(false);
   };
   // ========================================
-
 
   // Insert emoji
   const insertEmoji = (emoji) => {
@@ -272,7 +273,8 @@ export default function ChatPage() {
               {isRecording ? <StopCircle size={18} /> : <Mic size={18} />}
             </button>
 
-            <button type="submit" onClick={() =>handleSend()} className="send-btn">
+            {/* FIXED BUTTON — NO onClick */}
+            <button type="submit" className="send-btn">
               <Send size={18} />
             </button>
           </form>
