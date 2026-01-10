@@ -70,7 +70,7 @@ export default function About() {
                         </h1>
                         <p>
                             We're not just a mental health platform. We're the <strong>operating system</strong> for 
-                            modern healthcare institutions — powering hospitals, NGOs, and governments with 
+                            modern healthcare institutions powering hospitals, NGOs, and governments with 
                             AI-driven mental wellness infrastructure that scales from 500 to 5 million lives.
                         </p>
 
@@ -128,10 +128,10 @@ export default function About() {
                     </motion.p>
                     <p className="story-intro-text">
                         On <strong>December 26th, 2023</strong>, we asked: <em>"What if mental health infrastructure 
-                        could be designed like enterprise software — modular, scalable, and intelligent?"</em>
+                        could be designed like enterprise software modular, scalable, and intelligent?"</em>
                         <br /><br />
                         What started as grassroots mental health outreach evolved into Africa's fastest-growing 
-                        <strong> healthcare AI platform</strong> — now powering hospitals, NGOs, and governments 
+                        <strong> healthcare AI platform</strong> now powering hospitals, NGOs, and governments 
                         across three continents.
                     </p>
                 </motion.div>
@@ -154,7 +154,7 @@ export default function About() {
                         <div className="panel-text">
                             <h3>2024: The Awakening</h3>
                             <p>
-                                We built <strong>BIMPE</strong> — not just a chatbot, but a <strong>clinical-grade AI triage system</strong> 
+                                We built <strong>BIMPE</strong> not just a chatbot, but a <strong>clinical-grade AI triage system</strong> 
                                 that hospitals could white-label. Our first enterprise partner: a Lagos teaching hospital 
                                 managing 10,000 patient touchpoints monthly. Mental health became infrastructure.
                             </p>
@@ -180,7 +180,7 @@ export default function About() {
                             <h3>2030: The Vision</h3>
                             <p>
                                 By 2030, <strong>200 million lives</strong> will access mental health through our infrastructure. 
-                                We're not replacing therapists — we're <strong>augmenting healthcare systems</strong> so that 
+                                We're not replacing therapists we're <strong>augmenting healthcare systems</strong> so that 
                                 every hospital, clinic, and community center can deliver world-class mental wellness at scale.
                             </p>
                         </div>
@@ -197,12 +197,143 @@ export default function About() {
                 >
                     <p>
                         HealHubCenter stands for <strong>infrastructure</strong>, <strong>intelligence</strong>, 
-                        and <strong>impact</strong> — we're the <strong>AWS of mental health</strong>, 
+                        and <strong>impact</strong> we're the <strong>AWS of mental health</strong>, 
                         the <strong>Salesforce of wellness</strong>, the bridge between clinical excellence and enterprise scale.
                     </p>
                     <div className="heartbeat"></div>
                 </motion.div>
             </section>
+{/* === HEALHUBCENTER MENTAL HEALTH INFRASTRUCTURE === */}
+<section className="vision-mission-dashboard">
+
+  {/* INTRO */}
+  <motion.div
+    className="vm-intro"
+    initial={{ opacity: 0, y: 32 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.7, ease: "easeOut" }}
+    viewport={{ once: false, amount: 0.45 }}
+  >
+    <h2 className="vm-eyebrow">Mental Health, Built as Infrastructure</h2>
+
+    <div className="vm-typed-wrap">
+      <TypeAnimation
+        sequence={[
+          "Mental health is not episodic. It’s continuous.",
+          2600,
+          "Care should be adaptive, not reactive.",
+          2600,
+          "Technology should support the mind quietly.",
+          2600,
+        ]}
+        wrapper="span"
+        speed={36}
+        repeat={Infinity}
+        className="vm-typed"
+      />
+    </div>
+
+    <p className="vm-sub">
+      HealHubCenter is a mental health ecosystem engineered to support individuals
+      over time not moments. We design systems that listen, remember, and respond
+      with intention, preserving dignity while scaling access across communities.
+    </p>
+  </motion.div>
+
+  {/* GRID */}
+  <div className="vm-grid four-col">
+
+    {/* CARD 1 — PHILOSOPHY (STATIC) */}
+    <div className="vm-card gold-accent">
+      <div className="kpi-head">
+        <span className="kpi-dot" />
+        <span>People-First Mental Health</span>
+      </div>
+
+      <p className="kpi-foot">
+        HealHubCenter is built on a simple principle: mental health care must feel
+        human before it feels intelligent. Every interaction is designed to protect
+        emotional safety, privacy, and autonomy without surveillance, pressure,
+        or performative engagement.
+      </p>
+    </div>
+
+    {/* CARD 2 — INTELLIGENCE (ANIMATED) */}
+    <motion.div
+      className="vm-card gold-accent"
+      initial={{ opacity: 0, y: 22 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
+      whileHover={{ y: -4 }}
+    >
+      <div className="kpi-head">
+        <span className="kpi-dot" />
+        <span>Mental Health Intelligence</span>
+      </div>
+
+      {/* Subtle signal animation */}
+      <motion.div
+        className="signal-stack"
+        animate={{ opacity: [0.35, 0.7, 0.35] }}
+        transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut" }}
+      >
+        <span />
+        <span />
+        <span />
+      </motion.div>
+
+      <p className="kpi-foot">
+        The platform observes emotional signals across time language patterns,
+        interaction rhythm, and behavioral shifts allowing support to be delivered
+        with context and restraint rather than urgency or generic responses.
+      </p>
+    </motion.div>
+
+    {/* CARD 3 — CONTINUITY (ANIMATED) */}
+    <motion.div
+      className="vm-card gold-accent"
+      initial={{ opacity: 0, y: 22 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6, ease: "easeOut", delay: 0.15 }}
+      whileHover={{ y: -4 }}
+    >
+      <div className="kpi-head">
+        <span className="kpi-dot" />
+        <span>Continuity of Care</span>
+      </div>
+
+      {/* Slow memory loop */}
+      <motion.div
+        className="memory-loop"
+        animate={{ rotate: 360 }}
+        transition={{ duration: 38, repeat: Infinity, ease: "linear" }}
+      >
+        <span className="loop-core" />
+      </motion.div>
+
+      <p className="kpi-foot">
+        Mental health compounds. HealHubCenter preserves emotional context across
+        interactions so care does not reset. Progress, setbacks, and growth are
+        understood as part of a continuous journey not isolated sessions.
+      </p>
+    </motion.div>
+
+    {/* CARD 4 — AFRICA-FIRST SCALE (STATIC) */}
+    <div className="vm-card gold-accent">
+      <div className="kpi-head">
+        <span className="kpi-dot" />
+        <span>Africa-First by Design</span>
+      </div>
+
+      <p className="kpi-foot">
+        Built with African realities in mind, cultural nuance, access gaps, and
+        stigma. HealHubCenter pioneers a scalable mental health model that remains
+        deeply relevant to the people it serves, while standing strong on a global stage.
+      </p>
+    </div>
+
+  </div>
+</section>
 
             {/* === ENTERPRISE SOLUTIONS SHOWCASE === */}
             <section className="vision-mission-dashboard">
@@ -217,11 +348,11 @@ export default function About() {
                     <div className="vm-typed-wrap">
                         <TypeAnimation
                             sequence={[
-                                "Custom AI trained on your clinical protocols. Deployed in 30 days.",
+                                "Custom AI trained on your clinical protocols. Deployed in 40 days.",
                                 2800,
                                 "HIPAA-compliant. GDPR-ready. Built for healthcare compliance.",
                                 2800,
-                                "From patient triage to therapy booking — one unified platform.",
+                                "From patient triage to therapy booking one unified platform.",
                                 2800,
                             ]}
                             wrapper="span"
@@ -339,7 +470,7 @@ export default function About() {
                             </div>
                         </div>
                         <p className="kpi-foot">
-                            From contract to launch in 30 days — no enterprise project should take 6 months
+                            From contract to launch in 30 days no enterprise project should take 6 months
                         </p>
                     </motion.div>
                 </div>
@@ -373,7 +504,7 @@ export default function About() {
                             {
                                 icon: "🏛️",
                                 title: "Government Health",
-                                desc: "National mental health infrastructure — data dashboards, policy insights, population-level analytics.",
+                                desc: "National mental health infrastructure data dashboards, policy insights, population-level analytics.",
                                 stats: "2 Gov Partners",
                                 color: "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)",
                             },
