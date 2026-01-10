@@ -41,7 +41,7 @@ export default function Navbar() {
         { label: "Home", route: "/" },
         { label: "About", route: "/about" },
         { label: "Contact", route: "/contact" },
-        { label: "Coming Soon", route: "/coming-soon" },
+        { label: "Enterprise", route: "https://healhubenterprise.vercel.app" },
       ];
 
   return (
