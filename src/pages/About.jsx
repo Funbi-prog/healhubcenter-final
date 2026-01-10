@@ -69,8 +69,8 @@ export default function About() {
                             />
                         </h1>
                         <p>
-                            We're not just a mental health platform. We're the <strong>operating system</strong> for 
-                            modern healthcare institutions powering hospitals, NGOs, and governments with 
+                            We're not just a mental health platform. We're the <strong>operating system</strong> for
+                            modern healthcare institutions powering hospitals, NGOs, and governments with
                             AI-driven mental wellness infrastructure that scales from 500 to 5 million lives.
                         </p>
 
@@ -127,11 +127,11 @@ export default function About() {
                         "Every healthcare revolution begins with a question no one dared to ask."
                     </motion.p>
                     <p className="story-intro-text">
-                        On <strong>December 26th, 2023</strong>, we asked: <em>"What if mental health infrastructure 
-                        could be designed like enterprise software modular, scalable, and intelligent?"</em>
+                        On <strong>December 26th, 2023</strong>, we asked: <em>"What if mental health infrastructure
+                            could be designed like enterprise software modular, scalable, and intelligent?"</em>
                         <br /><br />
-                        What started as grassroots mental health outreach evolved into Africa's fastest-growing 
-                        <strong> healthcare AI platform</strong> now powering hospitals, NGOs, and governments 
+                        What started as grassroots mental health outreach evolved into Africa's fastest-growing
+                        <strong> healthcare AI platform</strong> now powering hospitals, NGOs, and governments
                         across three continents.
                     </p>
                 </motion.div>
@@ -142,45 +142,20 @@ export default function About() {
                         <div className="panel-text">
                             <h3>2023: The Crisis</h3>
                             <p>
-                                <strong>500 million Africans</strong> lack access to mental health services. 
-                                Traditional models couldn't scale. Healthcare systems were drowning in demand. 
+                                <strong>500 million Africans</strong> lack access to mental health services.
+                                Traditional models couldn't scale. Healthcare systems were drowning in demand.
                                 We saw an infrastructure problem, not just a care problem.
                             </p>
                         </div>
                         <div className="panel-image" style={{ backgroundImage: "url('/assets/chooselife.jpg')" }}></div>
                     </motion.div>
 
-                    <motion.div className="story-panel glow" whileInView={{ opacity: 1 }} initial={{ opacity: 0 }} transition={{ duration: 0.8 }} viewport={{ once: false }}>
-                        <div className="panel-text">
-                            <h3>2024: The Awakening</h3>
-                            <p>
-                                We built <strong>BIMPE</strong> not just a chatbot, but a <strong>clinical-grade AI triage system</strong> 
-                                that hospitals could white-label. Our first enterprise partner: a Lagos teaching hospital 
-                                managing 10,000 patient touchpoints monthly. Mental health became infrastructure.
-                            </p>
-                        </div>
-                        <div className="panel-image" style={{ backgroundImage: "url('/assets/therapy.jpg')" }}></div>
-                    </motion.div>
-
-                    <motion.div className="story-panel sunset" whileInView={{ opacity: 1 }} initial={{ opacity: 0 }} transition={{ duration: 0.8 }} viewport={{ once: false }}>
-                        <div className="panel-text">
-                            <h3>2025: The Expansion</h3>
-                            <p>
-                                From <strong>Nigeria</strong> to <strong>Kenya</strong> to <strong>Europe</strong>, 
-                                we're now the <strong>middleware</strong> between legacy healthcare systems and modern mental wellness. 
-                                Our API processes 200+ clinical interactions daily. Our enterprise suite powers NGOs, 
-                                telehealth platforms, and government health initiatives.
-                            </p>
-                        </div>
-                        <div className="panel-image" style={{ backgroundImage: "url('/assets/global-map.jpg')" }}></div>
-                    </motion.div>
-
                     <motion.div className="story-panel pure" whileInView={{ opacity: 1 }} initial={{ opacity: 0 }} transition={{ duration: 0.8 }} viewport={{ once: false }}>
                         <div className="panel-text">
                             <h3>2030: The Vision</h3>
                             <p>
-                                By 2030, <strong>200 million lives</strong> will access mental health through our infrastructure. 
-                                We're not replacing therapists we're <strong>augmenting healthcare systems</strong> so that 
+                                By 2030, <strong>200 million lives</strong> will access mental health through our infrastructure.
+                                We're not replacing therapists we're <strong>augmenting healthcare systems</strong> so that
                                 every hospital, clinic, and community center can deliver world-class mental wellness at scale.
                             </p>
                         </div>
@@ -196,144 +171,144 @@ export default function About() {
                     viewport={{ once: false, amount: 0.5 }}
                 >
                     <p>
-                        HealHubCenter stands for <strong>infrastructure</strong>, <strong>intelligence</strong>, 
-                        and <strong>impact</strong> we're the <strong>AWS of mental health</strong>, 
+                        HealHubCenter stands for <strong>infrastructure</strong>, <strong>intelligence</strong>,
+                        and <strong>impact</strong> we're the <strong>AWS of mental health</strong>,
                         the <strong>Salesforce of wellness</strong>, the bridge between clinical excellence and enterprise scale.
                     </p>
                     <div className="heartbeat"></div>
                 </motion.div>
             </section>
-{/* === HEALHUBCENTER MENTAL HEALTH INFRASTRUCTURE === */}
-<section className="vision-mission-dashboard">
+            {/* === HEALHUBCENTER MENTAL HEALTH INFRASTRUCTURE === */}
+            <section className="vision-mission-dashboard">
 
-  {/* INTRO */}
-  <motion.div
-    className="vm-intro"
-    initial={{ opacity: 0, y: 32 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    transition={{ duration: 0.7, ease: "easeOut" }}
-    viewport={{ once: false, amount: 0.45 }}
-  >
-    <h2 className="vm-eyebrow">Mental Health, Built as Infrastructure</h2>
+                {/* INTRO */}
+                <motion.div
+                    className="vm-intro"
+                    initial={{ opacity: 0, y: 32 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.7, ease: "easeOut" }}
+                    viewport={{ once: false, amount: 0.45 }}
+                >
+                    <h2 className="vm-eyebrow">Mental Health, Built as Infrastructure</h2>
 
-    <div className="vm-typed-wrap">
-      <TypeAnimation
-        sequence={[
-          "Mental health is not episodic. It’s continuous.",
-          2600,
-          "Care should be adaptive, not reactive.",
-          2600,
-          "Technology should support the mind quietly.",
-          2600,
-        ]}
-        wrapper="span"
-        speed={36}
-        repeat={Infinity}
-        className="vm-typed"
-      />
-    </div>
+                    <div className="vm-typed-wrap">
+                        <TypeAnimation
+                            sequence={[
+                                "Mental health is not episodic. It’s continuous.",
+                                2600,
+                                "Care should be adaptive, not reactive.",
+                                2600,
+                                "Technology should support the mind quietly.",
+                                2600,
+                            ]}
+                            wrapper="span"
+                            speed={36}
+                            repeat={Infinity}
+                            className="vm-typed"
+                        />
+                    </div>
 
-    <p className="vm-sub">
-      HealHubCenter is a mental health ecosystem engineered to support individuals
-      over time not moments. We design systems that listen, remember, and respond
-      with intention, preserving dignity while scaling access across communities.
-    </p>
-  </motion.div>
+                    <p className="vm-sub">
+                        HealHubCenter is a mental health ecosystem engineered to support individuals
+                        over time not moments. We design systems that listen, remember, and respond
+                        with intention, preserving dignity while scaling access across communities.
+                    </p>
+                </motion.div>
 
-  {/* GRID */}
-  <div className="vm-grid four-col">
+                {/* GRID */}
+                <div className="vm-grid four-col">
 
-    {/* CARD 1 — PHILOSOPHY (STATIC) */}
-    <div className="vm-card gold-accent">
-      <div className="kpi-head">
-        <span className="kpi-dot" />
-        <span>People-First Mental Health</span>
-      </div>
+                    {/* CARD 1 — PHILOSOPHY (STATIC) */}
+                    <div className="vm-card gold-accent">
+                        <div className="kpi-head">
+                            <span className="kpi-dot" />
+                            <span>People-First Mental Health</span>
+                        </div>
 
-      <p className="kpi-foot">
-        HealHubCenter is built on a simple principle: mental health care must feel
-        human before it feels intelligent. Every interaction is designed to protect
-        emotional safety, privacy, and autonomy without surveillance, pressure,
-        or performative engagement.
-      </p>
-    </div>
+                        <p className="kpi-foot">
+                            HealHubCenter is built on a simple principle: mental health care must feel
+                            human before it feels intelligent. Every interaction is designed to protect
+                            emotional safety, privacy, and autonomy without surveillance, pressure,
+                            or performative engagement.
+                        </p>
+                    </div>
 
-    {/* CARD 2 — INTELLIGENCE (ANIMATED) */}
-    <motion.div
-      className="vm-card gold-accent"
-      initial={{ opacity: 0, y: 22 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6, ease: "easeOut" }}
-      whileHover={{ y: -4 }}
-    >
-      <div className="kpi-head">
-        <span className="kpi-dot" />
-        <span>Mental Health Intelligence</span>
-      </div>
+                    {/* CARD 2 — INTELLIGENCE (ANIMATED) */}
+                    <motion.div
+                        className="vm-card gold-accent"
+                        initial={{ opacity: 0, y: 22 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.6, ease: "easeOut" }}
+                        whileHover={{ y: -4 }}
+                    >
+                        <div className="kpi-head">
+                            <span className="kpi-dot" />
+                            <span>Mental Health Intelligence</span>
+                        </div>
 
-      {/* Subtle signal animation */}
-      <motion.div
-        className="signal-stack"
-        animate={{ opacity: [0.35, 0.7, 0.35] }}
-        transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut" }}
-      >
-        <span />
-        <span />
-        <span />
-      </motion.div>
+                        {/* Subtle signal animation */}
+                        <motion.div
+                            className="signal-stack"
+                            animate={{ opacity: [0.35, 0.7, 0.35] }}
+                            transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut" }}
+                        >
+                            <span />
+                            <span />
+                            <span />
+                        </motion.div>
 
-      <p className="kpi-foot">
-        The platform observes emotional signals across time language patterns,
-        interaction rhythm, and behavioral shifts allowing support to be delivered
-        with context and restraint rather than urgency or generic responses.
-      </p>
-    </motion.div>
+                        <p className="kpi-foot">
+                            The platform observes emotional signals across time language patterns,
+                            interaction rhythm, and behavioral shifts allowing support to be delivered
+                            with context and restraint rather than urgency or generic responses.
+                        </p>
+                    </motion.div>
 
-    {/* CARD 3 — CONTINUITY (ANIMATED) */}
-    <motion.div
-      className="vm-card gold-accent"
-      initial={{ opacity: 0, y: 22 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6, ease: "easeOut", delay: 0.15 }}
-      whileHover={{ y: -4 }}
-    >
-      <div className="kpi-head">
-        <span className="kpi-dot" />
-        <span>Continuity of Care</span>
-      </div>
+                    {/* CARD 3 — CONTINUITY (ANIMATED) */}
+                    <motion.div
+                        className="vm-card gold-accent"
+                        initial={{ opacity: 0, y: 22 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.6, ease: "easeOut", delay: 0.15 }}
+                        whileHover={{ y: -4 }}
+                    >
+                        <div className="kpi-head">
+                            <span className="kpi-dot" />
+                            <span>Continuity of Care</span>
+                        </div>
 
-      {/* Slow memory loop */}
-      <motion.div
-        className="memory-loop"
-        animate={{ rotate: 360 }}
-        transition={{ duration: 38, repeat: Infinity, ease: "linear" }}
-      >
-        <span className="loop-core" />
-      </motion.div>
+                        {/* Slow memory loop */}
+                        <motion.div
+                            className="memory-loop"
+                            animate={{ rotate: 360 }}
+                            transition={{ duration: 38, repeat: Infinity, ease: "linear" }}
+                        >
+                            <span className="loop-core" />
+                        </motion.div>
 
-      <p className="kpi-foot">
-        Mental health compounds. HealHubCenter preserves emotional context across
-        interactions so care does not reset. Progress, setbacks, and growth are
-        understood as part of a continuous journey not isolated sessions.
-      </p>
-    </motion.div>
+                        <p className="kpi-foot">
+                            Mental health compounds. HealHubCenter preserves emotional context across
+                            interactions so care does not reset. Progress, setbacks, and growth are
+                            understood as part of a continuous journey not isolated sessions.
+                        </p>
+                    </motion.div>
 
-    {/* CARD 4 — AFRICA-FIRST SCALE (STATIC) */}
-    <div className="vm-card gold-accent">
-      <div className="kpi-head">
-        <span className="kpi-dot" />
-        <span>Africa-First by Design</span>
-      </div>
+                    {/* CARD 4 — AFRICA-FIRST SCALE (STATIC) */}
+                    <div className="vm-card gold-accent">
+                        <div className="kpi-head">
+                            <span className="kpi-dot" />
+                            <span>Africa-First by Design</span>
+                        </div>
 
-      <p className="kpi-foot">
-        Built with African realities in mind, cultural nuance, access gaps, and
-        stigma. HealHubCenter pioneers a scalable mental health model that remains
-        deeply relevant to the people it serves, while standing strong on a global stage.
-      </p>
-    </div>
+                        <p className="kpi-foot">
+                            Built with African realities in mind, cultural nuance, access gaps, and
+                            stigma. HealHubCenter pioneers a scalable mental health model that remains
+                            deeply relevant to the people it serves, while standing strong on a global stage.
+                        </p>
+                    </div>
 
-  </div>
-</section>
+                </div>
+            </section>
 
             {/* === ENTERPRISE SOLUTIONS SHOWCASE === */}
             <section className="vision-mission-dashboard">
@@ -362,7 +337,7 @@ export default function About() {
                         />
                     </div>
                     <p className="vm-sub">
-                        Whether you're a 50-bed clinic or a 5,000-bed hospital network, our enterprise 
+                        Whether you're a 50-bed clinic or a 5,000-bed hospital network, our enterprise
                         infrastructure adapts to your workflows, integrates with your EHR, and scales with your growth.
                     </p>
                 </motion.div>
@@ -481,7 +456,7 @@ export default function About() {
                 <motion.div {...fadeUp()} className="forums-container">
                     <h3 className="forums-heading">🏥 Who We Serve</h3>
                     <p className="forums-subtext">
-                        <strong>Healthcare infrastructure for every context.</strong> From 50-bed clinics to 
+                        <strong>Healthcare infrastructure for every context.</strong> From 50-bed clinics to
                         government health programs, we power mental wellness at scale.
                     </p>
 
