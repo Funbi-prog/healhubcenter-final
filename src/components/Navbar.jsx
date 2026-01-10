@@ -41,8 +41,17 @@ export default function Navbar() {
         { label: "Home", route: "/" },
         { label: "About", route: "/about" },
         { label: "Contact", route: "/contact" },
-        { label: "Enterprise", route: "https://healhubenterprise.vercel.app" },
+        { label: "Enterprise", route: "https://healhubenterprise.vercel.app", external: true },
       ];
+
+  // Handle navigation (internal vs external)
+  const handleNavigation = (route, external) => {
+    if (external) {
+      window.open(route, "_blank", "noopener,noreferrer");
+    } else {
+      navigate(route);
+    }
+  };
 
   return (
     <header
@@ -62,7 +71,7 @@ export default function Navbar() {
           {navItems.map((item, i) => (
             <motion.button
               key={i}
-              onClick={() => navigate(item.route)}
+              onClick={() => handleNavigation(item.route, item.external)}
               className={`nav-link ${
                 location.pathname === item.route ? "active" : ""
               }`}
@@ -104,7 +113,7 @@ export default function Navbar() {
               <button
                 key={i}
                 onClick={() => {
-                  navigate(item.route);
+                  handleNavigation(item.route, item.external);
                   setMenuOpen(false);
                 }}
                 className={`mobile-link ${
