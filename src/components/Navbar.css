@@ -170,3 +170,25 @@ html.dark .nav-link:hover {
     display: flex !important;
   }
 }
+
+/* FORCE HIDE: Mobile navbar completely in dashboard/chat pages */
+@media (max-width: 768px) {
+  /* Only show hamburger when in dashboard/chat */
+  body:has([class*="dashboard"]) .glass-nav .nav-container,
+  body:has([class*="chat"]) .glass-nav .nav-container {
+    padding: 1rem;
+    justify-content: flex-end;
+  }
+  
+  body:has([class*="dashboard"]) .nav-logo-img,
+  body:has([class*="chat"]) .nav-logo-img,
+  body:has([class*="dashboard"]) .nav-links,
+  body:has([class*="chat"]) .nav-links {
+    display: none !important;
+  }
+  
+  /* Mobile dropdown should show Chat + Logout */
+  .mobile-nav {
+    padding: 1rem;
+  }
+}
