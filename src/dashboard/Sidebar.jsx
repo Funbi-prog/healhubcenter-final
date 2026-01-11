@@ -14,17 +14,18 @@ import {
   LogOut,
 } from "lucide-react";
 import { signOut } from "firebase/auth";
-import { auth } from "../firebaseConfig"; // ✅ Make sure path is correct
+import { auth } from "../firebaseConfig";
 
+// ALL items - kept in code but hidden
 const navItems = [
-  { icon: <Home size={18} />, label: "Dashboard", route: "/dashboard" },
-  { icon: <MessageCircle size={18} />, label: "Chat", route: "/chat" },
-  { icon: <Brain size={18} />, label: "Mini Games", route: "/dashboard/games" },
-  { icon: <Book size={18} />, label: "Library", route: "/dashboard/library" },
-  { icon: <Users size={18} />, label: "Roundtable", route: "/roundtable" },
-  { icon: <Newspaper size={18} />, label: "Blog", route: "/blog" },
-  { icon: <BarChart2 size={18} />, label: "Insights", route: "/dashboard/insights" },
-  { icon: <Settings size={18} />, label: "Settings", route: "/dashboard/settings" },
+  { icon: <Home size={18} />, label: "Dashboard", route: "/dashboard", hidden: true }, // HIDDEN
+  { icon: <MessageCircle size={18} />, label: "Chat", route: "/chat", hidden: false }, // VISIBLE
+  { icon: <Brain size={18} />, label: "Mini Games", route: "/dashboard/games", hidden: true }, // HIDDEN
+  { icon: <Book size={18} />, label: "Library", route: "/dashboard/library", hidden: true }, // HIDDEN
+  { icon: <Users size={18} />, label: "Roundtable", route: "/roundtable", hidden: true }, // HIDDEN
+  { icon: <Newspaper size={18} />, label: "Blog", route: "/blog", hidden: true }, // HIDDEN
+  { icon: <BarChart2 size={18} />, label: "Insights", route: "/dashboard/insights", hidden: true }, // HIDDEN
+  { icon: <Settings size={18} />, label: "Settings", route: "/dashboard/settings", hidden: true }, // HIDDEN
 ];
 
 export default function Sidebar() {
@@ -33,10 +34,10 @@ export default function Sidebar() {
 
   const handleLogout = async () => {
     try {
-      await signOut(auth); // ✅ Ends Firebase session
-      localStorage.clear(); // ✅ Clean up any custom local data
+      await signOut(auth);
+      localStorage.clear();
       console.log("✅ User signed out successfully");
-      navigate("/coming-soon"); // ✅ Redirect
+      navigate("/coming-soon");
     } catch (error) {
       console.error("❌ Logout Error:", error.message);
       alert("Logout failed, please try again.");
@@ -45,32 +46,31 @@ export default function Sidebar() {
 
   return (
     <aside className="sidebar">
-      {/* Logo Header */}
-    
-
       {/* Navigation Links */}
       <nav className="sidebar-nav">
-        {navItems.map((item, i) => {
-          const active = pathname === item.route;
-          return (
-            <motion.button
-              key={i}
-              className="sidebar-link"
-              onClick={() => navigate(item.route)}
-              aria-label={item.label}
-              whileHover={{ scale: 1.02 }}
-              transition={{ type: "spring", stiffness: 260, damping: 18 }}
-              style={{
-                background: active ? "rgba(205,185,150,0.12)" : "transparent",
-                borderColor: active ? "rgba(205,185,150,0.35)" : "transparent",
-                color: active ? "#b99f79" : "#222",
-              }}
-            >
-              {item.icon}
-              <span>{item.label}</span>
-            </motion.button>
-          );
-        })}
+        {navItems
+          .filter(item => !item.hidden) // Only show items that are NOT hidden
+          .map((item, i) => {
+            const active = pathname === item.route;
+            return (
+              <motion.button
+                key={i}
+                className="sidebar-link"
+                onClick={() => navigate(item.route)}
+                aria-label={item.label}
+                whileHover={{ scale: 1.02 }}
+                transition={{ type: "spring", stiffness: 260, damping: 18 }}
+                style={{
+                  background: active ? "rgba(205,185,150,0.12)" : "transparent",
+                  borderColor: active ? "rgba(205,185,150,0.35)" : "transparent",
+                  color: active ? "#b99f79" : "#222",
+                }}
+              >
+                {item.icon}
+                <span>{item.label}</span>
+              </motion.button>
+            );
+          })}
 
         {/* Logout Button */}
         <motion.button
