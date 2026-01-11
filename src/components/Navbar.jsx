@@ -12,7 +12,6 @@ export default function Navbar() {
     localStorage.getItem("theme") === "dark"
   );
 
-  // 🌓 Handle dark mode
   useEffect(() => {
     if (darkMode) {
       document.documentElement.classList.add("dark");
@@ -23,19 +22,15 @@ export default function Navbar() {
     }
   }, [darkMode]);
 
-  // 🔍 Route-aware nav items
   const isDashboard =
     location.pathname.startsWith("/dashboard") ||
     location.pathname.startsWith("/chat") ||
     location.pathname.startsWith("/roundtable");
 
+  // SIMPLIFIED - Only show Chat in dashboard
   const navItems = isDashboard
     ? [
-        { label: "Dashboard", route: "/dashboard" },
-        { label: "Check-In", route: "/dashboard/checkin" },
-        { label: "Library", route: "/dashboard/library" },
-        { label: "Chat", route: "/chat" },
-        { label: "Roundtable", route: "/roundtable" },
+        { label: "Chat", route: "/chat" }, // ONLY CHAT VISIBLE
       ]
     : [
         { label: "Home", route: "/" },
@@ -44,7 +39,6 @@ export default function Navbar() {
         { label: "Enterprise", route: "https://healhubenterprise.vercel.app", external: true },
       ];
 
-  // Handle navigation (internal vs external)
   const handleNavigation = (route, external) => {
     if (external) {
       window.open(route, "_blank", "noopener,noreferrer");
@@ -58,15 +52,16 @@ export default function Navbar() {
       className={`glass-nav ${location.pathname !== "/" ? "scrolled" : ""}`}
     >
       <div className="nav-container">
-        {/* === Logo === */}
+        {/* Logo - Hidden on mobile */}
         <img
           src="/assets/nav.png"
           alt="HealHub Center Logo"
           className="nav-logo-img"
           onClick={() => navigate(isDashboard ? "/dashboard" : "/")}
+          style={{ display: window.innerWidth < 768 && isDashboard ? 'none' : 'block' }}
         />
 
-        {/* === Desktop Nav === */}
+        {/* Desktop Nav - Hidden on mobile */}
         <nav className="nav-links">
           {navItems.map((item, i) => (
             <motion.button
@@ -82,14 +77,17 @@ export default function Navbar() {
           ))}
         </nav>
 
-        {/* === Icons === */}
+        {/* Icons */}
         <div className="nav-actions">
-          <button
-            className="darkmode-toggle"
-            onClick={() => setDarkMode(!darkMode)}
-          >
-            {darkMode ? <Sun size={18} /> : <Moon size={18} />}
-          </button>
+          {/* Hide dark mode toggle in dashboard on mobile */}
+          {!(window.innerWidth < 768 && isDashboard) && (
+            <button
+              className="darkmode-toggle"
+              onClick={() => setDarkMode(!darkMode)}
+            >
+              {darkMode ? <Sun size={18} /> : <Moon size={18} />}
+            </button>
+          )}
 
           <button
             className="hamburger"
@@ -100,7 +98,7 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* === Mobile Dropdown === */}
+      {/* Mobile Dropdown - Only Chat visible in dashboard */}
       <AnimatePresence>
         {menuOpen && (
           <motion.div

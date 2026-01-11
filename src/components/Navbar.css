@@ -147,3 +147,26 @@ html.dark .nav-link:hover {
     }
   }
 }
+
+/* MOBILE: Hide entire navbar except hamburger in dashboard */
+@media (max-width: 768px) {
+  .glass-nav {
+    background: transparent !important;
+    box-shadow: none !important;
+    border: none !important;
+  }
+  
+  .nav-container {
+    justify-content: flex-end !important;
+  }
+  
+  .nav-logo-img,
+  .nav-links,
+  .darkmode-toggle {
+    display: none !important;
+  }
+  
+  .hamburger {
+    display: flex !important;
+  }
+}
