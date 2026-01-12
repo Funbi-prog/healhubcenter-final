@@ -8,7 +8,8 @@ export async function sendMessage(conversationId, message) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`
+        "Authorization": `Bearer ${token}`,
+        "ngrok-skip-browser-warning": "true"
       },
       body: JSON.stringify({ content: message }),
     }
@@ -16,14 +17,15 @@ export async function sendMessage(conversationId, message) {
   return response.json();
 }
 
-export async function createConversation(title) {
+export async function createConversation(title = "New Chat") {
   const response = await fetch(`${API_BASE_URL}/conversations`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "Authorization": `Bearer ${token}`
+      "Authorization": `Bearer ${token}`,
+      "ngrok-skip-browser-warning": "true"
     },
-    body: JSON.stringify({title})
+    body: JSON.stringify({ title })
   });
   return response.json();
 }
@@ -35,9 +37,22 @@ export async function getMessages(conversationId) {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`
+        "Authorization": `Bearer ${token}`,
+        "ngrok-skip-browser-warning": "true"
       },
     }
   );
+  return response.json();
+}
+
+export async function getConversations() {
+  const response = await fetch(`${API_BASE_URL}/conversations`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${token}`,
+      "ngrok-skip-browser-warning": "true"
+    },
+  });
   return response.json();
 }
