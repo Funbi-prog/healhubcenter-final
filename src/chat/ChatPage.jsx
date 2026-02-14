@@ -4,14 +4,23 @@ import { motion } from "framer-motion";
 import { Send, Mic, Smile, StopCircle, Play } from "lucide-react";
 import Sidebar from "../dashboard/Sidebar.jsx";
 import "./ChatPage.css";
-import { sendMessage, createConversation, getMessages } from "../services/api.js";
+
+
+// 🔥 FULL SCRIPTED CHAT (REAL TIMESTAMPS GENERATED ON PLAY)
+const SCRIPTED_CHAT = [
+  { sender: "bimpe", text: "Hi love, welcome to HealHubCenter. I’m glad you’re here." },
+  { sender: "user", text: "Hey Bimpe, I’ve been overwhelmed lately…" },
+  { sender: "bimpe", text: "I understand. You’ve been carrying so much." },
+  { sender: "bimpe", text: "You’re safe here, okay? Just breathe for a second." },
+  { sender: "bimpe", text: "What’s the biggest thing on your mind right now?" },
+];
+
 
 export default function ChatPage() {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const [showEmoji, setShowEmoji] = useState(false);
-  const [conversationId, setConversationId] = useState(null);
 
   const [isRecording, setIsRecording] = useState(false);
   const [recAvailable, setRecAvailable] = useState(false);
@@ -21,102 +30,89 @@ export default function ChatPage() {
   const chatEndRef = useRef(null);
   const inputRef = useRef(null);
 
-  const lastMood = localStorage.getItem("hh_lastMood");
-
   const EMOJIS = ["❤️", "🙂", "😔", "😃", "🔥", "🌿", "✨", "💬", "🎧", "🙌"];
 
-  // ========== INIT CHAT SESSION ==========
+  // ========= AUTO-PLAY SCRIPTED CHAT ==========
   useEffect(() => {
-    async function initChat() {
-      const conv = await createConversation("hello");
-      setConversationId(conv?.id);
-      console.log(conv)
+    let index = 0;
 
-      let greeting = "";
-      switch (lastMood) {
-        case "stressed":
-          greeting = "Hi love 🌿, I noticed you felt stressed earlier. Want to talk?";
-          break;
-        case "joy":
-          greeting = "Hey sunshine ☀️, your joy is contagious today.";
-          break;
-        case "tired":
-          greeting = "Hi dear 😴, you’ve had a long day. Want to unwind a bit?";
-          break;
-        case "calm":
-          greeting = "Hi beautiful soul 💫, I love your calm energy.";
-          break;
-        default:
-          greeting = "Hi, I’m Bimpe — your digital wellness companion. Talk to me.";
-      }
+    function playNext() {
+      if (index >= SCRIPTED_CHAT.length) return;
+
+      const next = SCRIPTED_CHAT[index];
 
       setIsTyping(true);
+
       setTimeout(() => {
-        setMessages([
+        setMessages((prev) => [
+          ...prev,
           {
-            sender: "bimpe",
+            sender: next.sender,
             type: "text",
-            text: greeting,
-            ts: Date.now(),
+            text: next.text,
+            ts: Date.now(),  // REAL timestamp
           },
         ]);
+
         setIsTyping(false);
-      }, 700);
+        index++;
+        setTimeout(playNext, 900);
+      }, 900);
     }
 
-    initChat();
+    playNext();
   }, []);
 
+  // auto-scroll
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, isTyping]);
 
+  // mic availability
   useEffect(() => {
     if (navigator.mediaDevices?.getUserMedia) {
       setRecAvailable(true);
     }
   }, []);
 
-  // ========== SEND TEXT ==========
-  const handleSend = async (e) => {
-    e?.preventDefault();
-    if (!input.trim() || !conversationId
-    ) {console.log("no conversation id")
-    return;}
+  // ========= SEND TEXT (LOCAL ONLY) ==========
+  const handleSend = (e) => {
+    e.preventDefault();
+    if (!input.trim()) return;
 
-    const userText = input.trim();
+    const text = input.trim();
 
     setMessages((prev) => [
       ...prev,
-      { sender: "user", type: "text", text: userText, ts: Date.now() },
+      { sender: "user", type: "text", text, ts: Date.now() },
     ]);
 
     setInput("");
+
+    // Auto-demo reply
     setIsTyping(true);
-
-    await sendMessage(conversationId, userText);
-
-    const backendMessages = await getMessages(conversationId);
-
-    const formatted = backendMessages.map((m) => ({
-      sender: m.role === "assistant" ? "bimpe" : "user",
-      type: "text",
-      text: m.content,
-      ts: new Date(m.timestamp).getTime(),
-    }));
-
-    setMessages(formatted);
-    setIsTyping(false);
+    setTimeout(() => {
+      setMessages((prev) => [
+        ...prev,
+        {
+          sender: "bimpe",
+          type: "text",
+          text: "I’m listening… tell me more.",
+          ts: Date.now(),
+        },
+      ]);
+      setIsTyping(false);
+    }, 900);
   };
-  // ========================================
 
-  // Insert emoji
+  // ========= INSERT EMOJI ==========
   const insertEmoji = (emoji) => {
     const el = inputRef.current;
     if (!el) return setInput((v) => v + emoji);
 
     const start = el.selectionStart;
     const end = el.selectionEnd;
+
     const newVal = input.slice(0, start) + emoji + input.slice(end);
     setInput(newVal);
 
@@ -126,7 +122,7 @@ export default function ChatPage() {
     });
   };
 
-  // ========== RECORDING ==========
+  // ========= RECORDING ==========
   const startRecording = async () => {
     if (!recAvailable) return alert("Recording not supported");
 
@@ -147,7 +143,12 @@ export default function ChatPage() {
 
         setMessages((prev) => [
           ...prev,
-          { sender: "user", type: "voice", audioUrl: url, ts: Date.now() },
+          {
+            sender: "user",
+            type: "voice",
+            audioUrl: url,
+            ts: Date.now(),
+          },
         ]);
 
         stream.getTracks().forEach((t) => t.stop());
@@ -169,13 +170,15 @@ export default function ChatPage() {
 
   const playAudio = (url) => new Audio(url).play();
 
-  // ========== RENDER ==========
+  // ========= RENDER ==========
   return (
     <div className="dashboard-layout no-topbar">
       <Sidebar />
 
       <main className="dashboard-main">
         <div className="chat-wrapper">
+
+          {/* HEADER */}
           <motion.header
             className="chat-header"
             initial={{ y: -20, opacity: 0 }}
@@ -190,6 +193,7 @@ export default function ChatPage() {
             </div>
           </motion.header>
 
+          {/* CHAT BODY */}
           <div className="chat-body">
             {messages.map((msg, i) => {
               const isUser = msg.sender === "user";
@@ -206,7 +210,10 @@ export default function ChatPage() {
                   )}
 
                   <div className="bubble-body">
-                    {msg.type === "text" && <div className="bubble-text">{msg.text}</div>}
+                    {msg.type === "text" && (
+                      <div className="bubble-text">{msg.text}</div>
+                    )}
+
                     {msg.type === "voice" && (
                       <div className="bubble-voice">
                         <button onClick={() => playAudio(msg.audioUrl)}>
@@ -238,6 +245,7 @@ export default function ChatPage() {
             <div ref={chatEndRef} />
           </div>
 
+          {/* INPUT BAR */}
           <form className="chat-input" onSubmit={handleSend}>
             <button
               type="button"
@@ -273,11 +281,11 @@ export default function ChatPage() {
               {isRecording ? <StopCircle size={18} /> : <Mic size={18} />}
             </button>
 
-            {/* FIXED BUTTON — NO onClick */}
             <button type="submit" className="send-btn">
               <Send size={18} />
             </button>
           </form>
+
         </div>
       </main>
     </div>

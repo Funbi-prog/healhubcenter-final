@@ -19,8 +19,6 @@ import { auth } from "../firebaseConfig"; // ✅ Make sure path is correct
 const navItems = [
   { icon: <Home size={18} />, label: "Dashboard", route: "/dashboard" },
   { icon: <MessageCircle size={18} />, label: "Chat", route: "/chat" },
-  { icon: <Brain size={18} />, label: "Mini Games", route: "/dashboard/games" },
-  { icon: <Book size={18} />, label: "Library", route: "/dashboard/library" },
   { icon: <Users size={18} />, label: "Roundtable", route: "/roundtable" },
   { icon: <Newspaper size={18} />, label: "Blog", route: "/blog" },
   { icon: <BarChart2 size={18} />, label: "Insights", route: "/dashboard/insights" },
