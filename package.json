@@ -28,7 +28,7 @@
     "react-slick": "^0.31.0",
     "react-type-animation": "^3.2.0",
     "slick-carousel": "^1.8.1",
-    "socket.io": "^4.8.1",
+    "socket.io": "^4.8.3",
     "socket.io-client": "^4.8.1",
     "three": "^0.180.0",
     "typed.js": "^2.1.0"

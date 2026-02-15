@@ -1,6 +1,7 @@
 const TOKEN_KEY = "hhc.token";
 const REFRESH_TOKEN_KEY = "hhc.refreshToken";
 const USER_KEY = "hhc.user";
+const AI_CHAT_CONVERSATION_ID_KEY = "hhc.aiChat.conversationId";
 
 export function getToken() {
   return localStorage.getItem(TOKEN_KEY);
@@ -48,4 +49,17 @@ export function clearAuthStorage() {
   localStorage.removeItem(TOKEN_KEY);
   localStorage.removeItem(REFRESH_TOKEN_KEY);
   localStorage.removeItem(USER_KEY);
+  localStorage.removeItem(AI_CHAT_CONVERSATION_ID_KEY);
+}
+
+export function getAiChatConversationId() {
+  return localStorage.getItem(AI_CHAT_CONVERSATION_ID_KEY);
+}
+
+export function storeAiChatConversationId(conversationId) {
+  if (!conversationId) {
+    localStorage.removeItem(AI_CHAT_CONVERSATION_ID_KEY);
+    return;
+  }
+  localStorage.setItem(AI_CHAT_CONVERSATION_ID_KEY, String(conversationId));
 }
