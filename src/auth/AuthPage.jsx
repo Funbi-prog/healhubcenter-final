@@ -1,7 +1,7 @@
 // src/auth/AuthPage.jsx
 import React from "react";
-import { motion } from "framer-motion";
-import { useNavigate } from "react-router-dom";
+import { motion as Motion } from "framer-motion";
+import { Link, useNavigate } from "react-router-dom";
 import { FaGoogle, FaApple, FaEnvelope } from "react-icons/fa";
 
 export default function AuthPage() {
@@ -9,7 +9,7 @@ export default function AuthPage() {
 
   // Detect mobile once on mount and on resize
   const [isMobile, setIsMobile] = React.useState(
-    typeof window !== "undefined" ? window.innerWidth <= 768 : false
+    typeof window !== "undefined" ? window.innerWidth <= 768 : false,
   );
   React.useEffect(() => {
     const onResize = () => setIsMobile(window.innerWidth <= 768);
@@ -18,10 +18,13 @@ export default function AuthPage() {
   }, []);
 
   const handleLogin = (method) => {
-    console.log(`${method} login clicked`);
-    setTimeout(() => {
-      navigate("/chat");
-    }, 1000);
+    if (method === "Email") {
+      navigate("/login");
+      return;
+    }
+
+    // OAuth not wired in this project yet.
+    navigate("/login");
   };
 
   return (
@@ -43,7 +46,7 @@ export default function AuthPage() {
 
       {/* 🧍🏽‍♀️ Desktop/Large-screen Bimpe (hidden on mobile) */}
       {!isMobile && (
-        <motion.img
+        <Motion.img
           src="/assets/bim1.png" // full-body transparent PNG
           alt="Bimpe AI"
           initial={{ opacity: 0, y: 30 }}
@@ -55,7 +58,7 @@ export default function AuthPage() {
 
       {/* 📱 Mobile Floating Avatar (circular, draggable, always above the form) */}
       {isMobile && (
-        <motion.div
+        <Motion.div
           drag
           dragMomentum={false}
           dragElastic={0.2}
@@ -76,16 +79,16 @@ export default function AuthPage() {
             }}
           />
           {/* subtle breathing glow */}
-          <motion.span
+          <Motion.span
             style={styles.mobileGlow}
             animate={{ opacity: [0.3, 0.6, 0.3], scale: [1, 1.08, 1] }}
             transition={{ repeat: Infinity, duration: 3 }}
           />
-        </motion.div>
+        </Motion.div>
       )}
 
       {/* 💬 Auth Card */}
-      <motion.div
+      <Motion.div
         initial={{ opacity: 0, y: 25 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
@@ -118,7 +121,13 @@ export default function AuthPage() {
           <span style={styles.line}></span>
         </div>
 
-        <form style={styles.form} onSubmit={(e) => e.preventDefault()}>
+        <form
+          style={styles.form}
+          onSubmit={(e) => {
+            e.preventDefault();
+            navigate("/login");
+          }}
+        >
           <input
             type="email"
             placeholder="name@workemail.com"
@@ -129,7 +138,7 @@ export default function AuthPage() {
             placeholder="Your password"
             style={styles.input}
           />
-          <button style={styles.signInBtn} onClick={() => handleLogin("Email")}>
+          <button style={styles.signInBtn} type="submit">
             Sign In
           </button>
         </form>
@@ -144,12 +153,12 @@ export default function AuthPage() {
           </a>
           <div style={{ marginTop: "0.6rem" }}>
             Don’t have an account?{" "}
-            <a href="#" style={styles.linkBold}>
+            <Link to="/signup" style={styles.linkBold}>
               Create one
-            </a>
+            </Link>
           </div>
         </div>
-      </motion.div>
+      </Motion.div>
 
       {/* ⚖️ Premium Footer */}
       <footer style={styles.footer}>

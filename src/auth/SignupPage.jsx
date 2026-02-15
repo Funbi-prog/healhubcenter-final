@@ -1,12 +1,18 @@
 // src/auth/SignupPage.jsx
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { motion } from "framer-motion";
+import { motion as Motion } from "framer-motion";
 import { FaGoogle, FaApple } from "react-icons/fa";
+import { register } from "../services/authApi";
 
 export default function SignupPage() {
   const navigate = useNavigate();
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  const [fullname, setFullname] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 768);
@@ -14,9 +20,30 @@ export default function SignupPage() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const submit = (e) => {
+  const submit = async (e) => {
     e.preventDefault();
-    navigate("/chat");
+    setError(null);
+    setIsSubmitting(true);
+    try {
+      await register({ email, password, fullname });
+      navigate("/dashboard");
+    } catch (err) {
+      console.log("Signup error:", err);
+      const status = err?.response?.status;
+      if (status === 409) {
+        setError("This email already exists. Try signing in instead.");
+      } else if (status === 401 || status === 403) {
+        setError("Unauthorized. Please check your details and try again.");
+      } else {
+        setError(
+          err?.response?.data?.message ||
+            err?.message ||
+            "Signup failed. Please try again.",
+        );
+      }
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -53,7 +80,7 @@ export default function SignupPage() {
 
       {/* ===== Content Section ===== */}
       <main style={styles.main}>
-        <motion.div
+        <Motion.div
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
@@ -78,21 +105,45 @@ export default function SignupPage() {
           </div>
 
           <form style={styles.form} onSubmit={submit}>
-            <input required placeholder="Full name" style={styles.input} />
+            <input
+              required
+              placeholder="Full name"
+              style={styles.input}
+              value={fullname}
+              onChange={(e) => setFullname(e.target.value)}
+              disabled={isSubmitting}
+            />
             <input
               required
               type="email"
               placeholder="Email address"
               style={styles.input}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              disabled={isSubmitting}
             />
             <input
               required
               type="password"
               placeholder="Create a password"
               style={styles.input}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              disabled={isSubmitting}
             />
-            <button type="submit" style={styles.primary}>
-              Create account
+            {error && (
+              <div
+                style={{ color: "#8b1e1e", fontSize: 13, textAlign: "left" }}
+              >
+                {error}
+              </div>
+            )}
+            <button
+              type="submit"
+              style={styles.primary}
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? "Creating..." : "Create account"}
             </button>
           </form>
 
@@ -102,7 +153,7 @@ export default function SignupPage() {
               Sign in
             </Link>
           </p>
-        </motion.div>
+        </Motion.div>
       </main>
 
       {/* ===== Mobile Floating Bimpe ===== */}

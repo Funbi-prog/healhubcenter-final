@@ -6,7 +6,14 @@ import "./index.css";
 import Footer from "./Footer.jsx";
 import { TypeAnimation } from "react-type-animation";
 import { motion } from "framer-motion";
-import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Navigate,
+  useNavigate,
+} from "react-router-dom";
+import RequireAuth from "./auth/RequireAuth.jsx";
 
 // === GLOBAL COMPONENTS ===
 import Navbar from "./components/Navbar.jsx";
@@ -38,7 +45,6 @@ import BlogPage from "./dashboard/pages/BlogPage.jsx";
 import ConnectPage from "./dashboard/pages/ConnectPage.jsx";
 import WorkshopPage from "./dashboard/pages/WorkshopPage.jsx";
 
-
 // === PLACEHOLDER ===
 function PlaceholderPage({ title }) {
   return (
@@ -63,7 +69,6 @@ function PlaceholderPage({ title }) {
     </div>
   );
 }
-
 
 // === HOMEPAGE ===
 function HomePage() {
@@ -152,7 +157,6 @@ function HomePage() {
   );
 }
 
-
 // === MAIN ROUTER ===
 export default function App() {
   return (
@@ -161,7 +165,6 @@ export default function App() {
       <ScrollToTopButton />
 
       <Routes>
-
         {/* === MAIN === */}
         <Route path="/" element={<HomePage />} />
 
@@ -172,28 +175,114 @@ export default function App() {
         <Route path="/help" element={<AuthHelp />} />
 
         {/* === FEATURES === */}
-        <Route path="/chat" element={<ChatPage />} />
-        <Route path="/roundtable" element={<RoundtablePage />} />
-        <Route path="/fireside/:id" element={<FiresideChat />} />
+        <Route
+          path="/chat"
+          element={
+            <RequireAuth>
+              <ChatPage />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/roundtable"
+          element={
+            <RequireAuth>
+              <RoundtablePage />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/fireside/:id"
+          element={
+            <RequireAuth>
+              <FiresideChat />
+            </RequireAuth>
+          }
+        />
 
         {/* === INFORMATION === */}
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
 
         {/* === DASHBOARD (FULL NAVIGATION) === */}
-        <Route path="/dashboard" element={<HealHubDashboard />} />
+        <Route
+          path="/dashboard"
+          element={
+            <RequireAuth>
+              <HealHubDashboard />
+            </RequireAuth>
+          }
+        />
 
-        <Route path="/dashboard/checkin" element={<CheckInPage />} />
-        <Route path="/dashboard/library" element={<LibraryPage />} />
-        <Route path="/dashboard/games" element={<GamesPage />} />
-        <Route path="/dashboard/insights" element={<InsightsPage />} />
-        <Route path="/dashboard/settings" element={<SettingsPage />} />
-        <Route path="/dashboard/blog" element={<BlogPage />} />
+        <Route
+          path="/dashboard/checkin"
+          element={
+            <RequireAuth>
+              <CheckInPage />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/dashboard/library"
+          element={
+            <RequireAuth>
+              <LibraryPage />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/dashboard/games"
+          element={
+            <RequireAuth>
+              <GamesPage />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/dashboard/insights"
+          element={
+            <RequireAuth>
+              <InsightsPage />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/dashboard/settings"
+          element={
+            <RequireAuth>
+              <SettingsPage />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/dashboard/blog"
+          element={
+            <RequireAuth>
+              <BlogPage />
+            </RequireAuth>
+          }
+        />
 
         {/* === NEW FEATURES YOU ADDED === */}
-        <Route path="/dashboard/connect" element={<ConnectPage />} />
-        <Route path="/dashboard/workshops" element={<WorkshopPage />} />
+        <Route
+          path="/dashboard/connect"
+          element={
+            <RequireAuth>
+              <ConnectPage />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/dashboard/workshops"
+          element={
+            <RequireAuth>
+              <WorkshopPage />
+            </RequireAuth>
+          }
+        />
 
+        {/* Fallback: avoid blank screen on unknown routes */}
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>
   );

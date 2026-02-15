@@ -12,7 +12,9 @@
   "dependencies": {
     "@react-three/drei": "^10.7.6",
     "@react-three/fiber": "^9.4.0",
+    "axios": "^1.13.5",
     "cors": "^2.8.5",
+    "dotenv": "^17.3.1",
     "express": "^5.1.0",
     "firebase": "^12.5.0",
     "framer-motion": "^12.23.24",

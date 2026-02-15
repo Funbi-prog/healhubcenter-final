@@ -13,16 +13,23 @@ import {
   Settings,
   LogOut,
 } from "lucide-react";
-import { signOut } from "firebase/auth";
-import { auth } from "../firebaseConfig"; // ✅ Make sure path is correct
+import { logout } from "../services/authApi";
 
 const navItems = [
   { icon: <Home size={18} />, label: "Dashboard", route: "/dashboard" },
   { icon: <MessageCircle size={18} />, label: "Chat", route: "/chat" },
   { icon: <Users size={18} />, label: "Roundtable", route: "/roundtable" },
-  { icon: <Newspaper size={18} />, label: "Blog", route: "/blog" },
-  { icon: <BarChart2 size={18} />, label: "Insights", route: "/dashboard/insights" },
-  { icon: <Settings size={18} />, label: "Settings", route: "/dashboard/settings" },
+  { icon: <Newspaper size={18} />, label: "Blog", route: "/dashboard/blog" },
+  {
+    icon: <BarChart2 size={18} />,
+    label: "Insights",
+    route: "/dashboard/insights",
+  },
+  {
+    icon: <Settings size={18} />,
+    label: "Settings",
+    route: "/dashboard/settings",
+  },
 ];
 
 export default function Sidebar() {
@@ -31,9 +38,7 @@ export default function Sidebar() {
 
   const handleLogout = async () => {
     try {
-      await signOut(auth); // ✅ Ends Firebase session
-      localStorage.clear(); // ✅ Clean up any custom local data
-      console.log("✅ User signed out successfully");
+      await logout();
       navigate("/login"); // ✅ Redirect
     } catch (error) {
       console.error("❌ Logout Error:", error.message);
@@ -44,7 +49,6 @@ export default function Sidebar() {
   return (
     <aside className="sidebar">
       {/* Logo Header */}
-    
 
       {/* Navigation Links */}
       <nav className="sidebar-nav">

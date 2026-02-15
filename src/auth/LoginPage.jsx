@@ -1,16 +1,18 @@
 // src/auth/LoginPage.jsx
 import React, { useState, useEffect } from "react";
-import { motion } from "framer-motion";
-import { useNavigate, Link } from "react-router-dom";
+import { motion as Motion } from "framer-motion";
+import { useNavigate, Link, useLocation } from "react-router-dom";
 import { FaGoogle, FaApple, FaEnvelope } from "react-icons/fa";
-import { auth, provider } from "../firebaseConfig";
-import { signInWithPopup, signInWithEmailAndPassword } from "firebase/auth";
+import { login } from "../services/authApi";
 
 export default function LoginPage() {
   const navigate = useNavigate();
+  const location = useLocation();
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 768);
@@ -18,33 +20,36 @@ export default function LoginPage() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // === Firebase Auth Handlers ===
-  const handleGoogleLogin = async () => {
-    try {
-      const result = await signInWithPopup(auth, provider);
-      console.log("✅ Google Login Success:", result.user);
-      // Redirect to dashboard after successful login
-      navigate("/dashboard");
-    } catch (error) {
-      console.error("❌ Google Login Error:", error.message);
-      alert("Google login failed. Please try again.");
-    }
-  };
-
   const handleEmailLogin = async (e) => {
     e.preventDefault();
     try {
-      const userCredential = await signInWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-      console.log("✅ Email Login Success:", userCredential.user);
-      // Redirect to dashboard after successful login
-      navigate("/dashboard");
-    } catch (error) {
-      console.error("❌ Email Login Error:", error.message);
-      alert(error.message);
+      setError(null);
+      setIsSubmitting(true);
+      await login({ email, password });
+      const fromPath = location.state?.from?.pathname;
+      const nextPath =
+        typeof fromPath === "string" && fromPath.startsWith("/")
+          ? fromPath
+          : "/dashboard";
+      navigate(nextPath, { replace: true });
+    } catch (err) {
+      const status = err?.response?.status;
+      if (status === 401 || status === 403) {
+        console.warn("Authentication failed:", err.response.data.message);
+        setError("Invalid email or password.");
+      } else {
+        console.error(
+          "Unexpected Login Error:",
+          err.response.data.message.message[0],
+        );
+        setError(
+          err?.response?.data?.message.message[0] ||
+            err?.response.data.message.message ||
+            "Login failed. Please try again.",
+        );
+      }
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -63,7 +68,7 @@ export default function LoginPage() {
 
       {/* ===== Desktop Bimpe ===== */}
       {!isMobile && (
-        <motion.div
+        <Motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{
             opacity: 1,
@@ -77,12 +82,12 @@ export default function LoginPage() {
             alt="Bimpe illustration"
             style={styles.bimpeImg}
           />
-        </motion.div>
+        </Motion.div>
       )}
 
       {/* ===== Mobile Floating Bimpe ===== */}
       {isMobile && (
-        <motion.div
+        <Motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{
             opacity: 1,
@@ -93,11 +98,11 @@ export default function LoginPage() {
         >
           <img src="/assets/bim1.png" alt="BIMPE" style={styles.fabImg} />
           <div style={styles.bubble}>Hey there 👋 Ready to sign in?</div>
-        </motion.div>
+        </Motion.div>
       )}
 
       {/* ===== Auth Card ===== */}
-      <motion.div
+      <Motion.div
         initial={{ opacity: 0, y: 24 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
@@ -112,10 +117,10 @@ export default function LoginPage() {
         <p style={styles.subdomain}>healhubcenter.vercel.app</p>
 
         <div style={styles.buttons}>
-          <button style={styles.oauthBtn} onClick={handleGoogleLogin}>
+          <button style={styles.oauthBtn} disabled>
             <FaGoogle style={styles.icon} /> Continue with Google
           </button>
-          <button style={styles.oauthBtn}>
+          <button style={styles.oauthBtn} disabled>
             <FaApple style={styles.icon} /> Continue with Apple
           </button>
         </div>
@@ -134,6 +139,7 @@ export default function LoginPage() {
             onChange={(e) => setEmail(e.target.value)}
             style={styles.input}
             required
+            disabled={isSubmitting}
           />
           <input
             type="password"
@@ -142,7 +148,13 @@ export default function LoginPage() {
             onChange={(e) => setPassword(e.target.value)}
             style={styles.input}
             required
+            disabled={isSubmitting}
           />
+          {error && (
+            <div style={{ color: "#8b1e1e", fontSize: 13, textAlign: "left" }}>
+              {error}
+            </div>
+          )}
           <button style={styles.signInBtn} type="submit">
             <FaEnvelope style={{ marginRight: 6 }} /> Sign In with Email
           </button>
@@ -159,7 +171,7 @@ export default function LoginPage() {
             </Link>
           </div>
         </div>
-      </motion.div>
+      </Motion.div>
 
       {/* ===== Footer ===== */}
       <footer style={styles.footer}>
@@ -259,7 +271,12 @@ const styles = {
     fontSize: "0.85rem",
     marginBottom: "0.9rem",
   },
-  title: { fontSize: "1.55rem", color: "#222", marginBottom: 6, fontWeight: 600 },
+  title: {
+    fontSize: "1.55rem",
+    color: "#222",
+    marginBottom: 6,
+    fontWeight: 600,
+  },
   brandText: { color: "#a680ff" },
   subdomain: { fontSize: "0.9rem", color: "#666", marginBottom: "1.2rem" },
   buttons: { display: "flex", flexDirection: "column", gap: "0.75rem" },
@@ -285,7 +302,12 @@ const styles = {
     margin: "1.1rem 0",
   },
   line: { height: 1, width: "40%", background: "#ddd" },
-  or: { margin: "0 0.55rem", fontSize: "0.8rem", color: "#777", fontWeight: 600 },
+  or: {
+    margin: "0 0.55rem",
+    fontSize: "0.8rem",
+    color: "#777",
+    fontWeight: 600,
+  },
   form: {
     display: "flex",
     flexDirection: "column",

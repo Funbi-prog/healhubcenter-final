@@ -1,41 +1,27 @@
-const API_BASE_URL = "http://192.168.0.183:8000/api/v1";
-const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJoZWFsaHViIiwiZXhwIjoxNzY0Mjc0NzY3fQ.S4SAYAxXE9SgPzmRcMjZdukC-5yw5N2lQxLIOUbIWAE"
-export async function sendMessage(conversationId, message) {
-  const response = await fetch(
-    `${API_BASE_URL}/conversations/${conversationId}/messages`,
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json", 
-        "Authorization": `Bearer ${token}`
-      },
-      body: JSON.stringify({ content: message }),
-    }
-  );
+import { customFetch } from "../utils/customFetch";
 
-  return response.json();
+export async function sendMessage(conversationId, message) {
+  const response = await customFetch.post(
+    `/conversations/${conversationId}/messages`,
+    { content: message },
+    { headers: { "Content-Type": "application/json" } },
+  );
+  return response.data;
 }
 
 export async function createConversation(title) {
-  const response = await fetch(`${API_BASE_URL}/conversations`, {
-    method: "POST",
-       headers: {
-        "Content-Type": "application/json", 
-        "Authorization": `Bearer ${token}`
-      }, 
-      body: JSON.stringify({title}) 
-
-  });
-
-  return response.json();
+  const response = await customFetch.post(
+    "/conversations",
+    { title },
+    { headers: { "Content-Type": "application/json" } },
+  );
+  return response.data;
 }
 
 export async function getMessages(conversationId) {
-  const response = await fetch(
-    `${API_BASE_URL}/conversations/${conversationId}/messages`, {method:"GET",   headers: {
-        "Content-Type": "application/json", 
-        "Authorization": `Bearer ${token}`
-      },}
+  const response = await customFetch.get(
+    `/conversations/${conversationId}/messages`,
+    { headers: { "Content-Type": "application/json" } },
   );
-  return response.json();
+  return response.data;
 }
