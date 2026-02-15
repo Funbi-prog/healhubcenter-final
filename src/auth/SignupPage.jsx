@@ -36,8 +36,8 @@ export default function SignupPage() {
         setError("Unauthorized. Please check your details and try again.");
       } else {
         setError(
-          err?.response?.data?.message ||
-            err?.message ||
+          err?.response?.data?.message.message[0] ||
+            err?.response.data.message.message ||
             "Signup failed. Please try again.",
         );
       }
