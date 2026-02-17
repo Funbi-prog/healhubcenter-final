@@ -40,11 +40,11 @@ export default function LoginPage() {
       } else {
         console.error(
           "Unexpected Login Error:",
-          err.response.data.message.message[0],
+          err.response.data.message.message,
         );
         setError(
-          err?.response?.data?.message.message[0] ||
-            err?.response.data.message.message ||
+          err?.response?.data?.message.message ||
+            err?.response.data.message.message[0] ||
             "Login failed. Please try again.",
         );
       }

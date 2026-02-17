@@ -1,7 +1,8 @@
 // src/dashboard/Sidebar.jsx
 import React from "react";
-import { motion } from "framer-motion";
+import { motion as Motion } from "framer-motion";
 import { useNavigate, useLocation } from "react-router-dom";
+import "./Dashboard.css";
 import {
   Home,
   MessageCircle,
@@ -55,7 +56,7 @@ export default function Sidebar() {
         {navItems.map((item, i) => {
           const active = pathname === item.route;
           return (
-            <motion.button
+            <Motion.button
               key={i}
               className="sidebar-link"
               onClick={() => navigate(item.route)}
@@ -70,12 +71,12 @@ export default function Sidebar() {
             >
               {item.icon}
               <span>{item.label}</span>
-            </motion.button>
+            </Motion.button>
           );
         })}
 
         {/* Logout Button */}
-        <motion.button
+        <Motion.button
           onClick={handleLogout}
           className="sidebar-link logout"
           whileHover={{ scale: 1.05 }}
@@ -90,7 +91,7 @@ export default function Sidebar() {
         >
           <LogOut size={18} />
           <span>Logout</span>
-        </motion.button>
+        </Motion.button>
       </nav>
     </aside>
   );
