@@ -72,7 +72,6 @@ async function refreshAccessToken() {
     const refreshToken = getRefreshToken();
     if (!refreshToken) throw new Error("Missing refresh token");
 
-    // Use a plain axios call to avoid interceptor loops.
     const response = await axios.post(
       buildApiUrl("auth/refresh"),
       { refreshToken },
