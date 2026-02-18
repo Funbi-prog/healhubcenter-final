@@ -14,16 +14,12 @@ const smoothScrollTo = (id) => {
 const fadeSlideVariant = {
   hidden: (direction) => ({
     opacity: 0,
-    x: direction === "left" ? -80 : 80,
-    scale: 0.96,
-    filter: "blur(8px)",
+    x: direction === "left" ? -40 : 40,
   }),
   visible: {
     opacity: 1,
     x: 0,
-    scale: 1,
-    filter: "blur(0px)",
-    transition: { type: "spring", stiffness: 60, damping: 20, duration: 1.2 },
+    transition: { duration: 0.5, ease: "easeOut" },
   },
 };
 
@@ -52,7 +48,7 @@ export function Section({
   secondaryTo = "#",
 }) {
   const controls = useAnimation();
-  const [ref, inView] = useInView({ threshold: 0.25, triggerOnce: false });
+  const [ref, inView] = useInView({ threshold: 0.2, triggerOnce: true });
   const navigate = useNavigate();
 
   React.useEffect(() => {
@@ -89,14 +85,11 @@ export function Section({
       custom={reverse ? "right" : "left"}
     >
       <div className="hh-media">
-        <motion.img
+        <img
           src={image}
           alt={title}
           loading="lazy"
           className="hh-img"
-          initial={{ opacity: 0, y: 40, scale: 0.98 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          transition={{ duration: 1, ease: "easeOut" }}
         />
       </div>
 

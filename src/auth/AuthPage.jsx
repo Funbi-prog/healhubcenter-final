@@ -187,7 +187,7 @@ const styles = {
     position: "relative",
     minHeight: "100vh",
     width: "100%",
-    background: "linear-gradient(135deg, #fdfcfb, #f1ece7)",
+    background: "linear-gradient(135deg, #f8fafc, #f0f9ff)",
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
@@ -256,8 +256,8 @@ const styles = {
     marginTop: "4.5rem",
   },
   banner: {
-    background: "#f7f0e9",
-    color: "#4b3f2f",
+    background: "#dbeafe",
+    color: "#0c4a6e",
     padding: "0.6rem",
     borderRadius: "6px",
     fontSize: "0.85rem",
@@ -391,7 +391,7 @@ const styles = {
     position: "absolute",
     inset: 0,
     borderRadius: "999px",
-    boxShadow: "0 0 24px #cdbb96 inset",
+    boxShadow: "0 0 24px #38bdf8 inset",
     pointerEvents: "none",
   },
 

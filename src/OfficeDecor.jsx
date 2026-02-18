@@ -8,7 +8,7 @@ export function WallClock({ position = [0, 2.4, -2.9] }) {
       {/* Outer ring */}
       <mesh>
         <torusGeometry args={[0.25, 0.03, 16, 64]} />
-        <meshStandardMaterial color="#CDBA96" metalness={0.5} roughness={0.4} />
+        <meshStandardMaterial color="#38bdf8" metalness={0.5} roughness={0.4} />
       </mesh>
       {/* Face */}
       <mesh>
@@ -45,7 +45,7 @@ export function Shelf({ position = [1.6, 0.9, -1.8] }) {
   return (
     <group position={position}>
       <RoundedBox args={[0.8, 0.04, 0.3]} radius={0.02} smoothness={6}>
-        <meshStandardMaterial color="#CDBA96" roughness={0.4} />
+        <meshStandardMaterial color="#38bdf8" roughness={0.4} />
       </RoundedBox>
       <mesh position={[0, 0.12, 0]}>
         <sphereGeometry args={[0.08, 24, 24]} />

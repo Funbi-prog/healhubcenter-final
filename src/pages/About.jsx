@@ -12,27 +12,24 @@ const fadeUp = (delay = 0) => ({
     viewport: { once: true, amount: 0.3 },
 });
 
-// === Animated Counter Helper (Replays when in view) ===
+// === Animated Counter Helper ===
 function AnimatedCounter({ from = 0, to = 100, duration = 1.6, className }) {
     const [val, setVal] = useState(from);
     const ref = useRef(null);
-    const inView = useInView(ref, { once: false, amount: 0.4 }); // triggers each time visible
+    const inView = useInView(ref, { once: true, amount: 0.4 });
 
     useEffect(() => {
-        if (inView) {
-            const frames = Math.round(60 * duration);
-            const step = (to - from) / frames;
-            let i = 0;
-            const id = requestAnimationFrame(function tick() {
-                i++;
-                const next = Math.round(from + step * i);
-                setVal(next > to ? to : next);
-                if (i < frames) requestAnimationFrame(tick);
-            });
-            return () => cancelAnimationFrame(id);
-        } else {
-            setVal(from); // reset when leaving viewport
-        }
+        if (!inView) return;
+        const frames = Math.round(60 * duration);
+        const step = (to - from) / frames;
+        let i = 0;
+        const id = requestAnimationFrame(function tick() {
+            i++;
+            const next = Math.round(from + step * i);
+            setVal(next > to ? to : next);
+            if (i < frames) requestAnimationFrame(tick);
+        });
+        return () => cancelAnimationFrame(id);
     }, [inView, from, to, duration]);
 
     return (
@@ -122,14 +119,14 @@ export default function About() {
 
                 <motion.div
                     className="story-stage"
-                    initial={{ opacity: 0, y: 40 }}
+                    initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 1.2, ease: "easeOut" }}
+                    transition={{ duration: 0.6, ease: "easeOut" }}
                     viewport={{ once: true, amount: 0.5 }}
                 >
                     <h2 className="story-title">Our Story</h2>
-                    <motion.p className="story-quote" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.4, duration: 1 }}>
-                        “Every movement begins with silence.”
+                    <motion.p className="story-quote" initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: 0.2, duration: 0.5 }}>
+                        "Every movement begins with silence."
                     </motion.p>
                     <p className="story-intro-text">
                         For HealHubCenter, that silence came from the world’s growing cry for emotional clarity.
@@ -189,9 +186,9 @@ export default function About() {
 
                 <motion.div
                     className="story-outro"
-                    initial={{ opacity: 0, y: 40 }}
+                    initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 1.4, ease: "easeOut" }}
+                    transition={{ duration: 0.6, ease: "easeOut" }}
                     viewport={{ once: true, amount: 0.5 }}
                 >
                     <p>
@@ -207,10 +204,10 @@ export default function About() {
             <section className="vision-mission-dashboard">
                 <motion.div
                     className="vm-intro"
-                    initial={{ opacity: 0, x: 80, y: 12 }}
-                    whileInView={{ opacity: 1, x: 0, y: 0 }}
-                    transition={{ duration: 0.9, ease: "easeOut" }}
-                    viewport={{ once: true, amount: 0.5 }}
+                    initial={{ opacity: 0, x: 30 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.5, ease: "easeOut" }}
+                    viewport={{ once: true, amount: 0.4 }}
                 >
                     <h2 className="vm-eyebrow">Our Vision & Mission</h2>
                     <div className="vm-typed-wrap">

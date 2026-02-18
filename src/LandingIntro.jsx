@@ -17,12 +17,12 @@ import Atmosphere from "./Atmosphere";
 const colors = {
   wall: "#FBF9F5",
   floor: "#FDFCFB",
-  accent: "#CDBA96",
+  accent: "#38bdf8",
   trim: "#EDE6DD",
   plaque: "#FFFFFF",
   sign: "#111111",
-  gold: "#D4AF37",
-  brass: "#B89F65",
+  gold: "#0EA5E9",
+  brass: "#0284c7",
   glass: "#FFFFFF",
   rug: "#F2EEE9",
   monitor: "#16263A",
@@ -155,9 +155,17 @@ function GoldChandelier({ position = [0, 2.6, -0.1] }) {
     <group position={position} ref={ref}>
       <mesh position={[0, -0.25, 0]}>
         <cylinderGeometry args={[0.02, 0.02, 0.5, 24]} />
-        <meshStandardMaterial color={colors.gold} roughness={0.35} metalness={1} />
+        <meshStandardMaterial
+          color={colors.gold}
+          roughness={0.35}
+          metalness={1}
+        />
       </mesh>
-      {[[-0.32, -0.48, 0], [0, -0.5, 0], [0.32, -0.48, 0]].map((p, i) => (
+      {[
+        [-0.32, -0.48, 0],
+        [0, -0.5, 0],
+        [0.32, -0.48, 0],
+      ].map((p, i) => (
         <group key={i} position={p}>
           <mesh>
             <sphereGeometry args={[0.08, 24, 24]} />
@@ -172,7 +180,12 @@ function GoldChandelier({ position = [0, 2.6, -0.1] }) {
           <pointLight intensity={0.65} distance={4} decay={2} color="#FFE5B0" />
         </group>
       ))}
-      <pointLight position={[0, -0.5, 0]} intensity={0.3} distance={5} color="#FFEAD1" />
+      <pointLight
+        position={[0, -0.5, 0]}
+        intensity={0.3}
+        distance={5}
+        color="#FFEAD1"
+      />
     </group>
   );
 }
@@ -185,11 +198,19 @@ function WallSconces() {
         <group key={i} position={[x, 1.6, -2.95]}>
           <mesh>
             <boxGeometry args={[0.18, 0.36, 0.06]} />
-            <meshStandardMaterial color={colors.gold} metalness={1} roughness={0.35} />
+            <meshStandardMaterial
+              color={colors.gold}
+              metalness={1}
+              roughness={0.35}
+            />
           </mesh>
           <mesh position={[0, 0, 0.03]}>
             <boxGeometry args={[0.14, 0.28, 0.02]} />
-            <meshStandardMaterial emissive="#FFF3DE" emissiveIntensity={0.45} color="#FFF8EF" />
+            <meshStandardMaterial
+              emissive="#FFF3DE"
+              emissiveIntensity={0.45}
+              color="#FFF8EF"
+            />
           </mesh>
           <pointLight intensity={0.35} distance={2.2} color="#FFEFD9" />
         </group>
@@ -209,7 +230,11 @@ function DeskDecorGlassLeft() {
         </mesh>
         <mesh position={[0, 0.06, 0]}>
           <sphereGeometry args={[0.02, 12, 12]} />
-          <meshStandardMaterial emissive="#FFD6A3" emissiveIntensity={0.75} color="#fff5e9" />
+          <meshStandardMaterial
+            emissive="#FFD6A3"
+            emissiveIntensity={0.75}
+            color="#fff5e9"
+          />
         </mesh>
         <pointLight intensity={0.55} distance={1.4} color="#FFE5B0" />
       </group>
@@ -225,7 +250,10 @@ function DeskDecorGlassLeft() {
           />
         </mesh>
         {[...Array(3)].map((_, i) => (
-          <mesh key={i} position={[Math.sin(i) * 0.01, 0.09, Math.cos(i) * 0.01]}>
+          <mesh
+            key={i}
+            position={[Math.sin(i) * 0.01, 0.09, Math.cos(i) * 0.01]}
+          >
             <boxGeometry args={[0.01, 0.25, 0.01]} />
             <meshStandardMaterial color="#4B3E33" />
           </mesh>
@@ -262,13 +290,17 @@ function VaseSet() {
         <meshStandardMaterial color="#EFE9E3" roughness={0.6} />
       </mesh>
       <group position={[0, 0.75, 0]}>
-        <mesh position={[ -0.08, 0, 0 ]}>
+        <mesh position={[-0.08, 0, 0]}>
           <cylinderGeometry args={[0.05, 0.06, 0.2, 24]} />
           <meshStandardMaterial color="#FFFFFF" roughness={0.5} />
         </mesh>
         <mesh position={[0.08, 0.03, 0]} rotation={[0, 0, 0.2]}>
           <torusKnotGeometry args={[0.035, 0.01, 80, 12]} />
-          <meshStandardMaterial color={colors.gold} metalness={1} roughness={0.35} />
+          <meshStandardMaterial
+            color={colors.gold}
+            metalness={1}
+            roughness={0.35}
+          />
         </mesh>
         <mesh position={[0, 0.06, -0.06]}>
           <sphereGeometry args={[0.045, 24, 24]} />
@@ -302,8 +334,17 @@ function Monitor({ position = [0.55, 0.82, 0.05] }) {
 function ReceptionDesk() {
   return (
     <group>
-      <RoundedBox args={[2.2, 0.55, 0.84]} radius={0.08} smoothness={8} position={[0, 0.35, 0]}>
-        <meshStandardMaterial color={colors.accent} metalness={0.25} roughness={0.45} />
+      <RoundedBox
+        args={[2.2, 0.55, 0.84]}
+        radius={0.08}
+        smoothness={8}
+        position={[0, 0.35, 0]}
+      >
+        <meshStandardMaterial
+          color={colors.accent}
+          metalness={0.25}
+          roughness={0.45}
+        />
       </RoundedBox>
       <mesh position={[0, 0.55, 0.44]}>
         <boxGeometry args={[2.1, 0.1, 0.06]} />
@@ -327,7 +368,11 @@ function WallArt({ position = [1.8, 1.4, -2.99] }) {
       </mesh>
       <mesh position={[0, 0, 0.025]}>
         <planeGeometry args={[1.0, 0.7]} />
-        <meshStandardMaterial color="#8A6BBF" emissive="#FFB6C1" emissiveIntensity={0.28} />
+        <meshStandardMaterial
+          color="#8A6BBF"
+          emissive="#FFB6C1"
+          emissiveIntensity={0.28}
+        />
       </mesh>
     </group>
   );
@@ -354,7 +399,10 @@ function WallTV({ position = [-1.25, 1.18, -2.95] }) {
       </mesh>
       <mesh position={[0, 0, 0.03]}>
         <planeGeometry args={[1.3, 0.75]} />
-        <meshStandardMaterial emissive={colors.tvGlow} emissiveIntensity={0.72} />
+        <meshStandardMaterial
+          emissive={colors.tvGlow}
+          emissiveIntensity={0.72}
+        />
       </mesh>
       <Text
         position={[0, 0, 0.04]}
@@ -402,12 +450,21 @@ function RoomShell() {
 
       <mesh position={[0, 3, -3]}>
         <boxGeometry args={[10, 0.02, 0.02]} />
-        <meshStandardMaterial color={colors.brass} metalness={1} roughness={0.4} />
+        <meshStandardMaterial
+          color={colors.brass}
+          metalness={1}
+          roughness={0.4}
+        />
       </mesh>
 
       <group position={[0, 2.2, -2.95]}>
         <RoundedBox args={[3.0, 0.6, 0.04]} radius={0.06}>
-          <meshPhysicalMaterial color={colors.plaque} roughness={0.3} metalness={0.1} clearcoat={1} />
+          <meshPhysicalMaterial
+            color={colors.plaque}
+            roughness={0.3}
+            metalness={0.1}
+            clearcoat={1}
+          />
         </RoundedBox>
         <Text
           position={[0, 0, 0.035]}
@@ -548,12 +605,21 @@ export default function LandingIntro() {
               preserveDrawingBuffer: false,
             }}
             camera={{ position: [2.2, 1.25, 3.8], fov: 45 }}
-            style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }}
+            style={{
+              position: "absolute",
+              inset: 0,
+              width: "100%",
+              height: "100%",
+            }}
           >
             <color attach="background" args={["#FFFDFE"]} />
             <fog attach="fog" args={["#FFF7FB", 8, 22]} />
 
-            <hemisphereLight intensity={0.9} groundColor="#F5EFE6" skyColor="#FFFFFF" />
+            <hemisphereLight
+              intensity={0.9}
+              groundColor="#F5EFE6"
+              skyColor="#FFFFFF"
+            />
             <directionalLight
               name="breatheLight"
               position={[4, 5, 3]}
@@ -571,7 +637,11 @@ export default function LandingIntro() {
               <GoldChandelier position={[0.1, 2.6, -0.1]} />
               <Plant position={[-2.4, 0, -2.4]} />
               <Plant position={[2.6, 0, -2.5]} />
-              <BimpeModel position={[0, -0.47, -0.35]} scale={1.05} rotation={[0, Math.PI, 0]} />
+              <BimpeModel
+                position={[0, -0.47, -0.35]}
+                scale={1.05}
+                rotation={[0, Math.PI, 0]}
+              />
               <Atmosphere />
             </group>
 

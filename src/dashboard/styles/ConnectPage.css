@@ -3,12 +3,12 @@
    ============================================ */
 
 :root {
-  --bg-1: #faf9f7;
-  --bg-2: #f5f3ee;
+  --bg-1: #f0f9ff;
+  --bg-2: #e0f2fe;
   --text-1: #1b1b1b;
   --text-2: #6b665d;
-  --gold-1: #b79f6d;
-  --gold-2: #cdb996;
+  --gold-1: #0EA5E9;
+  --gold-2: #38bdf8;
   --card: #ffffff;
 }
 
@@ -48,7 +48,7 @@
   background: var(--card);
   border-radius: 16px;
   padding: 22px;
-  border: 1px solid rgba(205, 185, 150, 0.12);
+  border: 1px solid rgba(56, 189, 248, 0.12);
   box-shadow: 0 8px 28px rgba(0, 0, 0, 0.04);
 }
 
@@ -64,15 +64,15 @@
   flex: 1;
   padding: 22px;
   border-radius: 14px;
-  border: 1px solid rgba(205, 185, 150, 0.15);
-  background: linear-gradient(180deg, #ffffff, #fbf9f7);
+  border: 1px solid rgba(56, 189, 248, 0.15);
+  background: linear-gradient(180deg, #ffffff, #f0f9ff);
   cursor: pointer;
   transition: all 0.3s ease;
 }
 
 .choice-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 10px 32px rgba(183, 159, 109, 0.18);
+  box-shadow: 0 10px 32px rgba(14, 165, 233, 0.18);
 }
 
 .choice-card h3 {
@@ -103,7 +103,7 @@
 .input {
   padding: 12px 14px;
   border-radius: 12px;
-  border: 1px solid #e8dfd3;
+  border: 1px solid #bae6fd;
   background: #ffffff;
   font-size: 0.95rem;
   transition: 0.25s ease;
@@ -112,14 +112,14 @@
 .input:focus {
   outline: none;
   border-color: var(--gold-1);
-  box-shadow: 0 0 0 3px rgba(205, 185, 150, 0.25);
+  box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.25);
 }
 
 .textarea {
   width: 100%;
   padding: 14px;
   border-radius: 12px;
-  border: 1px solid #e8dfd3;
+  border: 1px solid #bae6fd;
   min-height: 120px;
   font-size: 0.95rem;
   resize: vertical;
@@ -129,7 +129,7 @@
 .textarea:focus {
   outline: none;
   border-color: var(--gold-1);
-  box-shadow: 0 0 0 3px rgba(205, 185, 150, 0.22);
+  box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.22);
 }
 
 /* SKILLS TAGS */
@@ -151,7 +151,7 @@
   padding: 8px 14px;
   border-radius: 999px;
   font-size: 0.85rem;
-  border: 1px solid rgba(205, 185, 150, 0.28);
+  border: 1px solid rgba(56, 189, 248, 0.28);
   background: #fff;
   color: var(--text-1);
   cursor: pointer;
@@ -159,14 +159,14 @@
 }
 
 .skill:hover {
-  background: rgba(205, 185, 150, 0.12);
+  background: rgba(56, 189, 248, 0.12);
 }
 
 .skill.on {
   background: linear-gradient(120deg, var(--gold-1), var(--gold-2));
   color: #fff;
   border: none;
-  box-shadow: 0 6px 14px rgba(183, 159, 109, 0.24);
+  box-shadow: 0 6px 14px rgba(14, 165, 233, 0.24);
 }
 
 /* FORM ACTIONS */
@@ -178,8 +178,8 @@
 }
 
 .ghost {
-  background: #f4efe6;
-  color: #3d3324;
+  background: #e0f2fe;
+  color: #0c4a6e;
   border: none;
   padding: 10px 16px;
   border-radius: 10px;
@@ -189,7 +189,7 @@
 }
 
 .ghost:hover {
-  background: #eae3d7;
+  background: #bae6fd;
 }
 
 .primary {
@@ -205,7 +205,7 @@
 
 .primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(183, 159, 109, 0.32);
+  box-shadow: 0 8px 20px rgba(14, 165, 233, 0.32);
 }
 
 /* ============================================
@@ -215,7 +215,7 @@
   background: var(--card);
   border-radius: 16px;
   padding: 20px;
-  border: 1px solid rgba(205, 185, 150, 0.12);
+  border: 1px solid rgba(56, 189, 248, 0.12);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
 }
 
@@ -237,7 +237,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 14px;
-  background: linear-gradient(180deg, #ffffff, #fcfbf8);
+  background: linear-gradient(180deg, #ffffff, #f8fafc);
   border-radius: 12px;
   border: 1px solid rgba(0, 0, 0, 0.05);
   margin-bottom: 12px;
@@ -246,7 +246,7 @@
 
 .match-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 8px 28px rgba(183, 159, 109, 0.18);
+  box-shadow: 0 8px 28px rgba(14, 165, 233, 0.18);
 }
 
 .match-title {

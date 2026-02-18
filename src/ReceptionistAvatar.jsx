@@ -30,7 +30,7 @@ export default function ReceptionistAvatar({ position = [0, 0, -0.3] }) {
         smoothness={6}
         position={[0, 0.12, 0]}
       >
-        <meshStandardMaterial color="#CDBA96" roughness={0.45} />
+        <meshStandardMaterial color="#38bdf8" roughness={0.45} />
       </RoundedBox>
       <RoundedBox
         args={[0.05, 0.48, 0.45]}
@@ -38,7 +38,7 @@ export default function ReceptionistAvatar({ position = [0, 0, -0.3] }) {
         smoothness={6}
         position={[-0.2, 0.36, 0]}
       >
-        <meshStandardMaterial color="#CDBA96" roughness={0.45} />
+        <meshStandardMaterial color="#38bdf8" roughness={0.45} />
       </RoundedBox>
 
       {/* Torso */}

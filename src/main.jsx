@@ -12,5 +12,5 @@ if (root) {
     </React.StrictMode>
   );
 } else {
-  console.error("Root element not found! Make sure <div id='root'></div> exists in index.html");
+  console.error("Root element not found!");
 }

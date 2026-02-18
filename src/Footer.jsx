@@ -5,7 +5,7 @@ export default function Footer() {
     <footer
       className="footer-section"
       style={{
-        backgroundImage: "url('/assets/diverse-hands-circle.jpg')",
+        "--footer-bg": "url('/assets/diverse-hands-circle.jpg')",
       }}
     >
       {/* Overlay */}

@@ -47,10 +47,10 @@ export default function Contact() {
           {/* TEXT SIDE */}
           <motion.div
             className="contact-hero-text"
-            initial={{ opacity: 0, x: -40 }}
+            initial={{ opacity: 0, x: -24 }}
             whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 1, ease: "easeOut" }}
-            viewport={{ once: true, amount: 0.4 }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
+            viewport={{ once: true, amount: 0.3 }}
           >
             <h1 className="contact-title">Let’s Connect. Collaborate. Create Impact.</h1>
             <p className="contact-sub">
@@ -63,10 +63,10 @@ export default function Contact() {
           {/* IMAGE SIDE */}
           <motion.div
             className="contact-hero-image-wrap"
-            initial={{ opacity: 0, x: 40 }}
+            initial={{ opacity: 0, x: 24 }}
             whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 1, ease: "easeOut", delay: 0.2 }}
-            viewport={{ once: true, amount: 0.4 }}
+            transition={{ duration: 0.5, ease: "easeOut", delay: 0.1 }}
+            viewport={{ once: true, amount: 0.3 }}
           >
             <img
               src="/assets/disp.jpg"

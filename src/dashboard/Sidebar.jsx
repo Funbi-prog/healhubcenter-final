@@ -64,9 +64,9 @@ export default function Sidebar() {
               whileHover={{ scale: 1.02 }}
               transition={{ type: "spring", stiffness: 260, damping: 18 }}
               style={{
-                background: active ? "rgba(205,185,150,0.12)" : "transparent",
-                borderColor: active ? "rgba(205,185,150,0.35)" : "transparent",
-                color: active ? "#b99f79" : "#222",
+                background: active ? "rgba(14,165,233,0.12)" : "transparent",
+                borderColor: active ? "rgba(14,165,233,0.35)" : "transparent",
+                color: active ? "#0EA5E9" : "#222",
               }}
             >
               {item.icon}

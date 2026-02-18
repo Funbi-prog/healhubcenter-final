@@ -50,7 +50,7 @@
 
 .nav-link.active,
 .nav-link:hover {
-  color: #c6ad7b;
+  color: #0ea5e9;
 }
 /* ===  Dark-mode support  === */
 html.dark {
@@ -70,7 +70,7 @@ html.dark .nav-link {
 
 html.dark .nav-link.active,
 html.dark .nav-link:hover {
-  color: #cdb996;
+  color: #38bdf8;
 }
 
 /* ===  Utility area (toggle + hamburger)  === */
@@ -133,7 +133,7 @@ html.dark .nav-link:hover {
 
   .mobile-link:hover,
   .mobile-link.active {
-    color: #c6ad7b;
+    color: #0ea5e9;
   }
 
   @keyframes fadeSlide {

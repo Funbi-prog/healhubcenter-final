@@ -7,9 +7,9 @@
   --hh-text: #222222;
   --hh-muted: #6d6d6d;
 
-  --gold-500: #cdb996;
-  --gold-600: #b99f79;
-  --gold-700: #9c7f52;
+  --gold-500: #38bdf8;
+  --gold-600: #0EA5E9;
+  --gold-700: #0369a1;
 
   --radius-sm: 8px;
   --radius-md: 12px;
@@ -111,9 +111,9 @@
   border-radius: inherit;
   background: linear-gradient(
     120deg,
-    rgba(205, 185, 150, 0.2),
+    rgba(56, 189, 248, 0.2),
     rgba(255, 255, 255, 0) 35%,
-    rgba(185, 159, 121, 0.15)
+    rgba(57, 56, 139, 0.15)
   );
   opacity: 0;
   transition: opacity 0.3s ease;

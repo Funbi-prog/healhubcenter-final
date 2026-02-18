@@ -1,5 +1,22 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&display=swap");
 
+/* === PERF: CSS-only float (GPU composited via transform, no JS) === */
+@keyframes bimpeFloat {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 /* === GLOBAL RESET === */
 body {
   margin: 0;
@@ -14,6 +31,19 @@ body {
 * {
   box-sizing: border-box;
 }
+
+.gradient-btn {
+  background: linear-gradient(
+    90deg,
+    rgb(57, 56, 139) 0%,
+    rgb(14, 165, 233) 100%
+  ) !important;
+
+  /* animation: pulseHeight 1.6s ease-in-out infinite;
+  will-change: transform;
+  box-shadow: 0 0 8px rgba(14, 165, 233, 0.4); */
+}
+
 /* === NAVBAR (Glass + Halo + Mobile Responsive) === */
 .minimal-nav {
   width: 100%;
@@ -84,8 +114,8 @@ body {
   border-radius: 50%;
   background: radial-gradient(
     circle,
-    rgba(205, 186, 150, 0.3) 0%,
-    rgba(205, 186, 150, 0.05) 60%,
+    rgba(14, 165, 233, 0.3) 0%,
+    rgba(14, 165, 233, 0.05) 60%,
     transparent 100%
   );
   transform: translate(-50%, -50%);
@@ -100,7 +130,7 @@ body {
 }
 
 .nav-link:hover {
-  color: #cdbA96;
+  color: #0ea5e9;
 }
 
 /* === MOBILE MENU (CLEAN RESPONSIVE FIX) === */
@@ -163,7 +193,7 @@ body {
 }
 
 .mobile-menu .nav-link:hover {
-  color: #cdbA96;
+  color: #0ea5e9;
 }
 
 /* === RESPONSIVE BEHAVIOR === */
@@ -243,16 +273,17 @@ body {
   background: #000;
   color: #fff;
   border: none;
-  padding: 0.9rem 1.8rem;
-  border-radius: 8px;
+  padding: 0.94rem 1.8rem;
+  border-radius: 10px;
   font-weight: 500;
   font-size: 1rem;
   transition: all 0.3s ease;
+  cursor: pointer;
 }
 
 .black-btn:hover {
-  background: #cdbA96;
-  color: #111;
+  background: #0ea5e9;
+  color: #fff;
   transform: translateY(-2px);
 }
 
@@ -450,23 +481,35 @@ body {
   font-weight: 300;
   text-align: center;
   padding: 8rem 2rem;
+  overflow: hidden;
+  /* background-attachment: fixed was removed — it disables GPU compositing
+     and causes full CPU repaints on every scroll tick (major jank source).
+     The pseudo-element below gives the same visual with zero scroll cost. */
+}
+
+.footer-section::before {
+  content: "";
+  position: absolute;
+  inset: -20px; /* slight bleed so the image stays covered */
+  background-image: var(--footer-bg);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  background-attachment: fixed;
-  overflow: hidden;
+  transform: translateZ(0); /* force GPU layer */
+  will-change: transform;
+  z-index: 0;
 }
 
 .footer-overlay {
   position: absolute;
   inset: 0;
   background: rgba(0, 0, 0, 0.7);
-  z-index: 0;
+  z-index: 1;
 }
 
 .footer-content {
   position: relative;
-  z-index: 1;
+  z-index: 2;
   max-width: 800px;
   margin: 0 auto;
   animation: fadeInUp 1.6s ease forwards;
@@ -616,7 +659,7 @@ body {
 .hh-sections {
   display: grid;
   gap: 64px;
-  padding: 48px 20px;
+  padding: 48px 50px;
 }
 
 .hh-section {
@@ -625,9 +668,15 @@ body {
   align-items: center;
   gap: 36px;
 }
-.hh-section.reverse { grid-template-columns: 1fr 1.2fr; }
-.hh-section.reverse .hh-media { order: 2; }
-.hh-section.reverse .hh-copy  { order: 1; }
+.hh-section.reverse {
+  grid-template-columns: 1fr 1.2fr;
+}
+.hh-section.reverse .hh-media {
+  order: 2;
+}
+.hh-section.reverse .hh-copy {
+  order: 1;
+}
 
 @media (max-width: 1024px) {
   .hh-section,
@@ -640,13 +689,15 @@ body {
   }
 }
 
-.hh-media { width: 100%; }
+.hh-media {
+  width: 100%;
+}
 .hh-img {
   width: 100%;
   height: auto;
   display: block;
   border-radius: 18px;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
   object-fit: cover;
 }
 
@@ -672,12 +723,34 @@ body {
 }
 
 /* Bullets */
-.hh-features { margin: 12px 0 20px; padding: 0; list-style: none; display: grid; gap: 10px; }
-.hh-feature { display: flex; gap: 10px; align-items: flex-start; color: #1f2937; }
-.hh-dot { width: 8px; height: 8px; border-radius: 50%; background: #D4AF37; margin-top: 8px; flex: none; }
+.hh-features {
+  margin: 12px 0 20px;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 10px;
+}
+.hh-feature {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  color: #1f2937;
+}
+.hh-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #0ea5e9;
+  margin-top: 8px;
+  flex: none;
+}
 
 /* CTAs */
-.hh-ctas { display: flex; gap: 10px; flex-wrap: wrap; }
+.hh-ctas {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
 .hh-btn {
   appearance: none;
   border: 1px solid #111;
@@ -686,7 +759,8 @@ body {
   padding: 10px 14px;
   font-size: 0.95rem;
   cursor: pointer;
-  transition: transform .15s ease, background .2s ease, color .2s ease, border-color .2s ease;
+  transition: transform 0.15s ease, background 0.2s ease, color 0.2s ease,
+    border-color 0.2s ease;
 }
 .hh-btn.primary {
   background: #111;

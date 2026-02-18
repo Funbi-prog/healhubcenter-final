@@ -135,15 +135,15 @@
 .contact-form input:focus,
 .contact-form textarea:focus,
 .contact-form select:focus {
-  border-color: #b79f6d;
+  border-color: #0EA5E9;
   outline: none;
-  box-shadow: 0 0 6px rgba(183, 159, 109, 0.3);
+  box-shadow: 0 0 6px rgba(14, 165, 233, 0.3);
 }
 
 /* === SUBMIT BUTTON === */
 .btn-submit {
   width: 100%;
-  background: linear-gradient(90deg, #b79f6d, #a39bd2);
+  background: linear-gradient(90deg, #0EA5E9, #39388B);
   color: white;
   border: none;
   border-radius: 10px;
@@ -155,7 +155,7 @@
 }
 
 .btn-submit:hover {
-  background: linear-gradient(90deg, #a78b5f, #9888d1);
+  background: linear-gradient(90deg, #0284c7, #2d2c70);
   transform: translateY(-2px);
 }
 
@@ -170,7 +170,7 @@
   background: #fff;
   border-radius: 12px;
   padding: 1.6rem 1.8rem;
-  border-left: 3px solid #b79f6d;
+  border-left: 3px solid #0EA5E9;
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.04);
   transition: all 0.3s ease;
 }
@@ -238,7 +238,7 @@
 }
 
 .faq-question:hover {
-  color: #b79f6d;
+  color: #0EA5E9;
 }
 
 .faq-answer p {
@@ -269,7 +269,7 @@
 }
 
 .contact-cta .btn-primary {
-  background: linear-gradient(90deg, #b79f6d, #a39bd2);
+  background: linear-gradient(90deg, #0EA5E9, #39388B);
   border: none;
   border-radius: 12px;
   padding: 1rem 2rem;
@@ -280,7 +280,7 @@
 }
 
 .contact-cta .btn-primary:hover {
-  background: linear-gradient(90deg, #a78b5f, #9888d1);
+  background: linear-gradient(90deg, #0284c7, #2d2c70);
   transform: translateY(-2px);
 }
 

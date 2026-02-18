@@ -1,5 +1,5 @@
 // src/dashboard/WidgetCard.jsx
-import React from "react";
+import React, { useId } from "react";
 import { motion } from "framer-motion";
 
 /**
@@ -15,13 +15,17 @@ export default function WidgetCard({
   title = "Widget",
   subtitle = "",
   actionText = "Open",
-  gradient = "linear-gradient(90deg, #CDB996, #B99F79)",
+  gradient = "linear-gradient(90deg, #0EA5E9 0%, #39388B 100%)",
   metricValue = 72,
   metricLabel = "Goal progress",
   trend = "+3.1%",
   data = [12, 18, 15, 22, 26, 24, 30, 28, 33, 36],
   onClick,
 }) {
+  // Unique ID per card instance (prevents SVG gradient ID collisions in the DOM)
+  const uid = useId().replace(/:/g, "");
+  const gradientId = `wg-${uid}`;
+
   // Sparkline path generator (simple & dependency-free)
   const width = 120;
   const height = 36;
@@ -87,18 +91,18 @@ export default function WidgetCard({
               r={r}
               fill="none"
               strokeLinecap="round"
-              stroke="url(#goldGradient)"
+              stroke={`url(#${gradientId})`}
               strokeWidth={stroke}
               strokeDasharray={`${dash} ${c - dash}`}
               transform={`rotate(-90 ${size / 2} ${size / 2})`}
               initial={{ strokeDasharray: `0 ${c}` }}
               animate={{ strokeDasharray: `${dash} ${c - dash}` }}
-              transition={{ duration: 1.1, ease: "easeOut" }}
+              transition={{ duration: 0.5, ease: "easeOut" }}
             />
             <defs>
-              <linearGradient id="goldGradient" x1="0" x2="1" y1="0" y2="1">
-                <stop offset="0%" stopColor="#CDB996" />
-                <stop offset="100%" stopColor="#B99F79" />
+              <linearGradient id={gradientId} x1="0" x2="1" y1="0" y2="1">
+                <stop offset="0%" stopColor="#0EA5E9" />
+                <stop offset="100%" stopColor="#39388B" />
               </linearGradient>
             </defs>
           </svg>

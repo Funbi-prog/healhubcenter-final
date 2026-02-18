@@ -2,6 +2,7 @@
 import React, { useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate } from "react-router-dom";
+import "../Dashboard.css";
 
 const moods = [
   { key: "joy", label: "Joy", icon: "😊", color: "#F9D57E" },
@@ -48,7 +49,7 @@ export default function CheckInPage() {
     <div
       className="dashboard-layout"
       style={{
-        background: "linear-gradient(180deg, #fffaf3 0%, #fefcf9 100%)",
+        background: "linear-gradient(180deg, #f8fafc 0%, #f0f9ff 100%)",
         minHeight: "100vh",
       }}
     >
@@ -162,8 +163,8 @@ export default function CheckInPage() {
             >
               <motion.h2>✨ Check-In Saved ✨</motion.h2>
               <p>
-                You’ve centered yourself beautifully today.  
-                Would you like to continue your wellness ritual?
+                You’ve centered yourself beautifully today. Would you like to
+                continue your wellness ritual?
               </p>
               <div className="checkin-options">
                 <button onClick={() => navigate("/chat")} className="btn-gold">

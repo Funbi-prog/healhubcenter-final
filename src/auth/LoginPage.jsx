@@ -40,12 +40,12 @@ export default function LoginPage() {
       } else {
         console.error(
           "Unexpected Login Error:",
-          err.response.data.message.message,
+          err.response.data.message.message
         );
         setError(
           err?.response?.data?.message.message ||
             err?.response.data.message.message[0] ||
-            "Login failed. Please try again.",
+            "Login failed. Please try again."
         );
       }
     } finally {
@@ -70,12 +70,12 @@ export default function LoginPage() {
       {!isMobile && (
         <Motion.div
           initial={{ opacity: 0, y: 20 }}
-          animate={{
-            opacity: 1,
-            y: [0, -12, 0],
-            transition: { duration: 4, repeat: Infinity, ease: "easeInOut" },
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          style={{
+            ...styles.bimpeDesktop,
+            animation: "bimpeFloat 5s ease-in-out infinite",
           }}
-          style={styles.bimpeDesktop}
         >
           <img
             src="/assets/bim3.png"
@@ -89,12 +89,12 @@ export default function LoginPage() {
       {isMobile && (
         <Motion.div
           initial={{ opacity: 0, y: 10 }}
-          animate={{
-            opacity: 1,
-            y: [0, -8, 0],
-            transition: { duration: 3, repeat: Infinity, ease: "easeInOut" },
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
+          style={{
+            ...styles.fabContainer,
+            animation: "bimpeFloat 4s ease-in-out infinite",
           }}
-          style={styles.fabContainer}
         >
           <img src="/assets/bim1.png" alt="BIMPE" style={styles.fabImg} />
           <div style={styles.bubble}>Hey there 👋 Ready to sign in?</div>
@@ -199,7 +199,7 @@ const styles = {
     position: "relative",
     minHeight: "100vh",
     width: "100%",
-    background: "linear-gradient(135deg, #fdfcfb, #f1ece7)",
+    background: "linear-gradient(135deg, #f8fafc, #f0f9ff)",
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
@@ -264,8 +264,8 @@ const styles = {
     backdropFilter: "blur(8px)",
   },
   banner: {
-    background: "#f6f2ea",
-    color: "#4b3f2f",
+    background: "#39388B",
+    color: "#fff",
     padding: "0.55rem",
     borderRadius: 6,
     fontSize: "0.85rem",
@@ -277,7 +277,7 @@ const styles = {
     marginBottom: 6,
     fontWeight: 600,
   },
-  brandText: { color: "#a680ff" },
+  brandText: { color: "#39388B" },
   subdomain: { fontSize: "0.9rem", color: "#666", marginBottom: "1.2rem" },
   buttons: { display: "flex", flexDirection: "column", gap: "0.75rem" },
   oauthBtn: {
@@ -322,7 +322,8 @@ const styles = {
     outline: "none",
   },
   signInBtn: {
-    background: "#000",
+    background:
+      "linear-gradient(90deg, rgb(57, 56, 139) 0%, rgb(14, 165, 233) 100%)",
     color: "#fff",
     padding: "0.8rem 1rem",
     border: "none",

@@ -2,7 +2,7 @@
 import React from "react";
 import Sidebar from "../Sidebar.jsx";
 import Topbar from "../Topbar.jsx";
-import "../styles/Shared.css";
+import "../styles/Settings.css";
 
 export default function InsightsPage() {
   return (

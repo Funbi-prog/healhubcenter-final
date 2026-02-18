@@ -38,7 +38,7 @@ export default function SignupPage() {
         setError(
           err?.response?.data?.message.message[0] ||
             err?.response.data.message.message ||
-            "Signup failed. Please try again.",
+            "Signup failed. Please try again."
         );
       }
     } finally {
@@ -190,7 +190,7 @@ const styles = {
   page: {
     position: "relative",
     minHeight: "100vh",
-    background: "linear-gradient(135deg, #fdfcfb, #f1ece7)",
+    background: "linear-gradient(135deg, #f8fafc, #f0f9ff)",
     display: "flex",
     flexDirection: "column",
     overflow: "hidden",
@@ -270,7 +270,7 @@ const styles = {
     height: "600px",
     borderRadius: "50%",
     background:
-      "radial-gradient(circle at center, rgba(205,186,150,0.25), transparent 70%)",
+      "radial-gradient(circle at center, rgba(14,165,233,0.25), transparent 70%)",
     filter: "blur(45px)",
     zIndex: -1,
   },
@@ -318,14 +318,15 @@ const styles = {
     fontSize: 15,
   },
   primary: {
-    marginTop: 6,
-    background: "#000",
+    background:
+      "linear-gradient(90deg, rgb(57, 56, 139) 0%, rgb(14, 165, 233) 100%)",
     color: "#fff",
+    padding: "0.8rem 1rem",
     border: "none",
     borderRadius: 10,
-    padding: "12px",
     cursor: "pointer",
-    fontWeight: 700,
+    fontSize: "1rem",
+    fontWeight: 600,
   },
   meta: { marginTop: 12, color: "#555" },
   link: { color: "#000", textDecoration: "none", fontWeight: 600 },
