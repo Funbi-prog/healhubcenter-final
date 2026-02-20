@@ -29,7 +29,7 @@ export default function ChatPage() {
   const [isTyping, setIsTyping] = useState(false);
   const [showEmoji, setShowEmoji] = useState(false);
   const [conversationId, setConversationId] = useState(
-    () => getAiChatConversationId() ?? null,
+    () => getAiChatConversationId() ?? null
   );
   const [socketConnected, setSocketConnected] = useState(false);
   const [socketError, setSocketError] = useState(null);
@@ -69,8 +69,8 @@ export default function ChatPage() {
         typeof content === "string"
           ? content
           : typeof text === "string"
-            ? text
-            : "";
+          ? text
+          : "";
 
       const rawTime = createdAt ?? created_at ?? timestamp ?? ts;
       const parsedTime =
@@ -79,8 +79,8 @@ export default function ChatPage() {
             ? rawTime * 1000
             : rawTime
           : rawTime
-            ? new Date(rawTime).getTime()
-            : NaN;
+          ? new Date(rawTime).getTime()
+          : NaN;
 
       return {
         id: id ?? `local-${Date.now()}-${Math.random().toString(16).slice(2)}`,
@@ -92,7 +92,7 @@ export default function ChatPage() {
         pending: false,
       };
     },
-    [],
+    []
   );
 
   const setConversationIdAndPersist = useCallback((nextId) => {
@@ -126,8 +126,8 @@ export default function ChatPage() {
             ? rawTime * 1000
             : rawTime
           : rawTime
-            ? new Date(rawTime).getTime()
-            : NaN;
+          ? new Date(rawTime).getTime()
+          : NaN;
       const ts = Number.isFinite(parsedTime) ? parsedTime : Date.now();
 
       const content = serverMsg?.content;
@@ -192,7 +192,7 @@ export default function ChatPage() {
         __source: source,
       };
     },
-    [buildAttachmentUrl],
+    [buildAttachmentUrl]
   );
 
   const hydrateConversationMessages = useCallback(
@@ -255,18 +255,18 @@ export default function ChatPage() {
 
         setMessages(
           merged.map(
-            ({ __hydrationIndex: _ignored, __source: _src, ...rest }) => rest,
-          ),
+            ({ __hydrationIndex: _ignored, __source: _src, ...rest }) => rest
+          )
         );
       } catch (err) {
         setSocketError(
           err?.response?.data?.message ??
             err?.message ??
-            "Failed to load messages",
+            "Failed to load messages"
         );
       }
     },
-    [mapServerMessageToUi],
+    [mapServerMessageToUi]
   );
 
   const appendMessage = useCallback((message) => {
@@ -293,7 +293,7 @@ export default function ChatPage() {
         return next;
       });
     },
-    [toLocalMessage],
+    [toLocalMessage]
   );
 
   const attachTranscriptionToLastVoiceMessage = useCallback((transcription) => {
@@ -302,7 +302,7 @@ export default function ChatPage() {
     const transcriptText =
       typeof transcription === "string"
         ? transcription
-        : (transcription?.text ?? transcription?.transcript ?? null);
+        : transcription?.text ?? transcription?.transcript ?? null;
 
     setMessages((prev) => {
       const idx = [...prev]
@@ -402,9 +402,7 @@ export default function ChatPage() {
         }
       } catch (err) {
         setSocketError(
-          err?.response?.data?.message ??
-            err?.message ??
-            "REST fallback failed",
+          err?.response?.data?.message ?? err?.message ?? "REST fallback failed"
         );
       }
     });
@@ -497,7 +495,9 @@ export default function ChatPage() {
     if (!input.trim()) return;
 
     const content = input.trim();
-    const localId = `local-user-${Date.now()}-${Math.random().toString(16).slice(2)}`;
+    const localId = `local-user-${Date.now()}-${Math.random()
+      .toString(16)
+      .slice(2)}`;
 
     appendMessage({
       id: localId,
@@ -551,7 +551,7 @@ export default function ChatPage() {
     } catch (err) {
       setIsTyping(false);
       setSocketError(
-        err?.response?.data?.message ?? err?.message ?? "Message failed",
+        err?.response?.data?.message ?? err?.message ?? "Message failed"
       );
     }
   };
@@ -594,7 +594,9 @@ export default function ChatPage() {
         });
         const url = URL.createObjectURL(blob);
 
-        const localId = `local-voice-${Date.now()}-${Math.random().toString(16).slice(2)}`;
+        const localId = `local-voice-${Date.now()}-${Math.random()
+          .toString(16)
+          .slice(2)}`;
 
         appendMessage({
           id: localId,
@@ -658,7 +660,7 @@ export default function ChatPage() {
             setSocketError(
               err?.response?.data?.message ??
                 err?.message ??
-                "Voice upload failed",
+                "Voice upload failed"
             );
             setMessages((prev) => {
               const idx = prev.findIndex((m) => m.id === localId);
@@ -728,11 +730,11 @@ export default function ChatPage() {
             ref={chatBodyRef}
             onScroll={updateIsAtBottom}
           >
-            {socketError && (
+            {/* {socketError && (
               <div style={{ color: "#8b1e1e", fontSize: 13 }}>
                 {socketError}
               </div>
-            )}
+            )} */}
             {messages.map((msg, i) => {
               const isUser = (msg.role ?? msg.sender) === "user";
               const key = msg.id ?? msg.ts ?? i;
@@ -751,7 +753,9 @@ export default function ChatPage() {
                   )}
 
                   <Motion.div
-                    className={`chat-bubble ${isUser ? "chat-user-bubble" : "chat-ai-bubble"}`}
+                    className={`chat-bubble ${
+                      isUser ? "chat-user-bubble" : "chat-ai-bubble"
+                    }`}
                     initial={{ opacity: 0, y: 12 }}
                     animate={{ opacity: 1, y: 0 }}
                   >
@@ -818,8 +822,8 @@ export default function ChatPage() {
                                 ? msg.transcription
                                 : JSON.stringify(msg.transcription)
                               : msg.pending
-                                ? "Transcribing…"
-                                : "No transcription available."}
+                              ? "Transcribing…"
+                              : "No transcription available."}
                           </div>
                         )}
 
