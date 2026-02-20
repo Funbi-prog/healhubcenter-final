@@ -194,7 +194,7 @@ Built for scale, compliance, and impact. Whether you're serving 500 patients or 
           "Seamless integration with EHR/EMR systems",
           "Dedicated success team for onboarding and ongoing support",
         ]}
-        image="/assets/hero.jpg"
+        image="/assets/entre.jpeg"
         primaryCta="Explore HealHubCenter Enterprise"
         primaryTo="/coming-soon"
         secondaryCta="Schedule a Demo"
