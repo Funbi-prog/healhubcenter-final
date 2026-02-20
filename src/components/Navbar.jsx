@@ -33,9 +33,9 @@ export default function Navbar() {
     ? [
         { label: "Dashboard", route: "/dashboard" },
         { label: "Check-In", route: "/dashboard/checkin" },
-        { label: "Library", route: "/dashboard/library" },
+        // { label: "Library", route: "/dashboard/library" },
         { label: "Chat", route: "/chat" },
-        { label: "Roundtable", route: "/roundtable" },
+        // { label: "Roundtable", route: "/roundtable" },
       ]
     : [
         { label: "Home", route: "/" },

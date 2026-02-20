@@ -42,28 +42,28 @@ const WIDGETS = (go) => [
     data: [10, 9, 12, 14, 16, 19, 18, 20, 22, 24],
     onClick: () => go("/chat"),
   },
-  {
-    title: "HealHub Library",
-    subtitle: "Curated articles & journals.",
-    actionText: "Explore Library",
-    gradient: "linear-gradient(135deg, #0EA5E9 0%, #39388B 100%)",
-    metricValue: 41,
-    metricLabel: "Reads",
-    trend: "-0.7%",
-    data: [4, 5, 6, 6, 7, 8, 8, 9, 10, 9],
-    onClick: () => go("/dashboard/library"),
-  },
-  {
-    title: "Roundtable Sessions",
-    subtitle: "Weekly group healing topics.",
-    actionText: "View Topics",
-    gradient: "linear-gradient(90deg, #0EA5E9 0%, #39388B 100%)",
-    metricValue: 73,
-    metricLabel: "Seats filled",
-    trend: "+4.2%",
-    data: [6, 8, 12, 11, 15, 17, 16, 19, 21, 23],
-    onClick: () => go("/roundtable"),
-  },
+  // {
+  //   title: "HealHub Library",
+  //   subtitle: "Curated articles & journals.",
+  //   actionText: "Explore Library",
+  //   gradient: "linear-gradient(135deg, #0EA5E9 0%, #39388B 100%)",
+  //   metricValue: 41,
+  //   metricLabel: "Reads",
+  //   trend: "-0.7%",
+  //   data: [4, 5, 6, 6, 7, 8, 8, 9, 10, 9],
+  //   onClick: () => go("/dashboard/library"),
+  // },
+  // {
+  //   title: "Roundtable Sessions",
+  //   subtitle: "Weekly group healing topics.",
+  //   actionText: "View Topics",
+  //   gradient: "linear-gradient(90deg, #0EA5E9 0%, #39388B 100%)",
+  //   metricValue: 73,
+  //   metricLabel: "Seats filled",
+  //   trend: "+4.2%",
+  //   data: [6, 8, 12, 11, 15, 17, 16, 19, 21, 23],
+  //   onClick: () => go("/roundtable"),
+  // },
 
   // ============================================
   // NEW — HEALHUB CONNECT
@@ -80,20 +80,20 @@ const WIDGETS = (go) => [
     onClick: () => go("/dashboard/connect"),
   },
 
-  // ============================================
-  // NEW — WORKSHOPS
-  // ============================================
-  {
-    title: "Workshops",
-    subtitle: "Guided healing journeys.",
-    actionText: "Start Workshop",
-    gradient: "linear-gradient(135deg, #39388B 0%, #0EA5E9 100%)",
-    metricValue: 52,
-    metricLabel: "Progress",
-    trend: "+5.4%",
-    data: [3, 5, 7, 6, 9, 11, 10, 14, 13, 16],
-    onClick: () => go("/dashboard/workshops"),
-  },
+  // // ============================================
+  // // NEW — WORKSHOPS
+  // // ============================================
+  // {
+  //   title: "Workshops",
+  //   subtitle: "Guided healing journeys.",
+  //   actionText: "Start Workshop",
+  //   gradient: "linear-gradient(135deg, #39388B 0%, #0EA5E9 100%)",
+  //   metricValue: 52,
+  //   metricLabel: "Progress",
+  //   trend: "+5.4%",
+  //   data: [3, 5, 7, 6, 9, 11, 10, 14, 13, 16],
+  //   onClick: () => go("/dashboard/workshops"),
+  // },
 ];
 
 // === HealHub Dashboard Component ===

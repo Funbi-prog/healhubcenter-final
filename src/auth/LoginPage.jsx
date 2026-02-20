@@ -120,9 +120,9 @@ export default function LoginPage() {
           <button style={styles.oauthBtn} disabled>
             <FaGoogle style={styles.icon} /> Continue with Google
           </button>
-          <button style={styles.oauthBtn} disabled>
+          {/* <button style={styles.oauthBtn} disabled>
             <FaApple style={styles.icon} /> Continue with Apple
-          </button>
+          </button> */}
         </div>
 
         <div style={styles.divider}>

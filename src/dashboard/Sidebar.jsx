@@ -19,8 +19,8 @@ import { logout } from "../services/authApi";
 const navItems = [
   { icon: <Home size={18} />, label: "Dashboard", route: "/dashboard" },
   { icon: <MessageCircle size={18} />, label: "Chat", route: "/chat" },
-  { icon: <Users size={18} />, label: "Roundtable", route: "/roundtable" },
-  { icon: <Newspaper size={18} />, label: "Blog", route: "/dashboard/blog" },
+  // { icon: <Users size={18} />, label: "Roundtable", route: "/roundtable" },
+  // { icon: <Newspaper size={18} />, label: "Blog", route: "/dashboard/blog" },
   {
     icon: <BarChart2 size={18} />,
     label: "Insights",
