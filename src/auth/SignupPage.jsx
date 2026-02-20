@@ -2,8 +2,9 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { motion as Motion } from "framer-motion";
-import { FaGoogle, FaApple } from "react-icons/fa";
-import { register } from "../services/authApi";
+import { FaGoogle } from "react-icons/fa";
+import { GoogleLogin } from "@react-oauth/google";
+import { register, googleLogin } from "../services/authApi";
 
 export default function SignupPage() {
   const navigate = useNavigate();
@@ -19,6 +20,27 @@ export default function SignupPage() {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+  // Google Signup/Login
+  const handleGoogleAuth = async (credential) => {
+    try {
+      setError(null);
+      setIsSubmitting(true);
+      await googleLogin({ idToken: credential });
+      navigate("/dashboard");
+    } catch (err) {
+      const status = err?.response?.status;
+      if (status === 401) {
+        setError("Invalid Google account or account deactivated.");
+      } else if (status === 409) {
+        setError("This Google account is already linked to another user.");
+      } else {
+        setError("Google sign-in failed. Please try again.");
+      }
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   const submit = async (e) => {
     e.preventDefault();
@@ -89,13 +111,24 @@ export default function SignupPage() {
           <h1 style={styles.title}>Create your HealHubCenter account</h1>
           <p style={styles.blurb}>Join the community that actually cares.</p>
 
-          <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-            <button style={styles.oauthBtn}>
-              <FaGoogle /> Continue with Google
+          <div style={styles.googleOverlayWrapper}>
+            <button
+              style={styles.oauthBtn}
+              type="button"
+              disabled={isSubmitting}
+            >
+              <FaGoogle style={styles.icon} /> Continue with Google
             </button>
-            <button style={styles.oauthBtn}>
-              <FaApple /> Continue with Apple
-            </button>
+            <div style={styles.googleOverlay}>
+              <GoogleLogin
+                onSuccess={(res) => handleGoogleAuth(res.credential)}
+                onError={() =>
+                  setError("Google sign-in failed. Please try again.")
+                }
+                width="460"
+                size="large"
+              />
+            </div>
           </div>
 
           <div style={styles.divider}>
@@ -295,18 +328,32 @@ const styles = {
   },
   title: { margin: 0, fontSize: 24, fontWeight: 700 },
   blurb: { marginTop: 8, color: "#555" },
+  googleOverlayWrapper: { position: "relative" },
+  googleOverlay: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    opacity: 0.001,
+    overflow: "hidden",
+  },
   oauthBtn: {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    gap: 8,
-    border: "1px solid #ddd",
-    borderRadius: 10,
-    padding: "10px 12px",
+    gap: "0.6rem",
     background: "#fff",
+    border: "1px solid #d7d7d7",
+    padding: "0.75rem 1rem",
+    borderRadius: 10,
     cursor: "pointer",
+    fontSize: "1rem",
     fontWeight: 500,
+    color: "#333",
+    width: "100%",
   },
+  icon: { fontSize: "1.1rem" },
   divider: { display: "flex", alignItems: "center", gap: 8, margin: "14px 0" },
   line: { flex: 1, height: 1, background: "#eee" },
   or: { fontSize: 12, color: "#777", fontWeight: 700 },

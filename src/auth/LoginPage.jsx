@@ -2,8 +2,9 @@
 import React, { useState, useEffect } from "react";
 import { motion as Motion } from "framer-motion";
 import { useNavigate, Link, useLocation } from "react-router-dom";
-import { FaGoogle, FaApple, FaEnvelope } from "react-icons/fa";
-import { login } from "../services/authApi";
+import { FaGoogle, FaEnvelope } from "react-icons/fa";
+import { GoogleLogin } from "@react-oauth/google";
+import { login, googleLogin } from "../services/authApi";
 
 export default function LoginPage() {
   const navigate = useNavigate();
@@ -19,6 +20,32 @@ export default function LoginPage() {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+  // Google Signup/Login
+  const handleGoogleAuth = async (credential) => {
+    try {
+      setError(null);
+      setIsSubmitting(true);
+      await googleLogin({ idToken: credential });
+      const fromPath = location.state?.from?.pathname;
+      const nextPath =
+        typeof fromPath === "string" && fromPath.startsWith("/")
+          ? fromPath
+          : "/dashboard";
+      navigate(nextPath, { replace: true });
+    } catch (err) {
+      const status = err?.response?.status;
+      if (status === 401) {
+        setError("Invalid Google account or account deactivated.");
+      } else if (status === 409) {
+        setError("This Google account is already linked to another user.");
+      } else {
+        setError("Google sign-in failed. Please try again.");
+      }
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   const handleEmailLogin = async (e) => {
     e.preventDefault();
@@ -117,12 +144,25 @@ export default function LoginPage() {
         <p style={styles.subdomain}>healhubcenter.vercel.app</p>
 
         <div style={styles.buttons}>
-          <button style={styles.oauthBtn} disabled>
-            <FaGoogle style={styles.icon} /> Continue with Google
-          </button>
-          {/* <button style={styles.oauthBtn} disabled>
-            <FaApple style={styles.icon} /> Continue with Apple
-          </button> */}
+          <div style={styles.googleOverlayWrapper}>
+            <button
+              style={styles.oauthBtn}
+              type="button"
+              disabled={isSubmitting}
+            >
+              <FaGoogle style={styles.icon} /> Continue with Google
+            </button>
+            <div style={styles.googleOverlay}>
+              <GoogleLogin
+                onSuccess={(res) => handleGoogleAuth(res.credential)}
+                onError={() =>
+                  setError("Google sign-in failed. Please try again.")
+                }
+                width="420"
+                size="large"
+              />
+            </div>
+          </div>
         </div>
 
         <div style={styles.divider}>
@@ -280,6 +320,16 @@ const styles = {
   brandText: { color: "#39388B" },
   subdomain: { fontSize: "0.9rem", color: "#666", marginBottom: "1.2rem" },
   buttons: { display: "flex", flexDirection: "column", gap: "0.75rem" },
+  googleOverlayWrapper: { position: "relative" },
+  googleOverlay: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    opacity: 0.001,
+    overflow: "hidden",
+  },
   oauthBtn: {
     display: "flex",
     alignItems: "center",
@@ -293,6 +343,7 @@ const styles = {
     fontSize: "1rem",
     fontWeight: 500,
     color: "#333",
+    width: "100%",
   },
   icon: { fontSize: "1.1rem" },
   divider: {

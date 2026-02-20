@@ -44,6 +44,20 @@ export async function login({ email, password }) {
   return { token, refreshToken, user, raw: response.data };
 }
 
+export async function googleLogin({ idToken }) {
+  const response = await customFetch.post("/auth/google-login", { idToken });
+
+  const { token, refreshToken, user } = normalizeAuthData(response.data);
+  if (!token || !refreshToken)
+    throw new Error("Missing token(s) in auth response");
+
+  storeToken(token);
+  storeRefreshToken(refreshToken);
+  storeUser(user);
+
+  return { token, refreshToken, user, raw: response.data };
+}
+
 export async function logout() {
   customFetch.post("/auth/logout").catch(() => {});
 

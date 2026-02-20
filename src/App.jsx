@@ -1,6 +1,6 @@
 // src/App.jsx
 import React, { lazy, Suspense } from "react";
-import LandingIntro from "./LandingIntro.jsx";
+// import LandingIntro from "./LandingIntro.jsx";
 import Sections from "./Sections.jsx";
 import "./index.css";
 import Footer from "./Footer.jsx";
@@ -166,7 +166,7 @@ function HomePage() {
         </div>
 
         <div className="hero-office modern-office">
-          <LandingIntro />
+          {/* <LandingIntro /> */}
         </div>
       </section>
 
