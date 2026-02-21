@@ -61,18 +61,26 @@ export default function LoginPage() {
       navigate(nextPath, { replace: true });
     } catch (err) {
       const status = err?.response?.status;
-      if (status === 401 || status === 403) {
+      if (
+        status === 401 &&
+        err?.response?.data?.message.message ===
+          "This account uses social login."
+      ) {
+        setError(
+          "This account is linked to a social login. Please sign in using Google.",
+        );
+      } else if (status === 401 || status === 403) {
         console.warn("Authentication failed:", err.response.data.message);
         setError("Invalid email or password.");
       } else {
         console.error(
           "Unexpected Login Error:",
-          err.response.data.message.message
+          err.response.data.message.message,
         );
         setError(
           err?.response?.data?.message.message ||
             err?.response.data.message.message[0] ||
-            "Login failed. Please try again."
+            "Login failed. Please try again.",
         );
       }
     } finally {
