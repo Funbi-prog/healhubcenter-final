@@ -23,15 +23,34 @@ import {
 } from "../services/aiChatApi";
 import "./ChatPage.css";
 
+function coerceErrorToText(value) {
+  if (value == null) return "";
+  if (typeof value === "string") return value;
+  if (value instanceof Error) return value.message || String(value);
+
+  if (typeof value === "object") {
+    const maybeMessage = value?.message;
+    if (typeof maybeMessage === "string") return maybeMessage;
+    try {
+      return JSON.stringify(value);
+    } catch {
+      return String(value);
+    }
+  }
+
+  return String(value);
+}
+
 export default function ChatPage() {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const [showEmoji, setShowEmoji] = useState(false);
   const [conversationId, setConversationId] = useState(
-    () => getAiChatConversationId() ?? null
+    () => getAiChatConversationId() ?? null,
   );
   const [socketConnected, setSocketConnected] = useState(false);
+  const [socketConnecting, setSocketConnecting] = useState(true);
   const [socketError, setSocketError] = useState(null);
   const [openTranscripts, setOpenTranscripts] = useState({});
 
@@ -48,6 +67,18 @@ export default function ChatPage() {
 
   const chatEndRef = useRef(null);
   const inputRef = useRef(null);
+
+  const autoResizeComposer = useCallback(() => {
+    const el = inputRef.current;
+    if (!el) return;
+
+    el.style.height = "auto";
+    el.style.height = `${el.scrollHeight}px`;
+  }, []);
+
+  useEffect(() => {
+    autoResizeComposer();
+  }, [input, autoResizeComposer]);
 
   const EMOJIS = ["❤️", "🙂", "😔", "😃", "🔥", "🌿", "✨", "💬", "🎧", "🙌"];
 
@@ -69,8 +100,8 @@ export default function ChatPage() {
         typeof content === "string"
           ? content
           : typeof text === "string"
-          ? text
-          : "";
+            ? text
+            : "";
 
       const rawTime = createdAt ?? created_at ?? timestamp ?? ts;
       const parsedTime =
@@ -79,8 +110,8 @@ export default function ChatPage() {
             ? rawTime * 1000
             : rawTime
           : rawTime
-          ? new Date(rawTime).getTime()
-          : NaN;
+            ? new Date(rawTime).getTime()
+            : NaN;
 
       return {
         id: id ?? `local-${Date.now()}-${Math.random().toString(16).slice(2)}`,
@@ -92,7 +123,7 @@ export default function ChatPage() {
         pending: false,
       };
     },
-    []
+    [],
   );
 
   const setConversationIdAndPersist = useCallback((nextId) => {
@@ -126,8 +157,8 @@ export default function ChatPage() {
             ? rawTime * 1000
             : rawTime
           : rawTime
-          ? new Date(rawTime).getTime()
-          : NaN;
+            ? new Date(rawTime).getTime()
+            : NaN;
       const ts = Number.isFinite(parsedTime) ? parsedTime : Date.now();
 
       const content = serverMsg?.content;
@@ -192,7 +223,7 @@ export default function ChatPage() {
         __source: source,
       };
     },
-    [buildAttachmentUrl]
+    [buildAttachmentUrl],
   );
 
   const hydrateConversationMessages = useCallback(
@@ -254,19 +285,26 @@ export default function ChatPage() {
         }
 
         setMessages(
-          merged.map(
-            ({ __hydrationIndex: _ignored, __source: _src, ...rest }) => rest
-          )
+          merged.map((m) => {
+            const next = { ...m };
+            delete next.__hydrationIndex;
+            delete next.__source;
+            return next;
+          }),
         );
       } catch (err) {
-        setSocketError(
-          err?.response?.data?.message ??
-            err?.message ??
-            "Failed to load messages"
-        );
+        const status = err?.response?.status ?? err?.status;
+
+        if (status === 401 || status === 403 || status === 404) {
+          setMessages([]);
+          setConversationId(null);
+          storeAiChatConversationId(null);
+        }
+
+        setSocketError(null);
       }
     },
-    [mapServerMessageToUi]
+    [mapServerMessageToUi],
   );
 
   const appendMessage = useCallback((message) => {
@@ -293,7 +331,7 @@ export default function ChatPage() {
         return next;
       });
     },
-    [toLocalMessage]
+    [toLocalMessage],
   );
 
   const attachTranscriptionToLastVoiceMessage = useCallback((transcription) => {
@@ -302,7 +340,7 @@ export default function ChatPage() {
     const transcriptText =
       typeof transcription === "string"
         ? transcription
-        : transcription?.text ?? transcription?.transcript ?? null;
+        : (transcription?.text ?? transcription?.transcript ?? null);
 
     setMessages((prev) => {
       const idx = [...prev]
@@ -324,6 +362,7 @@ export default function ChatPage() {
   useEffect(() => {
     const token = getToken();
     const origin = new URL(API_BASE_URL).origin;
+    setSocketConnecting(true);
     const socket = io(`${origin}/ai-chat`, {
       auth: token ? { token: `Bearer ${token}` } : undefined,
       transports: ["websocket", "polling"],
@@ -333,16 +372,20 @@ export default function ChatPage() {
 
     socket.on("connect", () => {
       setSocketConnected(true);
+      setSocketConnecting(false);
       setSocketError(null);
     });
 
     socket.on("disconnect", () => {
       setSocketConnected(false);
+      setSocketConnecting(true);
     });
 
-    socket.on("connect_error", (err) => {
+    socket.on("connect_error", () => {
       setSocketConnected(false);
-      setSocketError(err?.message ?? "Failed to connect");
+      setSocketConnecting(true);
+
+      setSocketError(null);
     });
 
     socket.on(MESSAGE_ACKNOWLEDGE, (payload) => {
@@ -381,7 +424,11 @@ export default function ChatPage() {
 
     socket.on(MESSAGE_ERROR, async (payload) => {
       setIsTyping(false);
-      setSocketError(payload?.message ?? "Message failed");
+      setSocketError(
+        coerceErrorToText(payload?.message) ||
+          coerceErrorToText(payload) ||
+          "Message failed",
+      );
 
       const lastOutgoing = lastOutgoingRef.current;
       if (!lastOutgoing || lastOutgoing.triedRest) return;
@@ -402,7 +449,10 @@ export default function ChatPage() {
         }
       } catch (err) {
         setSocketError(
-          err?.response?.data?.message ?? err?.message ?? "REST fallback failed"
+          coerceErrorToText(err?.response?.data?.message) ||
+            coerceErrorToText(err?.response?.data) ||
+            coerceErrorToText(err?.message) ||
+            "REST fallback failed",
         );
       }
     });
@@ -551,7 +601,10 @@ export default function ChatPage() {
     } catch (err) {
       setIsTyping(false);
       setSocketError(
-        err?.response?.data?.message ?? err?.message ?? "Message failed"
+        coerceErrorToText(err?.response?.data?.message) ||
+          coerceErrorToText(err?.response?.data) ||
+          coerceErrorToText(err?.message) ||
+          "Message failed",
       );
     }
   };
@@ -660,7 +713,7 @@ export default function ChatPage() {
             setSocketError(
               err?.response?.data?.message ??
                 err?.message ??
-                "Voice upload failed"
+                "Voice upload failed",
             );
             setMessages((prev) => {
               const idx = prev.findIndex((m) => m.id === localId);
@@ -717,8 +770,12 @@ export default function ChatPage() {
               <div>
                 <h3>Bimpe</h3>
                 <p>
-                  {socketConnected ? "Online" : "Offline"} •{" "}
-                  {isTyping ? "Thinking" : "Listening"}
+                  {socketConnected
+                    ? "Online"
+                    : socketConnecting
+                      ? "Connecting"
+                      : "Offline"}{" "}
+                  • {isTyping ? "Thinking" : "Listening"}
                 </p>
               </div>
             </div>
@@ -730,11 +787,11 @@ export default function ChatPage() {
             ref={chatBodyRef}
             onScroll={updateIsAtBottom}
           >
-            {/* {socketError && (
+            {socketError && (
               <div style={{ color: "#8b1e1e", fontSize: 13 }}>
-                {socketError}
+                {coerceErrorToText(socketError)}
               </div>
-            )} */}
+            )}
             {messages.map((msg, i) => {
               const isUser = (msg.role ?? msg.sender) === "user";
               const key = msg.id ?? msg.ts ?? i;
@@ -822,8 +879,8 @@ export default function ChatPage() {
                                 ? msg.transcription
                                 : JSON.stringify(msg.transcription)
                               : msg.pending
-                              ? "Transcribing…"
-                              : "No transcription available."}
+                                ? "Transcribing…"
+                                : "No transcription available."}
                           </div>
                         )}
 
@@ -871,19 +928,26 @@ export default function ChatPage() {
             {showEmoji && (
               <div className="emoji-popover">
                 {EMOJIS.map((e) => (
-                  <button key={e} onClick={() => insertEmoji(e)}>
+                  <button type="button" key={e} onClick={() => insertEmoji(e)}>
                     {e}
                   </button>
                 ))}
               </div>
             )}
 
-            <input
+            <textarea
               ref={inputRef}
-              type="text"
+              rows={1}
               placeholder="Type your message…"
               value={input}
               onChange={(e) => setInput(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key !== "Enter") return;
+                if (e.shiftKey) return;
+
+                e.preventDefault();
+                handleSend(e);
+              }}
             />
 
             <button

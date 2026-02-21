@@ -94,7 +94,7 @@
     gap: 0.55rem;
   }
 
-  .chat-input input {
+  .chat-input textarea {
     padding: 0.75rem 0.85rem;
   }
 
@@ -248,7 +248,7 @@
 
 /* User bubble (gold) */
 .chat-user-bubble {
-  background: linear-gradient(135deg, #38bdf8, #0EA5E9);
+  background: linear-gradient(135deg, #38bdf8, #0ea5e9);
   color: white;
   border-bottom-right-radius: 6px;
 }
@@ -308,7 +308,7 @@
 .typing-indicator span {
   width: 7px;
   height: 7px;
-  background: #0EA5E9;
+  background: #0ea5e9;
   border-radius: 50%;
   animation: blink 1.2s infinite;
 }
@@ -335,7 +335,7 @@
 ============================ */
 .chat-input {
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   gap: 0.75rem;
   padding: 1rem;
   background: rgba(255, 255, 255, 0.9);
@@ -365,12 +365,17 @@
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
 }
 
-/* Input */
-.chat-input input {
+/* Composer */
+.chat-input textarea {
   flex: 1;
   padding: 0.85rem 1rem;
   border-radius: 12px;
   border: 1px solid rgba(0, 0, 0, 0.08);
+  font: inherit;
+  line-height: 1.35;
+  resize: none;
+  overflow-y: auto;
+  max-height: 160px;
 }
 
 /* Mic + send buttons */
@@ -383,7 +388,7 @@
   align-items: center;
   justify-content: center;
   border: none;
-  background: linear-gradient(135deg, #0EA5E9, #38bdf8);
+  background: linear-gradient(135deg, #0ea5e9, #38bdf8);
   color: white;
 }
 
